@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "eternitek",
+  "version": "${version}",
+  "name": "Eternitek",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/eternitek/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.teking.eternitek.core.EternitekCoreClient"
+    ],
+    "main": [
+      "io.teking.eternitek.core.EternitekCore"
+    ]
+  },
+  "mixins": [
+    "eternitek.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
