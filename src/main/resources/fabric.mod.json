@@ -7,14 +7,17 @@
   "authors": [],
   "contact": {},
   "license": "GPL-3.0",
-  "icon": "assets/eternitek/icon.png",
+  "icon": "assets/eternitek/textures/icon.png",
   "environment": "*",
   "entrypoints": {
+    "main": [
+      "io.teking.eternitek.core.EternitekCore"
+    ],
     "client": [
       "io.teking.eternitek.core.EternitekCoreClient"
     ],
-    "main": [
-      "io.teking.eternitek.core.EternitekCore"
+    "fabric-datagen": [
+      "io.teking.eternitek.core.EternitekDataGenerator"
     ]
   },
   "mixins": [
