@@ -13,8 +13,15 @@ base {
 
 repositories {
 
-    // Lavender
-    maven { url 'https://maven.wispforest.io' }
+    // Porting Lib
+    maven { url = "https://mvn.devos.one/releases/" }
+    maven { url = "https://mvn.devos.one/snapshots/" }
+
+    // Lodestone
+    maven { url = "https://api.modrinth.com/maven" }
+
+    // Fabric ASM
+    maven { url 'https://jitpack.io' }
 
 }
 
@@ -27,7 +34,11 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "io.wispforest:lavender:${project.lavender_version}"
+    modImplementation "maven.modrinth:lodestonelib:${project.lodestone_version}"
+
+    for(String module in project.porting_lib_modules.split(",")) {
+        modImplementation "io.github.fabricators_of_create.Porting-Lib:${module}:${project.porting_lib_version}"
+    }
 
 }
 

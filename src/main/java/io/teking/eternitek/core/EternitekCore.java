@@ -1,7 +1,6 @@
 package io.teking.eternitek.core;
 
 import io.teking.eternitek.core.registry.EternitekItems;
-import io.wispforest.lavender.book.LavenderBookItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup;
 import net.minecraft.item.Item;

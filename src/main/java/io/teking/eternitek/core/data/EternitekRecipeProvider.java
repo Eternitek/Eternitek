@@ -1,6 +1,5 @@
 package io.teking.eternitek.core.data;
 
-import io.wispforest.lavender.client.LavenderBookScreen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.client.gui.screen.ingame.BookScreen;

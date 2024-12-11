@@ -1,7 +1,6 @@
 package io.teking.eternitek.core.registry;
 
 import io.teking.eternitek.core.EternitekCore;
-import io.wispforest.lavender.book.LavenderBookItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
@@ -13,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EternitekItems {
-
-    public static final Item GUIDEBOOK = LavenderBookItem.registerForBook(EternitekCore.id("eternitek"), EternitekCore.id("guidebook"), new Item.Settings());
 
     public static final Item CRUDE_STEEL_INGOT = new Item(new Item.Settings());
 
