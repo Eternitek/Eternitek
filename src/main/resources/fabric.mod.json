@@ -33,6 +33,7 @@
   "mixins": [
     "eternitek.mixins.json"
   ],
+  "accessWidener": "eternitek.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",

@@ -21,7 +21,7 @@ public class InventoryScreenMixin {
     private void eternitek$changeInventoryBackground(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo ci) {
 
         int spriteWidth = 188;
-        int spriteHeight = 196;
+        int spriteHeight = 178;
 
         int centerX = context.getScaledWindowWidth() / 2;
         int centerY = context.getScaledWindowHeight() / 2;
