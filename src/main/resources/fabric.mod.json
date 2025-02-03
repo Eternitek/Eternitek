@@ -4,7 +4,17 @@
   "version": "${version}",
   "name": "Eternitek",
   "description": "",
-  "authors": [],
+  "authors": [
+    "Mercury",
+    "Ascilion",
+    "Hollowed",
+    "IDoTheHax",
+    "xay",
+    "Remy",
+    "YBOUZL",
+    "bomb",
+    "supertoady"
+  ],
   "contact": {},
   "license": "GPL-3.0",
   "icon": "assets/eternitek/textures/icon.png",

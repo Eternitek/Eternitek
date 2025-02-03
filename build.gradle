@@ -23,6 +23,9 @@ repositories {
     // Fabric ASM
     maven { url 'https://jitpack.io' }
 
+    // REI
+    maven { url "https://maven.shedaniel.me" }
+
 }
 
 dependencies {
@@ -34,11 +37,11 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "maven.modrinth:lodestonelib:${project.lodestone_version}"
-
-    for(String module in project.porting_lib_modules.split(",")) {
-        modImplementation "io.github.fabricators_of_create.Porting-Lib:${module}:${project.porting_lib_version}"
-    }
+//    modImplementation "maven.modrinth:lodestonelib:${project.lodestone_version}"
+//
+//    for(String module in project.porting_lib_modules.split(",")) {
+//        modImplementation "io.github.fabricators_of_create.Porting-Lib:${module}:${project.porting_lib_version}"
+//    }
 
 }
 

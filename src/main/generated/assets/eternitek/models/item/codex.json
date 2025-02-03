@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "eternitek:item/guidebook"
+    "layer0": "eternitek:item/codex"
   }
 }

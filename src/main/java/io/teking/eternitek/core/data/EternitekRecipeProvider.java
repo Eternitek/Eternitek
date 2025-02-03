@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
@@ -25,7 +27,7 @@ public class EternitekRecipeProvider extends FabricRecipeProvider {
     @Override
     public void generate(RecipeExporter recipeExporter) {
 
-        offerBlasting(recipeExporter, List.of(Items.IRON_INGOT), RecipeCategory.MISC , CRUDE_STEEL_INGOT, 0.35F, 300, "");
+        offerBlasting(recipeExporter, List.of(Items.IRON_INGOT), RecipeCategory.MISC, CRUDE_STEEL_INGOT, 0.35F, 300, "");
 
     }
 

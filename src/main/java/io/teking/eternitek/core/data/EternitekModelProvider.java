@@ -24,7 +24,7 @@ public class EternitekModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 
-        itemModelGenerator.register(GUIDEBOOK, Models.GENERATED);
+        itemModelGenerator.register(CODEX, Models.GENERATED);
 
         itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
 
