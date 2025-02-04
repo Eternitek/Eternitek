@@ -4,6 +4,7 @@
   "package": "io.teking.eternitek.core.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AnonymousSlotMixin",
     "PlayerScreenHandlerMixin"
   ],
   "client": [

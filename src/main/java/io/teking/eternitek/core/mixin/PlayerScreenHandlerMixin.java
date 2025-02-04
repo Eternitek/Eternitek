@@ -14,7 +14,6 @@ import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.ArmorSlot;
 import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
@@ -30,8 +29,6 @@ import java.util.Map;
 
 @Mixin(PlayerScreenHandler.class)
 public abstract class PlayerScreenHandlerMixin {
-
-    @Shadow @Final private static EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
 
     @Unique
     private static final HashMap<EquipmentSlot, Identifier> SLOT_TEXTURES = new HashMap<>();
@@ -71,7 +68,15 @@ public abstract class PlayerScreenHandlerMixin {
     @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/slot/Slot;<init>(Lnet/minecraft/inventory/Inventory;III)V", ordinal = 1))
     private void eternitek$modifyInventorySlotsPosition(Args args, @Local(ordinal = 0) int i, @Local(ordinal = 1) int j) {
         // x value is fine, don't modify
-        int y = 90 + (i * 18) - 3;
+        int y = 90 + (i * 18) - 6;
+        args.set(3, y);
+    }
+
+    @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/slot/Slot;<init>(Lnet/minecraft/inventory/Inventory;III)V", ordinal = 2))
+    private void eternitek$modifyHotbarSlotsPosition(Args args, @Local(ordinal = 0) int i) {
+        int x = 8 + (i * 19) - 4;
+        int y = 142 + 4;
+        args.set(2, x);
         args.set(3, y);
     }
 
