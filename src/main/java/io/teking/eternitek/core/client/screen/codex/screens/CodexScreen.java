@@ -5,24 +5,17 @@ import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.Font;
-import net.minecraft.client.font.FontStorage;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.data.server.recipe.RecipeProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBook;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-import static net.minecraft.util.math.ColorHelper.Argb.*;
+import static net.minecraft.util.math.ColorHelper.Argb.withAlpha;
 
 @Environment(EnvType.CLIENT)
 public class CodexScreen extends Screen {

@@ -1,7 +1,6 @@
 package io.teking.eternitek.core.resource;
 
 import io.teking.eternitek.core.EternitekCore;
-import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;

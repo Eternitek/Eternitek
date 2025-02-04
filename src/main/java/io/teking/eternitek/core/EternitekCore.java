@@ -2,8 +2,6 @@ package io.teking.eternitek.core;
 
 import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

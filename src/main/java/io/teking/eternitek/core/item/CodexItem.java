@@ -1,7 +1,5 @@
 package io.teking.eternitek.core.item;
 
-import io.teking.eternitek.core.client.screen.codex.screens.CodexScreen;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

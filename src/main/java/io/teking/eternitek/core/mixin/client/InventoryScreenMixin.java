@@ -2,7 +2,6 @@ package io.teking.eternitek.core.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import io.teking.eternitek.core.EternitekCore;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
@@ -42,7 +41,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     }
 
     @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
-    private void eternitek$changeInventoryBackground(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo ci, @Local(ordinal = 0, argsOnly = true) int i, @Local(ordinal = 1, argsOnly = true) int j) {
+    private void eternitek$changeInventoryBackground(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo ci) {
 
         int spriteWidth = 188;
         int spriteHeight = 178;
@@ -63,10 +62,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
         drawEntity(
                 context,
-                i + 32,
-                j + 9,
-                i + 85,
-                j + 80,
+                drawX + 32,
+                drawY + 9,
+                drawX + 86,
+                drawY + 81,
                 30,
                 0.0625F,
                 this.mouseX,

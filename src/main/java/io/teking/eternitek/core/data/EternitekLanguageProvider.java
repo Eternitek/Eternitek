@@ -2,12 +2,12 @@ package io.teking.eternitek.core.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static io.teking.eternitek.core.registry.EternitekItems.*;
+import static io.teking.eternitek.core.registry.EternitekItems.CODEX;
+import static io.teking.eternitek.core.registry.EternitekItems.CRUDE_STEEL_INGOT;
 
 public class EternitekLanguageProvider extends FabricLanguageProvider {
 
