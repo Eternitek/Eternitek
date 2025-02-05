@@ -1,4 +1,7 @@
 package io.teking.eternitek.core.machine;
 
-public interface Resource {
+public abstract class Resource {
+
+
+
 }

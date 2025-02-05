@@ -1,5 +1,6 @@
 package io.teking.eternitek.core;
 
+import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -15,6 +16,7 @@ public class EternitekCore implements ModInitializer {
     @Override
     public void onInitialize() {
 
+        EternitekBlocks.register();
         EternitekItems.register();
 
         LOGGER.info("Successfully loaded");
