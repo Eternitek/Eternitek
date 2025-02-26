@@ -8,8 +8,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -21,14 +21,30 @@ import static net.minecraft.util.math.ColorHelper.Argb.withAlpha;
 public class CodexScreen extends Screen {
 
     private static final Identifier BOOK_TEXTURE = EternitekCore.id("textures/gui/codex.png");
+    private static final Identifier SLOT_TEXTURE = EternitekCore.id("textures/gui/slot.png");
+    private static final Identifier SLOT_HOVER_TEXTURE = EternitekCore.id("textures/gui/slot_hover.png");
+    private ButtonWidget welcomeButton;
 
     public CodexScreen() {
-        super(Text.of("Codex"));
+        super(Text.of("Codex")); // TODO MAKE IT USE TRANSLATIONS
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        int buttonWidth = 20;
+        int buttonHeight = 20;
+        int centerX = width / 2;
+        int centerY = height / 2;
+
+        welcomeButton = this.addDrawableChild(ButtonWidget.builder(Text.empty(), button -> {
+            // Button action here
+        }).dimensions(centerX - buttonWidth / 2, centerY - buttonHeight / 2, buttonWidth, buttonHeight).build());
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-
         super.render(context, mouseX, mouseY, delta);
 
         TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
@@ -53,17 +69,29 @@ public class CodexScreen extends Screen {
                 512, 256
         );
 
-        renderText(renderer, context, Text.of("Crude Steel"), bookRenderX + 12, bookRenderY + 12, 0x171717);
+        //renderText(renderer, context, Text.of("Crude Steel"), bookRenderX + 12, bookRenderY + 12, 0x171717);
 
-        renderShapedRecipe(
-                EternitekItems.CRUDE_STEEL_INGOT.getDefaultStack(),
-                List.of(
-                        Items.IRON_INGOT.getDefaultStack(), Items.CHARCOAL.getDefaultStack(), ItemStack.EMPTY,
-                        Items.CHARCOAL.getDefaultStack(), Items.IRON_INGOT.getDefaultStack()
-                ),
-                context, bookRenderX, bookRenderY
-        );
+        //renderShapedRecipe(
+        //        EternitekItems.CRUDE_STEEL_INGOT.getDefaultStack(),
+        //        List.of(
+        //                Items.IRON_INGOT.getDefaultStack(), Items.CHARCOAL.getDefaultStack(), ItemStack.EMPTY,
+        //                Items.CHARCOAL.getDefaultStack(), Items.IRON_INGOT.getDefaultStack()
+        //        ),
+        //        context, bookRenderX, bookRenderY
+        //);
 
+        context.drawTexture(SLOT_TEXTURE, welcomeButton.getX() - 1, welcomeButton.getY() - 1, 0, 0, 22, 22, 22, 22);
+
+        // Check if mouse is hovering over the button
+        boolean isHovering = mouseX >= welcomeButton.getX() && mouseX < welcomeButton.getX() + welcomeButton.getWidth() &&
+                mouseY >= welcomeButton.getY() && mouseY < welcomeButton.getY() + welcomeButton.getHeight();
+
+        // Draw hover texture if hovering
+        if (isHovering) {
+            context.drawTexture(SLOT_HOVER_TEXTURE, welcomeButton.getX(), welcomeButton.getY(), 0, 0, 20, 20, 20, 20);
+        }
+        
+        context.drawItem(new ItemStack(EternitekItems.CODEX), welcomeButton.getX() + 2, welcomeButton.getY() + 2);
     }
 
     private static void renderText(TextRenderer renderer, DrawContext context, Text text, int x, int y, int color) {
