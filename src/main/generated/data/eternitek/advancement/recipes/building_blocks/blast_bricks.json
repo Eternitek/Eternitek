@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blast_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "eternitek:blast_brick"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "eternitek:blast_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blast_brick"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "eternitek:blast_bricks"
+    ]
+  }
+}

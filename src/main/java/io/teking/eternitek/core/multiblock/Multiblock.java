@@ -1,7 +1,9 @@
 package io.teking.eternitek.core.multiblock;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -11,18 +13,50 @@ import java.util.function.Predicate;
 public class Multiblock {
 
     private char[][][] pattern;
-    private final Map<Character, BlockState> states;
+    private final Map<Character, Predicate<BlockState>> stateCheckers;
     private final int width;
     private final int height;
     private final int length;
 
-    public Multiblock(char[][][] pattern, Map<Character, BlockState> states) {
+    public Multiblock(char[][][] pattern, Map<Character, Predicate<BlockState>> stateCheckers) {
         this.pattern = pattern;
-        this.states = states;
-        this.width = pattern[0].length;
+        this.stateCheckers = stateCheckers;
         this.height = pattern.length;
+        this.width = pattern[0].length;
         this.length = pattern[0][0].length;
     }
+
+    public boolean isValid(BlockPos pos, World world) {
+        for (int y = 0; y < height; y++) {
+            for (int z = 0; z < length; z++) {
+                for (int x = 0; x < width; x++) {
+                    char c = pattern[y][z][x];
+                    BlockPos checkPos = pos.add(x, y, z);
+                    BlockState state = world.getBlockState(checkPos);
+
+                    System.out.println("Checking block at " + checkPos + ": expected '" + c + "', found " + state);
+
+                    if (c == ' ') {
+                        if (!state.isAir()) {
+                            System.out.println("Invalid block at " + checkPos + ". Expected air, found " + state);
+                            return false;
+                        }
+                        continue;
+                    }
+
+                    Predicate<BlockState> checker = stateCheckers.get(c);
+                    if (checker == null || !checker.test(state)) {
+                        System.out.println("Invalid block at " + checkPos + ". Expected '" + c + "', found " + state);
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
+
 
     public int getWidth() {
         return width;
@@ -44,10 +78,18 @@ public class Multiblock {
             for(int j = 0; j < pattern[i].length; j++) {
                 for(int k = 0; k < pattern[i][j].length; k++) {
                     BlockPos placePos = corner.add(j, i, k);
-                    BlockState placeState = states.get(pattern[i][j][k]);
+                    char c = pattern[i][j][k];
+                    Predicate<BlockState> checker = stateCheckers.get(c);
 
-                    if (placeState != null) {
-                        world.setBlockState(placePos, placeState);
+                    if (checker != null) {
+                        // Find a matching BlockState
+                        for (Block block : Registries.BLOCK) {
+                            BlockState state = block.getDefaultState();
+                            if (checker.test(state)) {
+                                world.setBlockState(placePos, state);
+                                break;
+                            }
+                        }
                     }
                 }
             }

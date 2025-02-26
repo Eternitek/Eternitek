@@ -18,13 +18,12 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
-
+        translationBuilder.add(BlAST_BRICK, "Blast Brick");
+        translationBuilder.add(BLAST_BRICKS, "Blast Bricks");
         translationBuilder.add(CODEX, "Codex");
         translationBuilder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
-        translationBuilder.add(BLAST_BRICKS, "Blast Bricks");
-
         translationBuilder.add(EternitekCore.ETERNITEK_CORE, "Eternitek Core");
-
+        translationBuilder.add(PRIMITIVE_FURNACE, "Primative Furnace");
     }
 
 }

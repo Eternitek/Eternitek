@@ -18,6 +18,8 @@ public class EternitekModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(BLAST_BRICKS);
+        blockStateModelGenerator.registerSimpleCubeAll(PRIMITIVE_FURNACE);
+
     }
 
     @Override
@@ -25,7 +27,6 @@ public class EternitekModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(CODEX, Models.GENERATED);
         itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
-
     }
 
 }

@@ -8,14 +8,13 @@ import net.minecraft.registry.Registry;
 
 public class EternitekItems {
 
+    public static final Item BlAST_BRICK = new Item(new Item.Settings());
     public static final Item CODEX = new CodexItem(new Item.Settings());
-
     public static final Item CRUDE_STEEL_INGOT = new Item(new Item.Settings());
 
     public static void register() {
-
+        registerItem("blast_brick", BlAST_BRICK);
         registerItem("codex", CODEX);
-
         registerItem("crude_steel_ingot", CRUDE_STEEL_INGOT);
 
     }
