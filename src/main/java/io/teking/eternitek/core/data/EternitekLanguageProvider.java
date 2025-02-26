@@ -1,5 +1,6 @@
 package io.teking.eternitek.core.data;
 
+import io.teking.eternitek.core.EternitekCore;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -21,7 +22,7 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(CODEX, "Codex");
 
         translationBuilder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
-
+        translationBuilder.add(EternitekCore.ETERNITEK_CORE, "Eternitek Core");
     }
 
 }

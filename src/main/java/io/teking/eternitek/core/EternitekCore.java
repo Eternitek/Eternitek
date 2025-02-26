@@ -3,6 +3,14 @@ package io.teking.eternitek.core;
 import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,21 +18,35 @@ import org.slf4j.LoggerFactory;
 public class EternitekCore implements ModInitializer {
 
     public static final String NAME = "Eternitek Core";
-    public static final String ID = "eternitek";
+    public static final String MOD_ID = "eternitek";
     public static final Logger LOGGER = LoggerFactory.getLogger(NAME);
+
+    public static final RegistryKey<ItemGroup> ETERNITEK_CORE = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(MOD_ID, "item_group"));
+    public static final ItemGroup ETERNITEK_CORE_GROUP = FabricItemGroup.builder()
+            .icon(() -> new ItemStack(EternitekItems.CODEX))
+            .displayName(Text.translatable("itemGroup.eternitek_core"))
+            .build();
 
     @Override
     public void onInitialize() {
+        LOGGER.info("Initializing Eternitek Core");
 
         EternitekBlocks.register();
         EternitekItems.register();
+
+        Registry.register(Registries.ITEM_GROUP, ETERNITEK_CORE, ETERNITEK_CORE_GROUP);
+
+        ItemGroupEvents.modifyEntriesEvent(ETERNITEK_CORE).register(itemGroup -> {
+            itemGroup.add(EternitekItems.CODEX);
+            itemGroup.add(EternitekItems.CRUDE_STEEL_INGOT);
+        });
 
         LOGGER.info("Successfully loaded");
 
     }
 
     public static Identifier id(String path) {
-        return Identifier.of(ID, path);
+        return Identifier.of(MOD_ID, path);
     }
 
 }
