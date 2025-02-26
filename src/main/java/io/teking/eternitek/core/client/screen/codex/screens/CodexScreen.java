@@ -1,154 +1,145 @@
 package io.teking.eternitek.core.client.screen.codex.screens;
 
 import io.teking.eternitek.core.EternitekCore;
-import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
-import java.util.List;
-
-import static net.minecraft.util.math.ColorHelper.Argb.withAlpha;
+import net.minecraft.client.MinecraftClient;
 
 @Environment(EnvType.CLIENT)
 public class CodexScreen extends Screen {
 
     private static final Identifier BOOK_TEXTURE = EternitekCore.id("textures/gui/codex.png");
-    private static final Identifier SLOT_TEXTURE = EternitekCore.id("textures/gui/slot.png");
-    private static final Identifier SLOT_HOVER_TEXTURE = EternitekCore.id("textures/gui/slot_hover.png");
-    private ButtonWidget welcomeButton;
+    private static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
+    private static final int SIDEBAR_COLLAPSED_WIDTH = 26;
+    private static final int SIDEBAR_EXPANDED_WIDTH = 90;
+    private boolean isSidebarExpanded = false;
+    private float currentSidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
+    private final int bookWidth = 384;
+    private final int bookHeight = 256;
+    private int bookRenderX;
+    private int bookRenderY;
+
+    private String sidebarContent = "Sidebar Content";
+    private String displayedSidebarContent = "";
+    private int contentIndex = 0;
+
+    private int animationTimer = 0;
 
     public CodexScreen() {
-        super(Text.of("Codex")); // TODO MAKE IT USE TRANSLATIONS
+        super(Text.of("Codex"));
     }
 
     @Override
     protected void init() {
         super.init();
 
-        int buttonWidth = 20;
-        int buttonHeight = 20;
-        int centerX = width / 2;
-        int centerY = height / 2;
-
-        welcomeButton = this.addDrawableChild(ButtonWidget.builder(Text.empty(), button -> {
-            // Button action here
-        }).dimensions(centerX - buttonWidth / 2, centerY - buttonHeight / 2, buttonWidth, buttonHeight).build());
+        // Calculate book rendering position to center it
+        bookRenderX = (this.width - bookWidth) / 2;
+        bookRenderY = (this.height - bookHeight) / 2;
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
+        int screenWidth = this.width;
+        int screenHeight = this.height;
 
-        int bookHeight = 208;
-        int bookWidth = 352;
-
-        int screenHeight = context.getScaledWindowHeight();
-        int screenWidth = context.getScaledWindowWidth();
-
-        int centerX = screenWidth / 2;
-        int centerY = screenHeight / 2;
-
-        int bookRenderX = centerX - (bookWidth / 2);
-        int bookRenderY = centerY - (bookHeight / 2);
-
-        context.drawTexture(
-                BOOK_TEXTURE,
-                bookRenderX, bookRenderY, 0,
-                0, 0,
-                bookWidth, bookHeight,
-                512, 256
-        );
-
-        //renderText(renderer, context, Text.of("Crude Steel"), bookRenderX + 12, bookRenderY + 12, 0x171717);
-
-        //renderShapedRecipe(
-        //        EternitekItems.CRUDE_STEEL_INGOT.getDefaultStack(),
-        //        List.of(
-        //                Items.IRON_INGOT.getDefaultStack(), Items.CHARCOAL.getDefaultStack(), ItemStack.EMPTY,
-        //                Items.CHARCOAL.getDefaultStack(), Items.IRON_INGOT.getDefaultStack()
-        //        ),
-        //        context, bookRenderX, bookRenderY
-        //);
-
-        context.drawTexture(SLOT_TEXTURE, welcomeButton.getX() - 1, welcomeButton.getY() - 1, 0, 0, 22, 22, 22, 22);
-
-        // Check if mouse is hovering over the button
-        boolean isHovering = mouseX >= welcomeButton.getX() && mouseX < welcomeButton.getX() + welcomeButton.getWidth() &&
-                mouseY >= welcomeButton.getY() && mouseY < welcomeButton.getY() + welcomeButton.getHeight();
-
-        // Draw hover texture if hovering
-        if (isHovering) {
-            context.drawTexture(SLOT_HOVER_TEXTURE, welcomeButton.getX(), welcomeButton.getY(), 0, 0, 20, 20, 20, 20);
-        }
-        
-        context.drawItem(new ItemStack(EternitekItems.CODEX), welcomeButton.getX() + 2, welcomeButton.getY() + 2);
-    }
-
-    private static void renderText(TextRenderer renderer, DrawContext context, Text text, int x, int y, int color) {
-
-        context.drawText(renderer, text, x, y, color, false);
-
-        int lightColor = withAlpha(50, color);
-        context.drawText(renderer, text, x - 1, y, lightColor, false);
-        context.drawText(renderer, text, x + 1, y, lightColor, false);
-        context.drawText(renderer, text, x, y - 1, lightColor, false);
-        context.drawText(renderer, text, x, y + 1, lightColor, false);
-
-    }
-
-    private static void renderWrappedText(TextRenderer renderer, DrawContext context, String string, int x, int y, int color) {
-
-        List<String> words = List.of(string.split(" "));
-
-    }
-
-    private static void renderShapedRecipe(ItemStack output, List<ItemStack> inputs, DrawContext context, int bookRenderX, int bookRenderY) {
-
-        int offsetX = 30;
-        int offsetY = 72;
-
-        context.drawTexture(
-                BOOK_TEXTURE,
-                bookRenderX + offsetX, bookRenderY + offsetY, 0,
-                352, 0,
-                112, 64,
-                512, 256
-        );
-
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
-                int index = i * 3 + j;
-                if(inputs.size() <= index) break;
-                ItemStack stack = inputs.get(index);
-                context.drawItem(
-                        stack,
-                        (bookRenderX + offsetX + 5) + (19 * j),
-                        (bookRenderY + offsetY + 5) + (19 * i)
-                );
+        // Sidebar Animation
+        if (isSidebarExpanded) {
+            currentSidebarWidth += (SIDEBAR_EXPANDED_WIDTH - currentSidebarWidth) * 0.1;
+            if (currentSidebarWidth > SIDEBAR_EXPANDED_WIDTH - 1) {
+                currentSidebarWidth = SIDEBAR_EXPANDED_WIDTH;
+            }
+        } else {
+            currentSidebarWidth += (SIDEBAR_COLLAPSED_WIDTH - currentSidebarWidth) * 0.1;
+            if (currentSidebarWidth < SIDEBAR_COLLAPSED_WIDTH + 1) {
+                currentSidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
             }
         }
 
-        context.drawItem(
-                output,
-                bookRenderX + offsetX + 91,
-                bookRenderY + offsetY + 24
+        // Draw the Main Book Area
+        context.drawTexture(
+                BOOK_TEXTURE,
+                bookRenderX,
+                bookRenderY,
+                0,
+                0,
+                bookWidth,
+                bookHeight,
+                512,
+                256
         );
 
+        // Draw the Sidebar Area
+        context.drawTexture(
+                BOOK_TEXTURE,
+                bookRenderX + bookWidth - (int) currentSidebarWidth,
+                bookRenderY,
+                bookWidth,
+                0,
+                (int) currentSidebarWidth,
+                bookHeight,
+                512,
+                256
+        );
+
+
+        // Render Book Icon (clickable area)
+        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
+        int bookIconY = bookRenderY + 5;
+        context.drawTexture(BOOK_ICON, bookIconX, bookIconY, 0, 0, 20, 20, 20, 20);
+
+        // Letter by Letter Animation
+        animationTimer++;
+        if (isSidebarExpanded) {
+            if (animationTimer % 7.5 == 0) { // Adjust the speed of the animation
+                if (contentIndex < sidebarContent.length()) {
+                    displayedSidebarContent = sidebarContent.substring(0, contentIndex + 1);
+                    contentIndex++;
+                }
+            }
+        } else {
+            // Reset content when sidebar is collapsed
+            displayedSidebarContent = "";
+            contentIndex = 0;
+        }
+
+        // Sidebar Content
+        if (currentSidebarWidth > SIDEBAR_COLLAPSED_WIDTH) {
+            // The sidebar expanded, so display the animated content
+            int sidebarContentY = bookRenderY + 40;
+
+            // Calculate right-aligned text position
+            int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(displayedSidebarContent);
+            int sidebarContentX = bookRenderX + bookWidth - (int) currentSidebarWidth + (int) currentSidebarWidth - textWidth - 5; // 5 is padding
+
+
+            context.drawText(textRenderer, displayedSidebarContent, sidebarContentX, sidebarContentY, 0xFFFFFF, true);
+        }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
+        int bookIconY = bookRenderY + 5;
+        if (mouseX >= bookIconX && mouseX < bookIconX + 20 && mouseY >= bookIconY && mouseY < bookIconY + 20) {
+            isSidebarExpanded = !isSidebarExpanded;
+            if (!isSidebarExpanded) {
+                displayedSidebarContent = "";
+                contentIndex = 0;
+            }
+            return true;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean shouldPause() {
         return false;
     }
-
 }
