@@ -29,7 +29,7 @@ public class EternitekCore implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing Eternitek Core");
+        LOGGER.info("Did you know that the A.E.S.I.R. suits can manually detonate their onboard fusion reactors?");
 
         EternitekBlocks.register();
         EternitekItems.register();
@@ -39,6 +39,7 @@ public class EternitekCore implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(ETERNITEK_CORE).register(itemGroup -> {
             itemGroup.add(EternitekItems.CODEX);
             itemGroup.add(EternitekItems.CRUDE_STEEL_INGOT);
+            itemGroup.add(EternitekBlocks.MACHINE_CORE);
         });
 
         LOGGER.info("Successfully loaded");
