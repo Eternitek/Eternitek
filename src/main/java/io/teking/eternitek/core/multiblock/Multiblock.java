@@ -37,11 +37,8 @@ public class Multiblock {
     }
 
     public void place(BlockPos pos, World world) {
-
         BlockPos corner = offset(pos);
         if(corner == null) return;
-
-        MinecraftClient.getInstance().getBlockRenderManager().renderBlock();
 
         for(int i = 0; i < pattern.length; i++) {
             for(int j = 0; j < pattern[i].length; j++) {
@@ -49,11 +46,12 @@ public class Multiblock {
                     BlockPos placePos = corner.add(j, i, k);
                     BlockState placeState = states.get(pattern[i][j][k]);
 
-                    world.setBlockState(placePos, placeState);
+                    if (placeState != null) {
+                        world.setBlockState(placePos, placeState);
+                    }
                 }
             }
         }
-
     }
 
     public BlockPos offset(BlockPos pos) {
