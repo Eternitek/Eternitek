@@ -27,6 +27,8 @@ public class EternitekModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(CODEX, Models.GENERATED);
         itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
+        itemModelGenerator.register(BlAST_BRICK, Models.GENERATED);
+
     }
 
 }

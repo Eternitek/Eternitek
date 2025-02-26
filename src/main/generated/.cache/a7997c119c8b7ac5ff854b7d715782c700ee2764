@@ -1,9 +1,10 @@
-// 1.21.1	2025-02-26T21:34:12.268247563	Eternitek/Model Definitions
+// 1.21.1	2025-02-26T21:43:43.014318188	Eternitek/Model Definitions
 5c0836559b6f3997aa246dec48f3e9a8f15b2db3 assets/eternitek/models/block/blast_bricks.json
 f1147270a24f8da28fa6eaa201fae6446812a475 assets/eternitek/models/item/primitive_furnace.json
 aef0133a861d5187eaa8172f028ad0ba8f950f2f assets/eternitek/models/item/codex.json
 a0c9f94539428483417b56f9cbe6de8d86831e86 assets/eternitek/models/block/primitive_furnace.json
-611eec58da33f7f4413a082a59485142c8f1538f assets/eternitek/models/item/blast_bricks.json
 f93c4b37b736448bb53cda2874df768520c31314 assets/eternitek/blockstates/primitive_furnace.json
+611eec58da33f7f4413a082a59485142c8f1538f assets/eternitek/models/item/blast_bricks.json
 7af1fca7077f1da3ee6bca10221b1cf1b3560347 assets/eternitek/models/item/crude_steel_ingot.json
 7b67f845b48b1f9105116d17731dc759f7a36ab3 assets/eternitek/blockstates/blast_bricks.json
+47a9a7ebdd9763fb0d0a13a39c621b3e9c2a56df assets/eternitek/models/item/blast_brick.json

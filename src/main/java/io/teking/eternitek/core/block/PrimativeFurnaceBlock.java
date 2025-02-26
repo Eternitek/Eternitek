@@ -61,16 +61,6 @@ public class PrimativeFurnaceBlock extends Block {
         super(settings);
     }
 
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (!world.isClient) {
-            Multiblock multiblock = new Multiblock(blocks, map);
-            BlockPos newPos = pos.add(0, 1, 0);
-            multiblock.place(newPos, world);
-        }
-        super.onPlaced(world, pos, state, placer, itemStack);
-    }
-
     public boolean isValidStructure(World world, BlockPos pos) {
         // Try all four cardinal directions
         return (
