@@ -12,20 +12,21 @@ import net.minecraft.registry.Registry;
 public class EternitekBlocks {
 
     public static final Block MACHINE_CORE = new MachineCoreBlock(AbstractBlock.Settings.create());
+    public static final Block BLAST_BRICKS = new Block(AbstractBlock.Settings.create());
 
     public static void register() {
 
         registerBlockWithItem("machine_core", MACHINE_CORE);
-
+        registerBlockWithItem("blast_bricks", BLAST_BRICKS);
     }
 
-    public static Block registerBlock(String name, Block block) {
-        return Registry.register(Registries.BLOCK, EternitekCore.id(name), block);
+    public static void registerBlock(String name, Block block) {
+        Registry.register(Registries.BLOCK, EternitekCore.id(name), block);
     }
 
-    public static Block registerBlockWithItem(String name, Block block) {
+    public static void registerBlockWithItem(String name, Block block) {
         EternitekItems.registerItem(name, new BlockItem(block, new Item.Settings()));
-        return registerBlock(name, block);
+        registerBlock(name, block);
     }
 
 }

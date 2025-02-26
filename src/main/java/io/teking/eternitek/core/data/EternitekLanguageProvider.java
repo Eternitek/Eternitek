@@ -7,8 +7,8 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static io.teking.eternitek.core.registry.EternitekItems.CODEX;
-import static io.teking.eternitek.core.registry.EternitekItems.CRUDE_STEEL_INGOT;
+import static io.teking.eternitek.core.registry.EternitekItems.*;
+import static io.teking.eternitek.core.registry.EternitekBlocks.*;
 
 public class EternitekLanguageProvider extends FabricLanguageProvider {
 
@@ -20,9 +20,11 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
 
         translationBuilder.add(CODEX, "Codex");
-
         translationBuilder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
+        translationBuilder.add(BLAST_BRICKS, "Blast Bricks");
+
         translationBuilder.add(EternitekCore.ETERNITEK_CORE, "Eternitek Core");
+
     }
 
 }

@@ -6,8 +6,8 @@ import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 
-import static io.teking.eternitek.core.registry.EternitekItems.CODEX;
-import static io.teking.eternitek.core.registry.EternitekItems.CRUDE_STEEL_INGOT;
+import static io.teking.eternitek.core.registry.EternitekItems.*;
+import static io.teking.eternitek.core.registry.EternitekBlocks.*;
 
 public class EternitekModelProvider extends FabricModelProvider {
 
@@ -17,14 +17,13 @@ public class EternitekModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
+        blockStateModelGenerator.registerSimpleCubeAll(BLAST_BRICKS);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 
         itemModelGenerator.register(CODEX, Models.GENERATED);
-
         itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
 
     }
