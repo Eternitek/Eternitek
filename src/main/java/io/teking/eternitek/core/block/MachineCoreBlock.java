@@ -52,7 +52,6 @@ public class MachineCoreBlock extends Block {
         map.put('o', blockState -> blockState.isOf(Blocks.OAK_PLANKS));
 
         Multiblock multiblock = new Multiblock(blocks, map);
-        multiblock.place(pos, world);
 
         super.onPlaced(world, pos, state, placer, itemStack);
     }

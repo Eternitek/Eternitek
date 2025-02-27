@@ -2,11 +2,9 @@ package io.teking.eternitek.core.registry;
 
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.block.MachineCoreBlock;
-import io.teking.eternitek.core.block.PrimativeFurnaceBlock;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import io.teking.eternitek.core.block.PrimitiveFurnaceBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
@@ -19,7 +17,7 @@ public class EternitekBlocks {
 
     public static final Block MACHINE_CORE = new MachineCoreBlock(AbstractBlock.Settings.create());
     public static final Block BLAST_BRICKS = new Block(AbstractBlock.Settings.create());
-    public static final Block PRIMITIVE_FURNACE = new PrimativeFurnaceBlock(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.5F));
+    public static final Block PRIMITIVE_FURNACE = new PrimitiveFurnaceBlock(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.5F));
 
     public static void register() {
 

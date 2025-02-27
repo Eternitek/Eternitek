@@ -1,18 +1,24 @@
 package io.teking.eternitek.core.multiblock;
 
-import net.minecraft.block.Block;
+import io.teking.eternitek.core.EternitekCore;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.registry.Registries;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import oshi.util.tuples.Triplet;
 
 import java.util.Map;
 import java.util.function.Predicate;
 
+import static io.teking.eternitek.core.EternitekCore.*;
+
 public class Multiblock {
 
-    private char[][][] pattern;
+    private final char[][][] pattern;
     private final Map<Character, Predicate<BlockState>> stateCheckers;
     private final int width;
     private final int height;
@@ -27,36 +33,116 @@ public class Multiblock {
     }
 
     public boolean isValid(BlockPos pos, World world) {
-        for (int y = 0; y < height; y++) {
-            for (int z = 0; z < length; z++) {
-                for (int x = 0; x < width; x++) {
-                    char c = pattern[y][z][x];
-                    BlockPos checkPos = pos.add(x, y, z);
-                    BlockState state = world.getBlockState(checkPos);
+        return (
+                checkDirection(pos, world, Direction.NORTH) ||
+                checkDirection(pos, world, Direction.EAST)  ||
+                checkDirection(pos, world, Direction.SOUTH) ||
+                checkDirection(pos, world, Direction.WEST)
+        );
+    }
 
-                    System.out.println("Checking block at " + checkPos + ": expected '" + c + "', found " + state);
+    public boolean checkDirection(BlockPos pos, World world, Direction direction) {
 
-                    if (c == ' ') {
-                        if (!state.isAir()) {
-                            System.out.println("Invalid block at " + checkPos + ". Expected air, found " + state);
+        if(direction == Direction.UP || direction == Direction.DOWN) return false;
+
+        Vec3i core = getCorePos();
+        int centerX = core.getX();
+        int centerY = core.getY();
+        int centerZ = core.getZ();
+
+        BlockPos origin;
+        switch(direction) {
+            case NORTH:
+                origin = pos.add(-centerX, -centerY, -centerZ);
+                break;
+            case EAST:
+                origin = pos.add(-centerZ, -centerY, centerX - (pattern[0][0].length - 1));
+                break;
+            case SOUTH:
+                origin = pos.add(centerX - (pattern[0][0].length - 1), -centerY, centerZ - (pattern[0].length - 1));
+                break;
+            case WEST:
+                origin = pos.add(centerZ - (pattern[0].length - 1), -centerY, -centerX);
+                break;
+            default:
+                return false;
+        }
+
+        for(int y = 0; y < height; y++) {
+            for(int z = 0; z < length; z++) {
+                for(int x = 0; x < width; x++) {
+
+                    char expected = pattern[y][z][x];
+                    if(expected == '*') continue;
+
+                    BlockPos check;
+                    switch(direction) {
+                        case NORTH:
+                            check = origin.add(x, y, z);
+                            break;
+                        case EAST:
+                            check = origin.add(z, y, (pattern[0][0].length - 1) - x);
+                            break;
+                        case SOUTH:
+                            check = origin.add((pattern[0][0].length - 1) - x, y, (pattern[0].length - 1) - z);
+                            break;
+                        case WEST:
+                            check = origin.add((pattern[0].length - 1) - z, y, x);
+                            break;
+                        default:
                             return false;
-                        }
-                        continue;
                     }
 
-                    Predicate<BlockState> checker = stateCheckers.get(c);
-                    if (checker == null || !checker.test(state)) {
-                        System.out.println("Invalid block at " + checkPos + ". Expected '" + c + "', found " + state);
-                        return false;
-                    }
+                    BlockState state = world.getBlockState(check);
+
+                    if(!checkBlock(expected, state, check)) return false;
+
                 }
             }
+        }
+
+        LOGGER.info("Valid for direction {}", direction);
+        return true;
+        
+    }
+
+    public boolean checkBlock(char expected, BlockState state, BlockPos pos) {
+        if (expected == ' ') {
+            if (!state.isAir()) {
+                LOGGER.warn("Invalid block at {}. Expected air, found {}", pos, state);
+                return false;
+            }
+            return true;
+        }
+
+        Predicate<BlockState> checker = stateCheckers.get(expected);
+        if (checker == null || !checker.test(state)) {
+            LOGGER.warn("Invalid block at {}. Expected '{}', found {}", pos, expected, state);
+            return false;
         }
         return true;
     }
 
+    public Vec3i getCorePos() {
+        for(int y = 0; y < height; y++) {
+            for(int z = 0; z < length; z++) {
+                for(int x = 0; x < width; x++) {
+                    if(pattern[y][z][x] == '*') {
+                        return new Vec3i(x, y, z);
+                    }
+                }
+            }
+        }
+        return Vec3i.ZERO;
+    }
 
-
+    public boolean canUse(PlayerEntity player, BlockPos pos, World world) {
+        if(isValid(pos, world)) {
+            return true;
+        }
+        player.sendMessage(Text.translatable("texts.eternitek.invalid_structure"), true);
+        return false;
+    }
 
     public int getWidth() {
         return width;
@@ -68,45 +154,6 @@ public class Multiblock {
 
     public int getLength() {
         return length;
-    }
-
-    public void place(BlockPos pos, World world) {
-        BlockPos corner = offset(pos);
-        if(corner == null) return;
-
-        for(int i = 0; i < pattern.length; i++) {
-            for(int j = 0; j < pattern[i].length; j++) {
-                for(int k = 0; k < pattern[i][j].length; k++) {
-                    BlockPos placePos = corner.add(j, i, k);
-                    char c = pattern[i][j][k];
-                    Predicate<BlockState> checker = stateCheckers.get(c);
-
-                    if (checker != null) {
-                        // Find a matching BlockState
-                        for (Block block : Registries.BLOCK) {
-                            BlockState state = block.getDefaultState();
-                            if (checker.test(state)) {
-                                world.setBlockState(placePos, state);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public BlockPos offset(BlockPos pos) {
-        for(int i = 0; i < height; i++) {
-            for(int j = 0; j < width; j++) {
-                for(int k = 0; k < length; k++) {
-                    if(pattern[i][j][k] == '*') {
-                        return pos.add(-j, -i, -k);
-                    }
-                }
-            }
-        }
-        return null;
     }
 
 }
