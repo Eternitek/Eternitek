@@ -1,20 +1,15 @@
 package io.teking.eternitek.core.multiblock;
 
-import io.teking.eternitek.core.EternitekCore;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import oshi.util.tuples.Triplet;
 
 import java.util.Map;
 import java.util.function.Predicate;
-
-import static io.teking.eternitek.core.EternitekCore.*;
 
 public class Multiblock {
 
@@ -101,7 +96,6 @@ public class Multiblock {
             }
         }
 
-        LOGGER.info("Valid for direction {}", direction);
         return true;
         
     }
@@ -109,7 +103,6 @@ public class Multiblock {
     public boolean checkBlock(char expected, BlockState state, BlockPos pos) {
         if (expected == ' ') {
             if (!state.isAir()) {
-                LOGGER.warn("Invalid block at {}. Expected air, found {}", pos, state);
                 return false;
             }
             return true;
@@ -117,7 +110,6 @@ public class Multiblock {
 
         Predicate<BlockState> checker = stateCheckers.get(expected);
         if (checker == null || !checker.test(state)) {
-            LOGGER.warn("Invalid block at {}. Expected '{}', found {}", pos, expected, state);
             return false;
         }
         return true;
