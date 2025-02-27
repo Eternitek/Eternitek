@@ -17,7 +17,7 @@ public class CodexScreen extends Screen {
 
     private static final Identifier MAIN_PAGE_TEXTURE = EternitekCore.id("textures/gui/codex.png");
     private static final Identifier SIDEBAR_TEXTURE = EternitekCore.id("textures/gui/codex_sidebar.png");
-    private static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
+    public static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
 
     private static final int SIDEBAR_COLLAPSED_WIDTH = 26;
     private static final int SIDEBAR_EXPANDED_WIDTH = 100;
