@@ -1,69 +1,108 @@
 package io.teking.eternitek.core.client.screen.codex.screens;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.util.techtree.TechNode;
+import io.teking.eternitek.core.util.techtree.TechNodeData;
+import io.teking.eternitek.core.util.techtree.TechTreeLoader;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.resource.Resource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import static io.teking.eternitek.core.client.screen.codex.screens.CodexScreen.BOOK_ICON;
 
 public class TierZeroScreen extends BaseTierScreen {
-    private final TechNode node1;
-    private final TechNode node2;
+    private Map<String, TechNode> nodes = new HashMap<>();
+    private Map<String, TechNodeData> techTreeData;
+    private String errorMessage = null;
 
     public TierZeroScreen(CodexScreen parentScreen) {
         super(Text.of("Tier 0: Crude"), parentScreen);
-
-        node1 = new TechNode(
-                Identifier.of("eternitek", "node1"),
-                Identifier.of("minecraft", "textures/item/apple.png"), // Replace with your icon
-                Identifier.of("minecraft", "textures/item/apple.png"),
-                -50,   // x, relative to the center
-                0      // y, relative to center
-        );
-
-        node2 = new TechNode(
-                Identifier.of("eternitek", "node2"),
-                Identifier.of("minecraft", "textures/item/baked_potato.png"), // Replace with your icon
-                Identifier.of("minecraft", "textures/item/baked_potato.png"),
-                50,  // x, relative to center
-                0    // y, relative to center
-        );
 
         // Center the view initially
         this.offsetX = -mainPageWidth / 2 + 45;
         this.offsetY = -bookHeight / 2 + 45;
     }
 
+    @Override
+    protected void init() {
+        super.init();
+        loadTechTree();
+    }
+
+    private void loadTechTree() {
+        try {
+            Identifier resourceId = Identifier.of("eternitek", "data/techtree/tier_zero.json");
+            Optional<Resource> resource = client.getResourceManager().getResource(resourceId);
+            if (resource.isPresent()) {
+                try (InputStream inputStream = resource.get().getInputStream()) {
+                    InputStreamReader reader = new InputStreamReader(inputStream);
+                    techTreeData = new Gson().fromJson(reader, new TypeToken<Map<String, TechNodeData>>(){}.getType());
+                } catch (IOException e) {
+                    errorMessage = "Failed to read tech tree file: " + e.getMessage();
+                }
+            } else {
+                errorMessage = "Tech tree file not found: " + resourceId;
+            }
+        } catch (Exception e) {
+            errorMessage = "Failed to load tech tree: " + e.getMessage();
+        }
+    }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         // Add our tier-specific render code here
+        if (errorMessage != null) {
+            int x = 5;
+            int y = this.height - 15;
+            context.drawText(this.textRenderer, errorMessage, x, y, 0xFF0000, true);
+        }
     }
+
+    private void renderBottomLeftText(DrawContext context, String text) {
+        int screenWidth = this.width;
+        int screenHeight = this.height;
+        int textWidth = this.textRenderer.getWidth(text);
+        int textHeight = 10; // Approximate height of text
+        int padding = 2;
+
+        int x = padding;
+        int y = screenHeight - textHeight - padding;
+
+        context.drawText(this.textRenderer, text, x, y, 0xFFFFFF, true);
+    }
+
 
     @Override
     protected void renderTechTree(DrawContext context, int mouseX, int mouseY, float delta) {
-
-        // Line color (blue)
         int lineColor = 0xFF0000FF; // ARGB format (alpha, red, green, blue)
 
-        //Get the screen position.
-        int bookScreenX = bookRenderX;
-        int bookScreenY = bookRenderY;
+        int centerX = bookRenderX + (mainPageWidth / 2);
+        int centerY = bookRenderY + (bookHeight / 2);
 
-        // The middle of the book is the origin for the tech tree.
-        int treeOriginX = bookScreenX + (mainPageWidth / 2);
-        int treeOriginY = bookScreenY + (bookHeight / 2);
+        for (Map.Entry<String, TechNode> entry : nodes.entrySet()) {
+            TechNode node = entry.getValue();
+            drawNode(context, node, centerX, centerY);
 
-        // Draw the "link" (a line) between the nodes
-        drawLineBetweenNodes(context, node1, node2, treeOriginX, treeOriginY, lineColor);
-
-        // Draw the nodes.
-        drawNode(context, node1, treeOriginX, treeOriginY);
-        drawNode(context, node2, treeOriginX, treeOriginY);
+            String parentKey = techTreeData.get(entry.getKey()).parent_connection;
+            if (!parentKey.equals("root") && nodes.containsKey(parentKey)) {
+                TechNode parentNode = nodes.get(parentKey);
+                drawLineBetweenNodes(context, parentNode, node, centerX, centerY, lineColor);
+            }
+        }
     }
+
 
     private void drawNode(DrawContext context, TechNode node, int centerX, int centerY) {
         int nodeX = centerX + node.getX() + offsetX;
