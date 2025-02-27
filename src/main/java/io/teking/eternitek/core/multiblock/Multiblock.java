@@ -1,8 +1,12 @@
 package io.teking.eternitek.core.multiblock;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
@@ -146,6 +150,23 @@ public class Multiblock {
 
     public int getLength() {
         return length;
+    }
+
+    public record Data(Identifier id) {
+
+        public static final Codec<Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Identifier.CODEC.fieldOf("id").forGetter(data -> data.id)/*,
+                Codec.STRING.comapFlatMap(keyEntry -> {
+                    if(keyEntry.length() != 1) {
+                        return DataResult.error(() -> "Invalid key entry: '" + keyEntry + "' is an invalid symbol (must be 1 character only).");
+                    }
+                    if(keyEntry.charAt(0) == '*' || keyEntry.charAt(0) == ' ') {
+                        return DataResult.error(() -> "Invalid key entry: '" + keyEntry + "' is a reserved symbol.");
+                    }
+                    return DataResult.success(keyEntry.charAt(0));
+                }, String::valueOf)*/
+        ).apply(instance, Data::new));
+
     }
 
 }

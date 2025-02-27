@@ -22,8 +22,11 @@ public class EternitekModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+
         blockStateModelGenerator.registerSimpleCubeAll(BLAST_BRICKS);
-        blockStateModelGenerator.registerSingleton(PRIMITIVE_FURNACE, TexturedModel.ORIENTABLE_WITH_BOTTOM);
+        // Disabled because I can't be bothered to fix it
+//        blockStateModelGenerator.registerSimpleCubeAll(PRIMITIVE_FURNACE);
+
     }
 
     @Override

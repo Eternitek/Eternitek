@@ -18,8 +18,8 @@ public class CodexScreen extends Screen {
     private static final int SIDEBAR_EXPANDED_WIDTH = 90;
     private boolean isSidebarExpanded = false;
     private float currentSidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
-    private final int bookWidth = 384;
-    private final int bookHeight = 256;
+    private final int bookWidth = 348;
+    private final int bookHeight = 236;
     private int bookRenderX;
     private int bookRenderY;
 
@@ -44,6 +44,7 @@ public class CodexScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+
         super.render(context, mouseX, mouseY, delta);
 
         int screenWidth = this.width;
@@ -72,55 +73,67 @@ public class CodexScreen extends Screen {
                 bookWidth,
                 bookHeight,
                 512,
-                256
+                512
         );
 
-        // Draw the Sidebar Area
+        int sidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
+
         context.drawTexture(
                 BOOK_TEXTURE,
-                bookRenderX + bookWidth - (int) currentSidebarWidth,
-                bookRenderY,
-                bookWidth,
-                0,
-                (int) currentSidebarWidth,
-                bookHeight,
-                512,
-                256
+                bookRenderX + sidebarWidth + 7,
+                bookRenderY + 5,
+                348, 0,
+                7, 226,
+                512, 512
         );
 
+//        // Draw the Sidebar Area
+//        context.drawTexture(
+//                BOOK_TEXTURE,
+//                bookRenderX + bookWidth - (int) currentSidebarWidth,
+//                bookRenderY,
+//                bookWidth,
+//                0,
+//                (int) currentSidebarWidth,
+//                bookHeight,
+//                512,
+//                512
+//        );
+//
+//
+//        // Render Book Icon (clickable area)
+//        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
+//        int bookIconY = bookRenderY + 5;
+//        context.drawTexture(BOOK_ICON, bookIconX, bookIconY, 0, 0, 20, 20, 20, 20);
+//
+//        // Letter by Letter Animation
+//        animationTimer++;
+//        if (isSidebarExpanded) {
+//            if (animationTimer % 7.5 == 0) { // Adjust the speed of the animation
+//                if (contentIndex < sidebarContent.length()) {
+//                    displayedSidebarContent = sidebarContent.substring(0, contentIndex + 1);
+//                    contentIndex++;
+//                }
+//            }
+//        } else {
+//            // Reset content when sidebar is collapsed
+//            displayedSidebarContent = "";
+//            contentIndex = 0;
+//        }
+//
+//        // Sidebar Content
+//        if (currentSidebarWidth > SIDEBAR_COLLAPSED_WIDTH) {
+//            // The sidebar expanded, so display the animated content
+//            int sidebarContentY = bookRenderY + 40;
+//
+//            // Calculate right-aligned text position
+//            int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(displayedSidebarContent);
+//            int sidebarContentX = bookRenderX + bookWidth - (int) currentSidebarWidth + (int) currentSidebarWidth - textWidth - 5; // 5 is padding
+//
+//
+//            context.drawText(textRenderer, displayedSidebarContent, sidebarContentX, sidebarContentY, 0xFFFFFF, true);
+//        }
 
-        // Render Book Icon (clickable area)
-        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
-        int bookIconY = bookRenderY + 5;
-        context.drawTexture(BOOK_ICON, bookIconX, bookIconY, 0, 0, 20, 20, 20, 20);
-
-        // Letter by Letter Animation
-        animationTimer++;
-        if (isSidebarExpanded) {
-            if (animationTimer % 7.5 == 0) { // Adjust the speed of the animation
-                if (contentIndex < sidebarContent.length()) {
-                    displayedSidebarContent = sidebarContent.substring(0, contentIndex + 1);
-                    contentIndex++;
-                }
-            }
-        } else {
-            // Reset content when sidebar is collapsed
-            displayedSidebarContent = "";
-            contentIndex = 0;
-        }
-
-        // Sidebar Content
-        if (currentSidebarWidth > SIDEBAR_COLLAPSED_WIDTH) {
-            // The sidebar expanded, so display the animated content
-            int sidebarContentY = bookRenderY + 40;
-
-            // Calculate right-aligned text position
-            int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(displayedSidebarContent);
-            int sidebarContentX = bookRenderX + bookWidth - (int) currentSidebarWidth + (int) currentSidebarWidth - textWidth - 5; // 5 is padding
-
-
-            context.drawText(textRenderer, displayedSidebarContent, sidebarContentX, sidebarContentY, 0xFFFFFF, true);
-        }
     }
 
     @Override

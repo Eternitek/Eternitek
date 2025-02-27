@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable_with_bottom",
-  "textures": {
-    "bottom": "eternitek:block/primitive_furnace_bottom",
-    "front": "eternitek:block/primitive_furnace_front",
-    "side": "eternitek:block/primitive_furnace_side",
-    "top": "eternitek:block/primitive_furnace_top"
-  }
-}
