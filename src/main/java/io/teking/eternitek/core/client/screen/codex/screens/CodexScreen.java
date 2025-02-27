@@ -12,13 +12,14 @@ import net.minecraft.client.MinecraftClient;
 @Environment(EnvType.CLIENT)
 public class CodexScreen extends Screen {
 
-    private static final Identifier BOOK_TEXTURE = EternitekCore.id("textures/gui/codex.png");
-    private static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
+    private static final Identifier MAIN_PAGE_TEXTURE = EternitekCore.id("textures/gui/codex.png");
+    private static final Identifier SIDEBAR_TEXTURE = EternitekCore.id("textures/gui/codex_sidebar.png");
+    private static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png"); // Still using the same icon?
     private static final int SIDEBAR_COLLAPSED_WIDTH = 26;
     private static final int SIDEBAR_EXPANDED_WIDTH = 90;
     private boolean isSidebarExpanded = false;
     private float currentSidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
-    private final int bookWidth = 384;
+    private final int mainPageWidth = 384;  //Double the width of the other value to cover both pages?
     private final int bookHeight = 256;
     private int bookRenderX;
     private int bookRenderY;
@@ -38,16 +39,13 @@ public class CodexScreen extends Screen {
         super.init();
 
         // Calculate book rendering position to center it
-        bookRenderX = (this.width - bookWidth) / 2;
+        bookRenderX = (this.width - mainPageWidth) / 2;
         bookRenderY = (this.height - bookHeight) / 2;
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-
-        int screenWidth = this.width;
-        int screenHeight = this.height;
 
         // Sidebar Animation
         if (isSidebarExpanded) {
@@ -62,36 +60,38 @@ public class CodexScreen extends Screen {
             }
         }
 
-        // Draw the Main Book Area
+        // Draw the Main Page (covers both left and right sides)
         context.drawTexture(
-                BOOK_TEXTURE,
+                MAIN_PAGE_TEXTURE,
                 bookRenderX,
                 bookRenderY,
                 0,
                 0,
-                bookWidth,
+                mainPageWidth,
                 bookHeight,
-                512,
-                256
+                mainPageWidth,
+                bookHeight
         );
 
         // Draw the Sidebar Area
         context.drawTexture(
-                BOOK_TEXTURE,
-                bookRenderX + bookWidth - (int) currentSidebarWidth,
+                SIDEBAR_TEXTURE,
+                bookRenderX + mainPageWidth - (int) currentSidebarWidth,
                 bookRenderY,
-                bookWidth,
+                0,
                 0,
                 (int) currentSidebarWidth,
                 bookHeight,
-                512,
-                256
+                (int) currentSidebarWidth,
+                bookHeight
         );
 
-
         // Render Book Icon (clickable area)
-        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
-        int bookIconY = bookRenderY + 5;
+        int bookIconX = bookRenderX + mainPageWidth - SIDEBAR_COLLAPSED_WIDTH + 3;
+        if (isSidebarExpanded) {
+            bookIconX -= 5; // Move 3 pixels to the left when sidebar is expanded
+        }
+        int bookIconY = bookRenderY + bookHeight - 30;
         context.drawTexture(BOOK_ICON, bookIconX, bookIconY, 0, 0, 20, 20, 20, 20);
 
         // Letter by Letter Animation
@@ -116,8 +116,7 @@ public class CodexScreen extends Screen {
 
             // Calculate right-aligned text position
             int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(displayedSidebarContent);
-            int sidebarContentX = bookRenderX + bookWidth - (int) currentSidebarWidth + (int) currentSidebarWidth - textWidth - 5; // 5 is padding
-
+            int sidebarContentX = bookRenderX + mainPageWidth - (int) currentSidebarWidth + (int) currentSidebarWidth - textWidth - 5; // 5 is padding
 
             context.drawText(textRenderer, displayedSidebarContent, sidebarContentX, sidebarContentY, 0xFFFFFF, true);
         }
@@ -125,8 +124,11 @@ public class CodexScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        int bookIconX = bookRenderX + bookWidth - SIDEBAR_COLLAPSED_WIDTH + 5;
-        int bookIconY = bookRenderY + 5;
+        int bookIconX = bookRenderX + mainPageWidth - SIDEBAR_COLLAPSED_WIDTH + 3;
+        if (isSidebarExpanded) {
+            bookIconX -= 5; // Move 5 pixels to the left when sidebar is expanded
+        }
+        int bookIconY = bookRenderY + bookHeight - 30;
         if (mouseX >= bookIconX && mouseX < bookIconX + 20 && mouseY >= bookIconY && mouseY < bookIconY + 20) {
             isSidebarExpanded = !isSidebarExpanded;
             if (!isSidebarExpanded) {
@@ -137,6 +139,7 @@ public class CodexScreen extends Screen {
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }
+
 
     @Override
     public boolean shouldPause() {
