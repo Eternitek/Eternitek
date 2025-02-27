@@ -3,9 +3,9 @@ package io.teking.eternitek.core.client.screen.codex.pages;
 import net.minecraft.util.Identifier;
 
 public class Tier {
-    public static String name;
-    public static String mainResource;
-    public static Identifier icon;
+    public String name;
+    public String mainResource;
+    public Identifier icon;
 
     public Tier(String name, String mainResource, Identifier icon) {
         this.name = name;

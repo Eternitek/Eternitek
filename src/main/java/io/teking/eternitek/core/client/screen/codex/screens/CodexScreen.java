@@ -59,12 +59,12 @@ public class CodexScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
 
         if (isSidebarExpanded) {
-            currentSidebarWidth += (SIDEBAR_EXPANDED_WIDTH - currentSidebarWidth) * 0.1;
+            currentSidebarWidth += (float) ((SIDEBAR_EXPANDED_WIDTH - currentSidebarWidth) * 0.1);
             if (currentSidebarWidth > SIDEBAR_EXPANDED_WIDTH - 1) {
                 currentSidebarWidth = SIDEBAR_EXPANDED_WIDTH;
             }
         } else {
-            currentSidebarWidth += (SIDEBAR_COLLAPSED_WIDTH - currentSidebarWidth) * 0.1;
+            currentSidebarWidth += (float) ((SIDEBAR_COLLAPSED_WIDTH - currentSidebarWidth) * 0.1);
             if (currentSidebarWidth < SIDEBAR_COLLAPSED_WIDTH + 1) {
                 currentSidebarWidth = SIDEBAR_COLLAPSED_WIDTH;
             }
