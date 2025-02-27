@@ -47,11 +47,11 @@ public abstract class BaseTierScreen extends Screen {
         bookX = bookRenderX;
         bookY = bookRenderY;
 
-        // Initialize drag limits
+        // Adjust drag limits
         minOffsetX = -mainPageWidth;
-        maxOffsetX = mainPageWidth;
+        maxOffsetX = 0;
         minOffsetY = -bookHeight;
-        maxOffsetY = bookHeight;
+        maxOffsetY = 0;
     }
 
     @Override
