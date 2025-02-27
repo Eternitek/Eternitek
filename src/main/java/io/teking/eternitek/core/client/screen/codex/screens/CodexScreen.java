@@ -32,15 +32,15 @@ public class CodexScreen extends Screen {
     private int bookRenderY;
 
     private final List<Tier> tiers = Arrays.asList(
-            new Tier("T0: Crude", "Heat Resistant Brick", Identifier.of("minecraft:textures/block/oak_planks.png")),
-            new Tier("T1: Makeshift", "Brass", Identifier.of("minecraft:textures/block/stone.png")),
-            new Tier("T2: Industrial", "Steel", Identifier.of("minecraft:textures/block/iron_block.png")),
-            new Tier("T3: Advanced", "Aluminum", Identifier.of("minecraft:textures/block/gold_block.png")),
-            new Tier("T4: Refined", "Stainless Steel", Identifier.of("minecraft:textures/block/diamond_block.png")),
-            new Tier("T5: Reclaimed", "Sci-fi BS", Identifier.of("minecraft:textures/block/emerald_block.png")),
-            new Tier("T6: Reawakened", "Recharged Power Source", Identifier.of("minecraft:textures/block/netherite_block.png")),
-            new Tier("T7: Resonant", "Sci-fi BS", Identifier.of("minecraft:textures/block/obsidian.png")),
-            new Tier("T8: Evolved", "Unknown", Identifier.of("minecraft:textures/block/bedrock.png"))
+            new Tier("T0: Crude", "Heat Resistant Brick", Identifier.of("minecraft:textures/block/oak_planks.png"), 0),
+            new Tier("T1: Makeshift", "Brass", Identifier.of("minecraft:textures/block/stone.png"), 1),
+            new Tier("T2: Industrial", "Steel", Identifier.of("minecraft:textures/block/iron_block.png"), 2),
+            new Tier("T3: Advanced", "Aluminum", Identifier.of("minecraft:textures/block/gold_block.png"), 3),
+            new Tier("T4: Refined", "Stainless Steel", Identifier.of("minecraft:textures/block/diamond_block.png"), 4),
+            new Tier("T5: Reclaimed", "Sci-fi BS", Identifier.of("minecraft:textures/block/emerald_block.png"), 5),
+            new Tier("T6: Reawakened", "Recharged Power Source", Identifier.of("minecraft:textures/block/netherite_block.png"), 6),
+            new Tier("T7: Resonant", "Sci-fi BS", Identifier.of("minecraft:textures/block/obsidian.png"), 7),
+            new Tier("T8: Evolved", "Unknown", Identifier.of("minecraft:textures/block/bedrock.png"), 8)
     );
 
     private String displayedSidebarContent = "";
@@ -111,6 +111,7 @@ public class CodexScreen extends Screen {
                 if (mouseX >= buttonX && mouseX < buttonX + sidebarWidth &&
                         mouseY >= buttonY && mouseY < buttonY + buttonHeight) {
                     selectedTier = i;
+                    openTierScreen(i);
                     return true;
                 }
                 buttonY += buttonHeight;
@@ -121,5 +122,18 @@ public class CodexScreen extends Screen {
             }
         }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private void openTierScreen(int tierIndex) {
+        Screen tierScreen;
+        switch (tierIndex) {
+            case 0:
+                tierScreen = new TierZeroScreen(this);
+                break;
+            // todo add cases for other tiers
+            default:
+                return; // Do nothing if the tier doesn't have a specific screen
+        }
+        this.client.setScreen(tierScreen);
     }
 }
