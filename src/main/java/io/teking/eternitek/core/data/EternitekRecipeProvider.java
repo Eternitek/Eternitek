@@ -4,6 +4,7 @@ import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
@@ -27,6 +28,15 @@ public class EternitekRecipeProvider extends FabricRecipeProvider {
 
         offerBlasting(recipeExporter, List.of(Items.IRON_INGOT), RecipeCategory.MISC, CRUDE_STEEL_INGOT, 0.35F, 300, "");
         offer2x2BrickRecipe(recipeExporter, RecipeCategory.BUILDING_BLOCKS, EternitekBlocks.BLAST_BRICKS, EternitekItems.BlAST_BRICK);
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, EternitekBlocks.PRIMITIVE_FURNACE).pattern("BBB").pattern("IbI").pattern("BBB")
+                .input('I', Items.IRON_INGOT)
+                .input('b', Blocks.BLAST_FURNACE)
+                .input('B', EternitekBlocks.PRIMITIVE_FURNACE)
+                .criterion(FabricRecipeProvider.hasItem(EternitekBlocks.BLAST_BRICKS),
+                        FabricRecipeProvider.conditionsFromItem(EternitekItems.BlAST_BRICK))
+                .criterion(FabricRecipeProvider.hasItem(Items.BLAST_FURNACE),
+                        FabricRecipeProvider.conditionsFromItem(Blocks.BLAST_FURNACE))
+                .offerTo(recipeExporter);
     }
 
     public static void offer2x2BrickRecipe(RecipeExporter exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input) {

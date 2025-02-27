@@ -132,7 +132,7 @@ public class CodexScreen extends Screen {
                 break;
             // todo add cases for other tiers
             default:
-                return; // Do nothing if the tier doesn't have a specific screen
+                return;
         }
         this.client.setScreen(tierScreen);
     }
