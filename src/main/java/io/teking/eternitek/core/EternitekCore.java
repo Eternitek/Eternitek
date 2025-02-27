@@ -29,6 +29,7 @@ public class EternitekCore implements ModInitializer {
 
     @Override
     public void onInitialize() {
+
         LOGGER.info("Did you know that the A.E.S.I.R. suits can manually detonate their onboard fusion reactors?");
 
         EternitekBlocks.register();

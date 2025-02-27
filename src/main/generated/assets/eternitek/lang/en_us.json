@@ -1,8 +1,9 @@
 {
   "block.eternitek.blast_bricks": "Blast Bricks",
-  "block.eternitek.primitive_furnace": "Primative Furnace",
+  "block.eternitek.primitive_furnace": "Primitive Furnace",
   "item.eternitek.blast_brick": "Blast Brick",
   "item.eternitek.codex": "Codex",
   "item.eternitek.crude_steel_ingot": "Crude Steel Ingot",
-  "itemGroup.eternitek_core": "Eternitek Core"
+  "itemGroup.eternitek_core": "Eternitek Core",
+  "texts.eternitek.invalid_structure": "Invalid structure"
 }
