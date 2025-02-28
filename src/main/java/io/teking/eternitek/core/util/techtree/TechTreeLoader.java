@@ -11,9 +11,11 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public class TechTreeLoader {
+
     private static final Gson GSON = new Gson();
 
     public static Map<String, TechNodeData> loadTechTree(ResourceManager resourceManager, String techTreeName) {
+
         Identifier resourceId = Identifier.of("eternitek", "tech_trees/" + techTreeName + ".json");
         try (InputStream inputStream = resourceManager.getResource(resourceId).get().getInputStream()) {
             InputStreamReader reader = new InputStreamReader(inputStream);
@@ -23,5 +25,7 @@ public class TechTreeLoader {
             e.printStackTrace();
             return null;
         }
+
     }
+
 }

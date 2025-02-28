@@ -6,8 +6,10 @@ import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.util.techtree.TechNode;
 import io.teking.eternitek.core.util.techtree.TechNodeData;
 import io.teking.eternitek.core.util.techtree.TechTreeLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
@@ -41,9 +43,11 @@ public class TierZeroScreen extends BaseTierScreen {
     }
 
     private void loadTechTree() {
+
         try {
-            Identifier resourceId = Identifier.of("eternitek", "data/techtree/tier_zero.json");
-            Optional<Resource> resource = client.getResourceManager().getResource(resourceId);
+            ResourceManager manager = this.client.getResourceManager();
+            Identifier id = manager.findResources("techtree", path -> path.getPath().endsWith(".json")).keySet().toArray(new Identifier[]{})[0];
+            Optional<Resource> resource = manager.getResource(id);
             if (resource.isPresent()) {
                 try (InputStream inputStream = resource.get().getInputStream()) {
                     InputStreamReader reader = new InputStreamReader(inputStream);
@@ -52,11 +56,12 @@ public class TierZeroScreen extends BaseTierScreen {
                     errorMessage = "Failed to read tech tree file: " + e.getMessage();
                 }
             } else {
-                errorMessage = "Tech tree file not found: " + resourceId;
+                errorMessage = "Tech tree file not found: " + id;
             }
         } catch (Exception e) {
             errorMessage = "Failed to load tech tree: " + e.getMessage();
         }
+
     }
 
     @Override
