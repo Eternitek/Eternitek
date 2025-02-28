@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static io.teking.eternitek.core.machine.Tier.*;
@@ -19,7 +18,7 @@ import static io.teking.eternitek.core.machine.Tier.*;
 @Environment(EnvType.CLIENT)
 public class CodexScreen extends Screen {
 
-    private static final Identifier MAIN_PAGE_TEXTURE = EternitekCore.id("textures/gui/codex.png");
+    private static final Identifier CODEX_TEXTURE = EternitekCore.id("textures/gui/codex.png");
     public static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
 
     private static final int SIDEBAR_COLLAPSED_WIDTH = 26;
@@ -54,6 +53,10 @@ public class CodexScreen extends Screen {
 
         super.render(context, mouseX, mouseY, delta);
 
+        int textColor = 0xFFF4CCA1;
+        int selectColor = 0xFFA05B53;
+        int shadowColor = 0xFF5E3643;
+
         if(isSidebarExpanded) {
             if(currentSidebarWidth < SIDEBAR_EXPANDED_WIDTH) currentSidebarWidth += 2;
         } else {
@@ -61,7 +64,7 @@ public class CodexScreen extends Screen {
         }
 
         context.drawTexture(
-                MAIN_PAGE_TEXTURE,
+                CODEX_TEXTURE,
                 bookRenderX, bookRenderY,
                 0, 0,
                 mainPageWidth, bookHeight,
@@ -69,7 +72,7 @@ public class CodexScreen extends Screen {
         );
 
         context.drawTexture(
-                MAIN_PAGE_TEXTURE,
+                CODEX_TEXTURE,
                 (bookRenderX + 370) - currentSidebarWidth, bookRenderY + 5,
                 385, 0,
                 8, 246,
@@ -99,14 +102,14 @@ public class CodexScreen extends Screen {
                 context.fill(
                         x - 1, y - 4,
                         x + currentSidebarWidth + 1, y + 20,
-                        0xFFA69E9A
+                        selectColor
                 );
             }
 
             context.fill(
                     renderX + 1, y + 1,
                     renderX + iconSize + 1, y + iconSize + 1,
-                    0xFF595757
+                    shadowColor
             );
 
             context.drawTexture(
@@ -122,7 +125,7 @@ public class CodexScreen extends Screen {
                         renderer,
                         tier.name,
                         renderX + 24, y + 4,
-                        0xFFCBC6C1
+                        textColor
                 );
             }
 
