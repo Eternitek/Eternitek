@@ -20,7 +20,6 @@ import static io.teking.eternitek.core.machine.Tier.*;
 public class CodexScreen extends Screen {
 
     private static final Identifier MAIN_PAGE_TEXTURE = EternitekCore.id("textures/gui/codex.png");
-    private static final Identifier SIDEBAR_TEXTURE = EternitekCore.id("textures/gui/codex_sidebar.png");
     public static final Identifier BOOK_ICON = EternitekCore.id("textures/item/codex.png");
 
     private static final int SIDEBAR_COLLAPSED_WIDTH = 26;
@@ -37,10 +36,7 @@ public class CodexScreen extends Screen {
 
     private final List<Tier> tiers = List.of(T0, T1, T2, T3, T4, T5, T6, T7, T8);
 
-    private String displayedSidebarContent = "";
-    private int contentIndex = 0;
     private int selectedTier = -1;
-    private int animationTimer = 0;
 
     public CodexScreen() {
         super(Text.of("Codex"));
