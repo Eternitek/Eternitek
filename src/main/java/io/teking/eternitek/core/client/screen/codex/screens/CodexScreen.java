@@ -1,9 +1,11 @@
 package io.teking.eternitek.core.client.screen.codex.screens;
 
 import io.teking.eternitek.core.EternitekCore;
-import io.teking.eternitek.core.client.screen.codex.pages.Tier;
+import io.teking.eternitek.core.machine.Tier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -11,6 +13,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static io.teking.eternitek.core.machine.Tier.*;
 
 @Environment(EnvType.CLIENT)
 public class CodexScreen extends Screen {
@@ -31,17 +35,7 @@ public class CodexScreen extends Screen {
     private int bookRenderX;
     private int bookRenderY;
 
-    private final List<Tier> tiers = Arrays.asList(
-            new Tier("T0: Crude", "Heat Resistant Brick", Identifier.of("minecraft:textures/block/oak_planks.png"), 0),
-            new Tier("T1: Makeshift", "Brass", Identifier.of("minecraft:textures/block/stone.png"), 1),
-            new Tier("T2: Industrial", "Steel", Identifier.of("minecraft:textures/block/iron_block.png"), 2),
-            new Tier("T3: Advanced", "Aluminum", Identifier.of("minecraft:textures/block/gold_block.png"), 3),
-            new Tier("T4: Refined", "Stainless Steel", Identifier.of("minecraft:textures/block/diamond_block.png"), 4),
-            new Tier("T5: Reclaimed", "Sci-fi BS", Identifier.of("minecraft:textures/block/emerald_block.png"), 5),
-            new Tier("T6: Reawakened", "Recharged Power Source", Identifier.of("minecraft:textures/block/netherite_block.png"), 6),
-            new Tier("T7: Resonant", "Sci-fi BS", Identifier.of("minecraft:textures/block/obsidian.png"), 7),
-            new Tier("T8: Evolved", "Unknown", Identifier.of("minecraft:textures/block/bedrock.png"), 8)
-    );
+    private final List<Tier> tiers = List.of(T0, T1, T2, T3, T4, T5, T6, T7, T8);
 
     private String displayedSidebarContent = "";
     private int contentIndex = 0;
@@ -65,9 +59,9 @@ public class CodexScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
 
         if(isSidebarExpanded) {
-            if(currentSidebarWidth < SIDEBAR_EXPANDED_WIDTH) currentSidebarWidth++;
+            if(currentSidebarWidth < SIDEBAR_EXPANDED_WIDTH) currentSidebarWidth += 2;
         } else {
-            if(currentSidebarWidth > SIDEBAR_COLLAPSED_WIDTH) currentSidebarWidth--;
+            if(currentSidebarWidth > SIDEBAR_COLLAPSED_WIDTH) currentSidebarWidth -= 2;
         }
 
         context.drawTexture(
@@ -86,42 +80,91 @@ public class CodexScreen extends Screen {
                 512, 256
         );
 
+        int x = (bookRenderX + 370 - currentSidebarWidth) + 8;
+
+        context.enableScissor(
+                x,
+                bookRenderY + 7,
+                x + currentSidebarWidth,
+                bookRenderY + 5 + 244
+        );
+
+        for(int i = 0; i < tiers.size(); i++) {
+
+            TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
+            int iconSize = 16;
+            int renderX = x + 5;
+
+            Tier tier = tiers.get(i);
+
+            int y = bookRenderY + 7 + 5 + (i * 24);
+
+            if(i == selectedTier) {
+                context.fill(
+                        x - 1, y - 4,
+                        x + currentSidebarWidth + 1, y + 20,
+                        0xFFA69E9A
+                );
+            }
+
+            context.fill(
+                    renderX + 1, y + 1,
+                    renderX + iconSize + 1, y + iconSize + 1,
+                    0xFF595757
+            );
+
+            context.drawTexture(
+                    tier.icon,
+                    renderX, y,
+                    0, 0,
+                    iconSize, iconSize,
+                    iconSize, iconSize
+            );
+
+            if(currentSidebarWidth != SIDEBAR_COLLAPSED_WIDTH) {
+                context.drawTextWithShadow(
+                        renderer,
+                        tier.name,
+                        renderX + 24, y + 4,
+                        0xFFCBC6C1
+                );
+            }
+
+
+        }
+
+        context.disableScissor();
+
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        int bookIconX = bookRenderX + mainPageWidth - SIDEBAR_COLLAPSED_WIDTH + 3;
-        if (isSidebarExpanded) bookIconX -= 5;
-        int bookIconY = bookRenderY + bookHeight - 30;
-        if (mouseX >= bookIconX && mouseX < bookIconX + 20 && mouseY >= bookIconY && mouseY < bookIconY + 20) {
+
+        int sidebarX = bookRenderX + 370 - currentSidebarWidth;
+        int sidebarY = bookRenderY + 5;
+
+        if((sidebarX < mouseX && mouseX < (sidebarX + 8)) && (sidebarY < mouseY && mouseY < (sidebarY + 246))) {
             isSidebarExpanded = !isSidebarExpanded;
-            if (!isSidebarExpanded) selectedTier = -1;
             return true;
         }
 
-        if (isSidebarExpanded) {
-            int buttonY = bookRenderY + 15;
-            int padding = 2;
-            int iconSize = 16;
-            int buttonHeight = iconSize + padding * 2;
-            int sidebarWidth = (int) currentSidebarWidth;
+        for (int i = 0; i < tiers.size(); i++) {
 
-            for (int i = 0; i < tiers.size(); i++) {
-                int buttonX = bookRenderX + mainPageWidth - sidebarWidth;
-                if (mouseX >= buttonX && mouseX < buttonX + sidebarWidth &&
-                        mouseY >= buttonY && mouseY < buttonY + buttonHeight) {
-                    selectedTier = i;
-                    openTierScreen(i);
-                    return true;
-                }
-                buttonY += buttonHeight;
-
-                if (buttonY + buttonHeight > bookRenderY + bookHeight - 40) {
-                    break;
-                }
+            int x = bookRenderX + 370 - currentSidebarWidth + 8 + 5;
+            int y = bookRenderY + 7 + 5 + (i * 24);
+            if((x < mouseX && mouseX < (x + currentSidebarWidth)) && ((y - 4) < mouseY && mouseY < (y + 20))) {
+                selectedTier = i;
+                openTierScreen(i);
             }
+
+            if(y > bookRenderY + bookHeight) {
+                break;
+            }
+
         }
+
         return super.mouseClicked(mouseX, mouseY, button);
+
     }
 
     private void openTierScreen(int tierIndex) {
@@ -136,4 +179,5 @@ public class CodexScreen extends Screen {
         }
         this.client.setScreen(tierScreen);
     }
+
 }
