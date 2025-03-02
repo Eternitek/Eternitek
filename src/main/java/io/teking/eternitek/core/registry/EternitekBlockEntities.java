@@ -1,6 +1,7 @@
 package io.teking.eternitek.core.registry;
 
 import io.teking.eternitek.core.EternitekCore;
+import io.teking.eternitek.core.block.entity.PipeControllerBlockEntity;
 import io.teking.eternitek.core.block.entity.PipeTileEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
@@ -15,6 +16,12 @@ public class EternitekBlockEntities {
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(EternitekCore.MOD_ID, "stone_pipe"),
             FabricBlockEntityTypeBuilder.create(PipeTileEntity::new, EternitekBlocks.STONE_PIPE).build()
+    );
+
+    public static final BlockEntityType<PipeControllerBlockEntity> PIPE_CONTROLLER_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(EternitekCore.MOD_ID, "pipe_controller"),
+            FabricBlockEntityTypeBuilder.create(PipeControllerBlockEntity::new, EternitekBlocks.PIPE_CONTROLLER).build()
     );
 
     public static void register() {

@@ -4,6 +4,7 @@ import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.block.MachineCoreBlock;
 import io.teking.eternitek.core.block.PrimitiveFurnaceBlock;
 import io.teking.eternitek.core.block.pipe.BasePipeBlock;
+import io.teking.eternitek.core.block.pipe.PipeControllerBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -22,6 +23,7 @@ public class EternitekBlocks {
 
     // Pipes
     // item pipes
+    public static final Block PIPE_CONTROLLER = new PipeControllerBlock(AbstractBlock.Settings.create());
     public static final Block STONE_PIPE = new BasePipeBlock(AbstractBlock.Settings.create());
 
     public static void register() {
