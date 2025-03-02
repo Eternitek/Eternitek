@@ -41,8 +41,8 @@ public class ItemTransferHelper {
         BlockPos targetPos = pos.offset(side);
         BlockEntity blockEntity = world.getBlockEntity(targetPos);
 
-        if (blockEntity instanceof Inventory) {
-            return (Inventory) blockEntity;
+        if (blockEntity instanceof Inventory inventory) {
+            return inventory;
         }
 
         return null;
@@ -51,4 +51,5 @@ public class ItemTransferHelper {
     public static boolean canCombine(ItemStack stack1, ItemStack stack2) {
         return ItemStack.areItemsAndComponentsEqual(stack1, stack2);
     }
+
 }

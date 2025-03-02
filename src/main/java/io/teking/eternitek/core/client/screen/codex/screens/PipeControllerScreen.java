@@ -1,6 +1,6 @@
 package io.teking.eternitek.core.client.screen.codex.screens;
 
-import io.teking.eternitek.core.util.screen.handler.PipeControllerScreenHandler;
+import io.teking.eternitek.core.client.screen.handler.PipeControllerScreenHandler;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.DrawContext;

@@ -12,19 +12,20 @@ import net.minecraft.util.Identifier;
 
 public class EternitekBlockEntities {
 
-    public static final BlockEntityType<PipeTileEntity> STONE_PIPE_BLOCK_ENTITY = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
-            Identifier.of(EternitekCore.MOD_ID, "stone_pipe"),
-            FabricBlockEntityTypeBuilder.create(PipeTileEntity::new, EternitekBlocks.STONE_PIPE).build()
-    );
+    public static final BlockEntityType<PipeTileEntity> STONE_PIPE_BLOCK_ENTITY = BlockEntityType.Builder.create(PipeTileEntity::new, EternitekBlocks.STONE_PIPE).build();
 
-    public static final BlockEntityType<PipeControllerBlockEntity> PIPE_CONTROLLER_BLOCK_ENTITY = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
-            Identifier.of(EternitekCore.MOD_ID, "pipe_controller"),
-            FabricBlockEntityTypeBuilder.create(PipeControllerBlockEntity::new, EternitekBlocks.PIPE_CONTROLLER).build()
-    );
+    public static final BlockEntityType<PipeControllerBlockEntity> PIPE_CONTROLLER_BLOCK_ENTITY = BlockEntityType.Builder.create(PipeControllerBlockEntity::new, EternitekBlocks.PIPE_CONTROLLER).build();
 
     public static void register() {
 
+        register("stone_pipe", STONE_PIPE_BLOCK_ENTITY);
+
+        register("pipe_controller", PIPE_CONTROLLER_BLOCK_ENTITY);
+
     }
+
+    public static void register(String name, BlockEntityType<?> blockEntity) {
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, EternitekCore.id(name), blockEntity);
+    }
+
 }
