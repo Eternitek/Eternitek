@@ -66,10 +66,6 @@ public class MultiblockReloadListener implements SimpleSynchronousResourceReload
                     }
                 }
 
-                for(char c : data.key().keySet()) {
-                    EternitekCore.LOGGER.info("Key = {}, value = {}", c, data.key().get(c));
-                }
-
                 MULTIBLOCKS.put(data.id(), new Multiblock(pattern, data.key()));
 
             } catch(Exception error) {

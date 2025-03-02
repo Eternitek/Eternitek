@@ -30,15 +30,15 @@ public class Multiblock {
     private final char[][][] pattern;
     private final Map<Character, RegistryEntryList<Block>> key;
     private final int width;
-    private final int height;
     private final int length;
+    private final int height;
 
     public Multiblock(char[][][] pattern, Map<Character, RegistryEntryList<Block>> key) {
         this.pattern = pattern;
         this.key = key;
         this.height = pattern.length;
-        this.width = pattern[0].length;
-        this.length = pattern[0][0].length;
+        this.length = pattern[0].length;
+        this.width = pattern[0][0].length;
     }
 
     public boolean isValid(BlockPos pos, World world) {
@@ -82,12 +82,7 @@ public class Multiblock {
                 for(int x = 0; x < width; x++) {
 
                     char expected = pattern[y][z][x];
-                    if(expected == '*') {
-                        EternitekCore.LOGGER.info("Found controller block");
-                        continue;
-                    }
-
-                    EternitekCore.LOGGER.info("Layer: {}", (Object) pattern[y]);
+                    if(expected == '*') continue;
 
                     BlockPos check;
                     switch(direction) {
@@ -107,16 +102,9 @@ public class Multiblock {
                             return false;
                     }
 
-                    EternitekCore.LOGGER.info("Checking [{}, {}, {}], expecting {}", check.getX(), check.getY(), check.getZ(), expected);
-
                     BlockState state = world.getBlockState(check);
 
-                    world.setBlockState(check, key.getOrDefault(expected, RegistryEntryList.of(RegistryEntry.of(Blocks.AIR))).get(0).value().getDefaultState());
-
-                    if(!checkBlock(expected, state)) {
-                        EternitekCore.LOGGER.warn("Unexpected block at [{}, {}, {}]: {}.", check.getX(), check.getY(), check.getZ(), state.getBlock());
-                        return false;
-                    }
+                    if(!checkBlock(expected, state)) return false;
 
                 }
             }
@@ -137,6 +125,7 @@ public class Multiblock {
     }
 
     public Vec3i getCorePos() {
+        EternitekCore.LOGGER.info("Height: {}, Width: {}, Length: {}", height, width, length);
         for(int y = 0; y < height; y++) {
             for(int z = 0; z < length; z++) {
                 for(int x = 0; x < width; x++) {
