@@ -17,8 +17,8 @@ public class EternitekModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 
         blockStateModelGenerator.registerSimpleCubeAll(BLAST_BRICKS);
-        // Disabled because I can't be bothered to fix it
-//        blockStateModelGenerator.registerSimpleCubeAll(PRIMITIVE_FURNACE);
+        blockStateModelGenerator.registerSimpleCubeAll(FACILITY_TILES);
+        blockStateModelGenerator.registerSimpleCubeAll(PRIMITIVE_FURNACE);
 
     }
 
@@ -26,8 +26,9 @@ public class EternitekModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 
         itemModelGenerator.register(CODEX, Models.GENERATED);
-        itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
+
         itemModelGenerator.register(BLAST_BRICK, Models.GENERATED);
+        itemModelGenerator.register(CRUDE_STEEL_INGOT, Models.GENERATED);
 
     }
 
