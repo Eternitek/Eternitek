@@ -53,9 +53,9 @@ public class CodexScreen extends Screen {
 
         super.render(context, mouseX, mouseY, delta);
 
-        int textColor = 0xFFF4CCA1;
-        int selectColor = 0xFFA05B53;
-        int shadowColor = 0xFF5E3643;
+        int textColor = 0xFFCBC6C1;
+        int selectColor = 0xFFA69E9A;
+        int shadowColor = 0xFF595757;
 
         if(isSidebarExpanded) {
             if(currentSidebarWidth < SIDEBAR_EXPANDED_WIDTH) currentSidebarWidth += 2;
