@@ -1,5 +1,6 @@
 package io.teking.eternitek.core;
 
+import io.teking.eternitek.core.registry.EternitekBlockEntities;
 import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import io.teking.eternitek.core.resource.MultiblockReloadListener;
@@ -37,7 +38,7 @@ public class EternitekCore implements ModInitializer {
 
         EternitekBlocks.register();
         EternitekItems.register();
-
+        EternitekBlockEntities.register();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
                 EternitekCore.id("multiblock"),
                 MultiblockReloadListener::new
