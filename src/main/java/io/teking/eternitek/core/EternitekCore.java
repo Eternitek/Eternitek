@@ -2,14 +2,17 @@ package io.teking.eternitek.core;
 
 import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
+import io.teking.eternitek.core.resource.MultiblockReloadListener;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -34,6 +37,11 @@ public class EternitekCore implements ModInitializer {
 
         EternitekBlocks.register();
         EternitekItems.register();
+
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
+                EternitekCore.id("multiblock"),
+                MultiblockReloadListener::new
+        );
 
         Registry.register(Registries.ITEM_GROUP, ETERNITEK_CORE, ETERNITEK_CORE_GROUP);
 

@@ -3,11 +3,14 @@ package io.teking.eternitek.core.multiblock;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.teking.eternitek.core.EternitekCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryCodecs;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -17,22 +20,22 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class Multiblock {
 
     private final char[][][] pattern;
-    private final Map<Character, Predicate<BlockState>> stateCheckers;
+    private final Map<Character, RegistryEntryList<Block>> key;
     private final int width;
     private final int height;
     private final int length;
 
-    public Multiblock(char[][][] pattern, Map<Character, Predicate<BlockState>> stateCheckers) {
+    public Multiblock(char[][][] pattern, Map<Character, RegistryEntryList<Block>> key) {
         this.pattern = pattern;
-        this.stateCheckers = stateCheckers;
+        this.key = key;
         this.height = pattern.length;
         this.width = pattern[0].length;
         this.length = pattern[0][0].length;
@@ -79,7 +82,12 @@ public class Multiblock {
                 for(int x = 0; x < width; x++) {
 
                     char expected = pattern[y][z][x];
-                    if(expected == '*') continue;
+                    if(expected == '*') {
+                        EternitekCore.LOGGER.info("Found controller block");
+                        continue;
+                    }
+
+                    EternitekCore.LOGGER.info("Layer: {}", (Object) pattern[y]);
 
                     BlockPos check;
                     switch(direction) {
@@ -99,31 +107,33 @@ public class Multiblock {
                             return false;
                     }
 
+                    EternitekCore.LOGGER.info("Checking [{}, {}, {}], expecting {}", check.getX(), check.getY(), check.getZ(), expected);
+
                     BlockState state = world.getBlockState(check);
 
-                    if(!checkBlock(expected, state, check)) return false;
+                    world.setBlockState(check, key.getOrDefault(expected, RegistryEntryList.of(RegistryEntry.of(Blocks.AIR))).get(0).value().getDefaultState());
+
+                    if(!checkBlock(expected, state)) {
+                        EternitekCore.LOGGER.warn("Unexpected block at [{}, {}, {}]: {}.", check.getX(), check.getY(), check.getZ(), state.getBlock());
+                        return false;
+                    }
 
                 }
             }
+
         }
 
         return true;
         
     }
 
-    public boolean checkBlock(char expected, BlockState state, BlockPos pos) {
+    public boolean checkBlock(char expected, BlockState state) {
         if (expected == ' ') {
-            if (!state.isAir()) {
-                return false;
-            }
-            return true;
+            return state.isAir();
         }
 
-        Predicate<BlockState> checker = stateCheckers.get(expected);
-        if (checker == null || !checker.test(state)) {
-            return false;
-        }
-        return true;
+        RegistryEntryList<Block> registryEntries = key.get(expected);
+        return registryEntries != null && registryEntries.contains(state.getRegistryEntry());
     }
 
     public Vec3i getCorePos() {
@@ -147,21 +157,7 @@ public class Multiblock {
         return false;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public record Data(Identifier id, Character controller, Map<Character, RegistryEntryList<Block>> key, List<List<String>> pattern) {
-
-        private static final Codec<Character> CONTROLLER_CODEC = Codec.STRING.comapFlatMap(Data::validateKey, String::valueOf);
+    public record Data(Identifier id, Map<Character, RegistryEntryList<Block>> key, List<List<String>> pattern) {
 
         private static final Codec<Character> KEY_ENTRY_CODEC = Codec.STRING.comapFlatMap(Data::validateKey, String::valueOf);
 
@@ -169,7 +165,6 @@ public class Multiblock {
 
         public static final Codec<Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Identifier.CODEC.fieldOf("id").forGetter(Data::id),
-                CONTROLLER_CODEC.fieldOf("controller").forGetter(Data::controller),
                 Codecs.strictUnboundedMap(KEY_ENTRY_CODEC, RegistryCodecs.entryList(RegistryKeys.BLOCK)).fieldOf("key").forGetter(Data::key),
                 PATTERN_CODEC.fieldOf("pattern").forGetter(Data::pattern)
         ).apply(instance, Data::new));

@@ -1,0 +1,28 @@
+{
+  "id": "eternitek:primitive_furnace",
+  "key": {
+    "b": "eternitek:blast_bricks"
+  },
+  "pattern": [
+    [
+      "bbb",
+      "bbb",
+      "bbb"
+    ],
+    [
+      "bbb",
+      "b b",
+      "b*b"
+    ],
+    [
+      "bbb",
+      "b b",
+      "bbb"
+    ],
+    [
+      "bbb",
+      "b b",
+      "bbb"
+    ]
+  ]
+}
