@@ -38,7 +38,7 @@ public class EternitekCore implements ModInitializer {
         Registry.register(Registries.ITEM_GROUP, ETERNITEK_CORE, ETERNITEK_CORE_GROUP);
 
         ItemGroupEvents.modifyEntriesEvent(ETERNITEK_CORE).register(itemGroup -> {
-            itemGroup.add(EternitekItems.BlAST_BRICK);
+            itemGroup.add(EternitekItems.BLAST_BRICK);
             itemGroup.add(EternitekBlocks.BLAST_BRICKS);
             itemGroup.add(EternitekItems.CODEX);
             itemGroup.add(EternitekItems.CRUDE_STEEL_INGOT);

@@ -27,13 +27,13 @@ public class EternitekRecipeProvider extends FabricRecipeProvider {
     public void generate(RecipeExporter recipeExporter) {
 
         offerBlasting(recipeExporter, List.of(Items.IRON_INGOT), RecipeCategory.MISC, CRUDE_STEEL_INGOT, 0.35F, 300, "");
-        offer2x2BrickRecipe(recipeExporter, RecipeCategory.BUILDING_BLOCKS, EternitekBlocks.BLAST_BRICKS, EternitekItems.BlAST_BRICK);
+        offer2x2BrickRecipe(recipeExporter, RecipeCategory.BUILDING_BLOCKS, EternitekBlocks.BLAST_BRICKS, EternitekItems.BLAST_BRICK);
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, EternitekBlocks.PRIMITIVE_FURNACE).pattern("BBB").pattern("IbI").pattern("BBB")
                 .input('I', Items.IRON_INGOT)
                 .input('b', Blocks.BLAST_FURNACE)
                 .input('B', EternitekBlocks.PRIMITIVE_FURNACE)
                 .criterion(FabricRecipeProvider.hasItem(EternitekBlocks.BLAST_BRICKS),
-                        FabricRecipeProvider.conditionsFromItem(EternitekItems.BlAST_BRICK))
+                        FabricRecipeProvider.conditionsFromItem(EternitekItems.BLAST_BRICK))
                 .criterion(FabricRecipeProvider.hasItem(Items.BLAST_FURNACE),
                         FabricRecipeProvider.conditionsFromItem(Blocks.BLAST_FURNACE))
                 .offerTo(recipeExporter);
