@@ -18,7 +18,7 @@ public class EternitekItems {
     public static final Item DIAMOND_HAMMER = new MiningHammerItem(
             ToolMaterials.DIAMOND,
             new Item.Settings(),
-            1, 1, 0 // 3x3x1 mining area
+            1, 0, 1 // 3x3x1 mining area
     );
 
     public static final Item NETHERITE_HAMMER = new MiningHammerItem(
