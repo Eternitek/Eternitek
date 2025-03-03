@@ -18,13 +18,24 @@ public class PipeControllerScreenHandler extends ScreenHandler {
 
         this.blockPos = buf.readBlockPos();
 
-        this.addSlot(new Slot(playerInventory));
+        // Add player inventory slots
+        for (int y = 0; y < 3; ++y) {
+            for (int x = 0; x < 9; ++x) {
+                this.addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
+            }
+        }
+
+        // Add player hotbar slots
+        for (int x = 0; x < 9; ++x) {
+            this.addSlot(new Slot(playerInventory, x, 8 + x * 18, 142));
+        }
 
     }
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int slot) {
-        return null;
+        // Implement quick move logic here
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -35,5 +46,4 @@ public class PipeControllerScreenHandler extends ScreenHandler {
     public BlockPos getBlockPos() {
         return blockPos;
     }
-
 }
