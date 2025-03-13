@@ -4,6 +4,7 @@ import io.teking.eternitek.core.registry.EternitekBlockEntities;
 import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import io.teking.eternitek.core.resource.MultiblockReloadListener;
+import io.teking.eternitek.core.util.fun.Facts;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -34,8 +35,9 @@ public class EternitekCore implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        LOGGER.info("Did you know that the A.E.S.I.R. suits can manually detonate their onboard fusion reactors?");
+        Facts.register();
 
+        LOGGER.info(Facts.getRandom());
         EternitekBlocks.register();
         EternitekItems.register();
         EternitekBlockEntities.register();
