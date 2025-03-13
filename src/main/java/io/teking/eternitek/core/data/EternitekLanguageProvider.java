@@ -1,6 +1,7 @@
 package io.teking.eternitek.core.data;
 
 import io.teking.eternitek.core.EternitekCore;
+import io.teking.eternitek.core.registry.EternitekTabs;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -28,7 +29,7 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(MACHINE_CORE, "Machine Core");
         translationBuilder.add(PRIMITIVE_FURNACE, "Primitive Furnace");
 
-        translationBuilder.add(EternitekCore.ETERNITEK_CORE, "Eternitek Core");
+        translationBuilder.add(EternitekTabs.ETERNITEK_CORE, "Eternitek Core");
 
         translationBuilder.add("texts.eternitek.invalid_structure", "Invalid structure");
 

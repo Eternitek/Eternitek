@@ -1,5 +1,7 @@
 {
   "block.eternitek.blast_bricks": "Blast Bricks",
+  "block.eternitek.facility_tiles": "Facility Tiles",
+  "block.eternitek.machine_core": "Machine Core",
   "block.eternitek.primitive_furnace": "Primitive Furnace",
   "item.eternitek.blast_brick": "Blast Brick",
   "item.eternitek.codex": "Codex",
