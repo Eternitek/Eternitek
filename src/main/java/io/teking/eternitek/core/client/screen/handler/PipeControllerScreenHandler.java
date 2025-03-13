@@ -46,4 +46,5 @@ public class PipeControllerScreenHandler extends ScreenHandler {
     public BlockPos getBlockPos() {
         return blockPos;
     }
+
 }

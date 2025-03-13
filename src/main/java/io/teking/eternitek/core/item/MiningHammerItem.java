@@ -43,29 +43,18 @@ public class MiningHammerItem extends PickaxeItem {
                         // Skip the original block
                         if (x == 0 && y == 0 && z == 0) continue;
 
-                        BlockPos newPos;
-                        // Properly adjust the mining area based on the player's facing direction
-                        switch (facing) {
-                            case UP:
-                            case DOWN:
+                        BlockPos newPos = switch (facing) {
+                            case UP, DOWN ->
                                 // If looking up/down, mine in the X-Z plane
-                                newPos = pos.add(x, 0, z);
-                                break;
-                            case NORTH:
-                            case SOUTH:
+                                    pos.add(x, 0, z);
+                            case NORTH, SOUTH ->
                                 // If looking north/south, mine in the X-Y plane
-                                newPos = pos.add(x, y, 0);
-                                break;
-                            case EAST:
-                            case WEST:
+                                    pos.add(x, y, 0);
+                            case EAST, WEST ->
                                 // If looking east/west, mine in the Y-Z plane
-                                newPos = pos.add(0, y, z);
-                                break;
-                            default:
-                                // Should never happen, but fallback
-                                newPos = pos.add(x, y, z);
-                                break;
-                        }
+                                    pos.add(0, y, z);
+                        };
+                        // Properly adjust the mining area based on the player's facing direction
                         breakExtraBlock(world, newPos, miner, stack);
                     }
                 }
