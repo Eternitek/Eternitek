@@ -9,6 +9,7 @@
   ],
   "client": [
     "client.ClientPlayerEntityMixin",
+    "client.DrawContextMixin",
     "client.InventoryScreenMixin"
   ],
   "injectors": {

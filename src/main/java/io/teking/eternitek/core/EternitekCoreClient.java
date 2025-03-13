@@ -1,5 +1,6 @@
 package io.teking.eternitek.core;
 
+import io.teking.eternitek.core.block.BlockWithMultiblock;
 import io.teking.eternitek.core.block.Tooltipped;
 import io.teking.eternitek.core.util.render.RenderHelper;
 import net.fabricmc.api.ClientModInitializer;
@@ -11,9 +12,15 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import org.joml.Vector2i;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EternitekCoreClient implements ClientModInitializer {
 
@@ -28,7 +35,8 @@ public class EternitekCoreClient implements ClientModInitializer {
         TextRenderer textRenderer = client.textRenderer;
 
         if(client.currentScreen != null) return;
-        if(!(getLookingAt(client.player).getBlock() instanceof Tooltipped block)) return;
+        BlockState state = getLookingAt(client.player);
+        if(!(state.getBlock() instanceof Tooltipped block)) return;
         if(!client.player.isSneaking()) return;
 
         int windowWidth = context.getScaledWindowWidth();
@@ -37,16 +45,18 @@ public class EternitekCoreClient implements ClientModInitializer {
         int x = (windowWidth / 2) + 20;
         int y = (windowHeight / 2);
 
-        RenderHelper.flipRender();
+        RenderHelper.setPalette(block.getColors());
+
+        List<OrderedText> tooltip = block.getTooltip(state);
 
         context.drawTooltip(
                 textRenderer,
-                block.getTooltip(getLookingAt(client.player)),
+                tooltip,
                 (screenWidth, screenHeight, tipX, tipY, width, height) -> new Vector2i(x, y - (height / 2)),
                 x, y
         );
 
-        RenderHelper.flipRender();
+        RenderHelper.setPalette(null);
 
     }
 

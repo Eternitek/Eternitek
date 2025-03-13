@@ -20,7 +20,7 @@ public class DrawContextMixin {
 
     @WrapOperation(method = "method_51743", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/tooltip/TooltipBackgroundRenderer;render(Lnet/minecraft/client/gui/DrawContext;IIIII)V"))
     public void eternitek$drawTooltipBackground(DrawContext context, int x, int y, int width, int height, int z, Operation<Void> original) {
-        if(RenderHelper.shouldRenderColored) {
+        if(RenderHelper.currentColors != null) {
             RenderHelper.renderTooltipBackground(context, x, y, width, height, z);
         } else {
             original.call(context, x, y, width, height, z);

@@ -1,6 +1,7 @@
 package io.teking.eternitek.core.util.render;
 
 import foundry.veil.api.client.color.ColorTheme;
+import io.teking.eternitek.core.block.Tooltipped;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
@@ -15,7 +16,7 @@ import static net.minecraft.client.gui.DrawContext.*;
 @Environment(EnvType.CLIENT)
 public class RenderHelper {
 
-    public static boolean shouldRenderColored = false;
+    public static Tooltipped.Palette currentColors;
 
     public static void renderTooltipBackground(DrawContext context, int x, int y, int width, int height, int z) {
 
@@ -24,9 +25,9 @@ public class RenderHelper {
         int trueWidth = width + 3 + 3;
         int trueHeight = height + 3 + 3;
 
-        int lightColor = 0xA36ABE30;
-        int darkColor  = 0xA337946E;
-        int background = 0xC8323C39;
+        int lightColor = currentColors.borderLight();
+        int darkColor  = currentColors.borderDark();
+        int background = currentColors.backgroundColor();
 
         renderHorizontalLine(context, leftEdge, topEdge - 1, trueWidth, z, background);
         renderHorizontalLine(context, leftEdge, topEdge + trueHeight, trueWidth, z, background);
@@ -40,8 +41,8 @@ public class RenderHelper {
 
     }
 
-    public static void flipRender() {
-        shouldRenderColored = !shouldRenderColored;
+    public static void setPalette(Tooltipped.Palette palette) {
+        currentColors = palette;
     }
 
 }

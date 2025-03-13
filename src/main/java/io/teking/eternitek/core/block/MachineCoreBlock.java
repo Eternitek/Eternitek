@@ -17,8 +17,8 @@ public class MachineCoreBlock extends Block implements Tooltipped {
     @Override
     public List<OrderedText> getTooltip(BlockState state) {
         return List.of(
-                Text.literal("Machine Core").fillStyle(Style.EMPTY.withBold(true).withColor(0xC4E099)).asOrderedText(),
-                Text.literal("Requires 100 GƐ").fillStyle(Style.EMPTY.withColor(0xE0B599)).asOrderedText()
+                Text.literal("Machine Core").fillStyle(TITLE).asOrderedText(),
+                Text.literal("Requires 100 GƐ").fillStyle(ERROR).asOrderedText()
         );
     }
 
