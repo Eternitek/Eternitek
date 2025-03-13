@@ -19,22 +19,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class PrimitiveFurnaceBlock extends Block {
+public class PrimitiveFurnaceBlock extends BlockWithMultiblock {
 
     public PrimitiveFurnaceBlock(Settings settings) {
-        super(settings);
+        super(EternitekCore.id("primitive_furnace"), settings);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        Multiblock multiblock = MultiblockReloadListener.MULTIBLOCKS.get(EternitekCore.id("primitive_furnace"));
-        if (!world.isClient) {
-            if (multiblock.canUse(player, pos, world)) {
-                // Open custom GUI
-                player.openHandledScreen(new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> new BlastFurnaceScreenHandler(i, playerInventory), Text.literal("Primitive Blast Furnace")));
-            }
-        }
-        return ActionResult.SUCCESS;
+    protected void useMultiblock(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(
+                (i, playerInventory, playerEntity) -> new BlastFurnaceScreenHandler(i, playerInventory),
+                Text.literal("Primitive Blast Furnace")
+        ));
     }
 
 }
