@@ -2,6 +2,8 @@ package io.teking.eternitek.core.mixin.client;
 
 import io.teking.eternitek.core.client.screen.codex.screens.CodexScreen;
 import io.teking.eternitek.core.registry.EternitekItems;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -13,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
 
