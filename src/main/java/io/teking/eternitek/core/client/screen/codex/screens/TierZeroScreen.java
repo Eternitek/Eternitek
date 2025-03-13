@@ -43,15 +43,53 @@ public class TierZeroScreen extends BaseTierScreen {
     }
 
     private void loadTechTree() {
-
         try {
             ResourceManager manager = this.client.getResourceManager();
-            Identifier id = manager.findResources("techtree", path -> path.getPath().endsWith(".json")).keySet().toArray(new Identifier[]{})[0];
+            // Find all resources in the "techtree" directory ending with ".json"
+            Map<Identifier, Resource> resources = manager.findResources("techtree", path -> path.getPath().endsWith(".json"));
+
+            // Check if any resources were found
+            if (resources.isEmpty()) {
+                errorMessage = "No tech tree JSON files found in 'techtree' directory.";
+                return;
+            }
+
+            // Get the first identifier (assuming you only want one file for now)
+            Identifier id = resources.keySet().iterator().next();
             Optional<Resource> resource = manager.getResource(id);
+
             if (resource.isPresent()) {
                 try (InputStream inputStream = resource.get().getInputStream()) {
                     InputStreamReader reader = new InputStreamReader(inputStream);
                     techTreeData = new Gson().fromJson(reader, new TypeToken<Map<String, TechNodeData>>(){}.getType());
+
+                    // Populate the nodes map from techTreeData
+                    if (techTreeData != null) {
+                        for (Map.Entry<String, TechNodeData> entry : techTreeData.entrySet()) {
+                            String key = entry.getKey();        // e.g., "apple_node"
+                            TechNodeData data = entry.getValue(); // The node's data
+
+                            // Create an Identifier for the node ID (e.g., "eternitek:apple_node")
+                            Identifier nodeId = Identifier.of("eternitek", key);
+
+                            // Create an Identifier for the icon texture (used for both icon32 and icon16)
+                            Identifier icon = Identifier.of(data.icon); // e.g., "minecraft:textures/item/apple.png"
+
+                            // Create a TechNode object with all required arguments
+                            TechNode node = new TechNode(
+                                    nodeId,           // Node ID
+                                    icon,             // icon32
+                                    icon,             // icon16 (using same texture for now)
+                                    data.position.x,  // x position
+                                    data.position.y   // y position
+                            );
+
+                            // Store it in the nodes map with the same key
+                            nodes.put(key, node);
+                        }
+                        // Log for debugging (optional)
+                        System.out.println("Loaded " + nodes.size() + " nodes");
+                    }
                 } catch (IOException e) {
                     errorMessage = "Failed to read tech tree file: " + e.getMessage();
                 }
@@ -61,7 +99,6 @@ public class TierZeroScreen extends BaseTierScreen {
         } catch (Exception e) {
             errorMessage = "Failed to load tech tree: " + e.getMessage();
         }
-
     }
 
     @Override
@@ -88,7 +125,6 @@ public class TierZeroScreen extends BaseTierScreen {
         context.drawText(this.textRenderer, text, x, y, 0xFFFFFF, true);
     }
 
-
     @Override
     protected void renderTechTree(DrawContext context, int mouseX, int mouseY, float delta) {
         int lineColor = 0xFF0000FF; // ARGB format (alpha, red, green, blue)
@@ -107,7 +143,6 @@ public class TierZeroScreen extends BaseTierScreen {
             }
         }
     }
-
 
     private void drawNode(DrawContext context, TechNode node, int centerX, int centerY) {
         int nodeX = centerX + node.getX() + offsetX;
@@ -128,10 +163,8 @@ public class TierZeroScreen extends BaseTierScreen {
         GuiGraphicsHelper.drawConnectingLine(context, startX, startY, endX, endY, 3, lineColor);
     }
 
-
     public static class GuiGraphicsHelper {
-
-        public static void drawConnectingLine(DrawContext context, int startX, int startY, int endX, int endY, int width, int color){
+        public static void drawConnectingLine(DrawContext context, int startX, int startY, int endX, int endY, int width, int color) {
             float angle = (float) Math.atan2(endY - startY, endX - startX);
             float lineLength = (float) Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
             // Save the transformation matrix
