@@ -172,6 +172,9 @@ public class CodexScreen extends Screen {
             case 0:
                 tierScreen = new TierZeroScreen(this);
                 break;
+            //case 1:
+            //    tierScreen = new QuestScreen(this, "test");
+            //    break; // debug remove later
             // todo add cases for other tiers
             default:
                 return;

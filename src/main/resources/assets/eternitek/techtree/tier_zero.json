@@ -7,7 +7,8 @@
       "x": -50,
       "y": 0
     },
-    "icon": "minecraft:textures/item/apple.png"
+    "icon": "minecraft:textures/item/apple.png",
+    "quest": "quest:gather_apples"
   },
   "golden_apple_node": {
     "parent_connection": "apple_node",
@@ -17,6 +18,7 @@
       "x": 50,
       "y": 0
     },
-    "icon": "minecraft:textures/item/golden_apple.png"
+    "icon": "minecraft:textures/item/golden_apple.png",
+    "quest": "quest:craft_golden_apple"
   }
 }

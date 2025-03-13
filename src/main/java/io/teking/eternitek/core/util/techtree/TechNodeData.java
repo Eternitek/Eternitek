@@ -6,6 +6,7 @@ public class TechNodeData {
     public int size;
     public Position position;
     public String icon;
+    public String quest;
 
     public static class Position {
         public int x;

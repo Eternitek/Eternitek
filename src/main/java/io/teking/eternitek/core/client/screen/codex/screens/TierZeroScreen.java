@@ -32,8 +32,8 @@ public class TierZeroScreen extends BaseTierScreen {
         super(Text.of("Tier 0: Crude"), parentScreen);
 
         // Center the view initially
-        this.offsetX = -mainPageWidth / 2 + 45;
-        this.offsetY = -bookHeight / 2 + 45;
+        this.offsetX = -mainPageWidth / 2 + 45 + 200;
+        this.offsetY = -bookHeight / 2 + 45 + 138;
     }
 
     @Override
@@ -60,7 +60,6 @@ public class TierZeroScreen extends BaseTierScreen {
                     InputStreamReader reader = new InputStreamReader(inputStream);
                     techTreeData = new Gson().fromJson(reader, new TypeToken<Map<String, TechNodeData>>(){}.getType());
 
-                    // Populate the nodes map from techTreeData
                     if (techTreeData != null) {
                         for (Map.Entry<String, TechNodeData> entry : techTreeData.entrySet()) {
                             String key = entry.getKey();
@@ -69,13 +68,13 @@ public class TierZeroScreen extends BaseTierScreen {
                             Identifier nodeId = EternitekCore.id(key);
                             Identifier icon = Identifier.of(data.icon);
 
-                            // Create a TechNode object with all required arguments
                             TechNode node = new TechNode(
-                                    nodeId,           // Node ID
-                                    icon,             // icon32
-                                    icon,             // icon16 (using same texture for now)
-                                    data.position.x,  // x position
-                                    data.position.y   // y position
+                                    nodeId,
+                                    icon,
+                                    icon, // Using same texture for icon16 for now
+                                    data.position.x,
+                                    data.position.y,
+                                    data.quest // Pass the quest identifier
                             );
 
                             nodes.put(key, node);
@@ -103,17 +102,39 @@ public class TierZeroScreen extends BaseTierScreen {
         }
     }
 
-    private void renderBottomLeftText(DrawContext context, String text) {
-        int screenWidth = this.width;
-        int screenHeight = this.height;
-        int textWidth = this.textRenderer.getWidth(text);
-        int textHeight = 10; // Approximate height of text
-        int padding = 2;
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        System.out.println("Mouse clicked at: (" + mouseX + ", " + mouseY + "), Button: " + button);
+        if (button == 0) { // Left-click
+            int centerX = bookRenderX + (mainPageWidth / 2);
+            int centerY = bookRenderY + (bookHeight / 2);
+            System.out.println("Center: (" + centerX + ", " + centerY + "), Offset: (" + offsetX + ", " + offsetY + ")");
 
-        int x = padding;
-        int y = screenHeight - textHeight - padding;
+            for (Map.Entry<String, TechNode> entry : nodes.entrySet()) {
+                TechNode node = entry.getValue();
+                int nodeX = centerX + node.getX() + offsetX;
+                int nodeY = centerY + node.getY() + offsetY;
+                int size = 32; // Assuming all nodes are 32x32 based on your JSON
+                System.out.println("Checking node: " + entry.getKey() + " at (" + nodeX + ", " + nodeY + "), Size: " + size);
 
-        context.drawText(this.textRenderer, text, x, y, 0xFFFFFF, true);
+                // Check if the click is within the node's bounds
+                if (mouseX >= nodeX && mouseX <= nodeX + size &&
+                        mouseY >= nodeY && mouseY <= nodeY + size) {
+                    System.out.println("Node clicked: " + entry.getKey());
+                    String questId = node.getQuest();
+                    System.out.println("Quest ID: " + questId);
+                    if (questId != null && !questId.isEmpty()) {
+                        System.out.println("Opening quest screen for: " + questId);
+                        openQuestScreen(questId); // Open the quest screen
+                        return true; // Consume the click event
+                    } else {
+                        System.out.println("No quest associated with this node.");
+                    }
+                }
+            }
+        }
+        System.out.println("Click not handled by nodes, passing to super.");
+        return super.mouseClicked(mouseX, mouseY, button); // Pass to parent if not handled
     }
 
     @Override
@@ -173,5 +194,9 @@ public class TierZeroScreen extends BaseTierScreen {
             // Restore the transformation matrix
             context.getMatrices().pop();
         }
+    }
+
+    private void openQuestScreen(String questId) {
+        MinecraftClient.getInstance().setScreen(new QuestScreen(this, questId));
     }
 }
