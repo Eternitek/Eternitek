@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "eternitek:block/primitive_furnace",
-    "side": "eternitek:block/blast_bricks",
-    "top": "eternitek:block/blast_bricks"
-  }
-}

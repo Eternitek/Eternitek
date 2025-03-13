@@ -24,6 +24,8 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
 
         translationBuilder.add(BLAST_BRICKS, "Blast Bricks");
+        translationBuilder.add(FACILITY_TILES, "Facility Tiles");
+        translationBuilder.add(MACHINE_CORE, "Machine Core");
         translationBuilder.add(PRIMITIVE_FURNACE, "Primitive Furnace");
 
         translationBuilder.add(EternitekCore.ETERNITEK_CORE, "Eternitek Core");
