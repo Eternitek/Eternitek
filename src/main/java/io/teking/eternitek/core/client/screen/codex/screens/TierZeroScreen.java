@@ -45,16 +45,13 @@ public class TierZeroScreen extends BaseTierScreen {
     private void loadTechTree() {
         try {
             ResourceManager manager = this.client.getResourceManager();
-            // Find all resources in the "techtree" directory ending with ".json"
             Map<Identifier, Resource> resources = manager.findResources("techtree", path -> path.getPath().endsWith(".json"));
 
-            // Check if any resources were found
             if (resources.isEmpty()) {
                 errorMessage = "No tech tree JSON files found in 'techtree' directory.";
                 return;
             }
 
-            // Get the first identifier (assuming you only want one file for now)
             Identifier id = resources.keySet().iterator().next();
             Optional<Resource> resource = manager.getResource(id);
 
@@ -66,14 +63,11 @@ public class TierZeroScreen extends BaseTierScreen {
                     // Populate the nodes map from techTreeData
                     if (techTreeData != null) {
                         for (Map.Entry<String, TechNodeData> entry : techTreeData.entrySet()) {
-                            String key = entry.getKey();        // e.g., "apple_node"
-                            TechNodeData data = entry.getValue(); // The node's data
+                            String key = entry.getKey();
+                            TechNodeData data = entry.getValue();
 
-                            // Create an Identifier for the node ID (e.g., "eternitek:apple_node")
-                            Identifier nodeId = Identifier.of("eternitek", key);
-
-                            // Create an Identifier for the icon texture (used for both icon32 and icon16)
-                            Identifier icon = Identifier.of(data.icon); // e.g., "minecraft:textures/item/apple.png"
+                            Identifier nodeId = EternitekCore.id(key);
+                            Identifier icon = Identifier.of(data.icon);
 
                             // Create a TechNode object with all required arguments
                             TechNode node = new TechNode(
@@ -84,11 +78,8 @@ public class TierZeroScreen extends BaseTierScreen {
                                     data.position.y   // y position
                             );
 
-                            // Store it in the nodes map with the same key
                             nodes.put(key, node);
                         }
-                        // Log for debugging (optional)
-                        System.out.println("Loaded " + nodes.size() + " nodes");
                     }
                 } catch (IOException e) {
                     errorMessage = "Failed to read tech tree file: " + e.getMessage();
@@ -134,13 +125,16 @@ public class TierZeroScreen extends BaseTierScreen {
 
         for (Map.Entry<String, TechNode> entry : nodes.entrySet()) {
             TechNode node = entry.getValue();
-            drawNode(context, node, centerX, centerY);
-
             String parentKey = techTreeData.get(entry.getKey()).parent_connection;
             if (!parentKey.equals("root") && nodes.containsKey(parentKey)) {
                 TechNode parentNode = nodes.get(parentKey);
                 drawLineBetweenNodes(context, parentNode, node, centerX, centerY, lineColor);
             }
+        }
+
+        for (Map.Entry<String, TechNode> entry : nodes.entrySet()) {
+            TechNode node = entry.getValue();
+            drawNode(context, node, centerX, centerY);
         }
     }
 
