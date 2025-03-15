@@ -13,7 +13,8 @@ public class TechTree {
 
     private final String name;
     private final Identifier id;
-    private final Map<Identifier, TechNode> nodes;
+    private final List<TechNode> nodes;
+    private final Map<Identifier, TechNode> nodeMap;
 
     public static final Codec<TechTree> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("name").forGetter(TechTree::getName),
@@ -24,9 +25,10 @@ public class TechTree {
     private TechTree(String name, Identifier id, List<TechNode> nodes) {
         this.name = name;
         this.id = id;
-        this.nodes = new HashMap<>();
+        this.nodes = nodes;
+        this.nodeMap = new HashMap<>();
         for(TechNode node : nodes) {
-            this.nodes.put(node.getIdentifier(), node);
+            this.nodeMap.put(node.getIdentifier(), node);
         }
     }
 
@@ -39,11 +41,11 @@ public class TechTree {
     }
 
     public Map<Identifier, TechNode> getNodeMap() {
-        return nodes;
+        return nodeMap;
     }
 
     public List<TechNode> getNodes() {
-        return nodes.values().stream().toList();
+        return nodes;
     }
 
 }

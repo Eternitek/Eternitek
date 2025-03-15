@@ -58,7 +58,7 @@ public class TechTreeReloadListener implements SimpleSynchronousResourceReloadLi
                 TREES.put(tree.getId(), tree);
 
             } catch(Exception error) {
-                EternitekCore.LOGGER.info("Error occurred loading tech tree {} from resource: {}", id, error);
+                EternitekCore.LOGGER.error("Error occurred loading tech tree {} from resource: {}", id, error);
                 error.printStackTrace();
             }
         }
