@@ -15,7 +15,7 @@ public abstract class BlockWithMultiblock extends Block {
 
     protected final Identifier multiblock;
 
-    public BlockWithMultiblock(Identifier multiblock, Settings settings) {
+    protected BlockWithMultiblock(Identifier multiblock, Settings settings) {
         super(settings);
         this.multiblock = multiblock;
     }

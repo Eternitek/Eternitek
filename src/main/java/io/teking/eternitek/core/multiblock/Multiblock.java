@@ -125,7 +125,6 @@ public class Multiblock {
     }
 
     public Vec3i getCorePos() {
-        EternitekCore.LOGGER.info("Height: {}, Width: {}, Length: {}", height, width, length);
         for(int y = 0; y < height; y++) {
             for(int z = 0; z < length; z++) {
                 for(int x = 0; x < width; x++) {
