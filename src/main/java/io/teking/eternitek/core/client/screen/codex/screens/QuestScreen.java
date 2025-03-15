@@ -4,12 +4,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class QuestScreen extends Screen {
-    private final Screen parent;
-    private final String questId;
 
-    public QuestScreen(Screen parent, String questId) {
+    private final Screen parent;
+    private final Identifier questId;
+
+    public QuestScreen(Screen parent, Identifier questId) {
         super(Text.of("Quest: " + questId));
         this.parent = parent;
         this.questId = questId;
@@ -32,4 +34,5 @@ public class QuestScreen extends Screen {
         MinecraftClient.getInstance().setScreen(parent);
         return true;
     }
+
 }

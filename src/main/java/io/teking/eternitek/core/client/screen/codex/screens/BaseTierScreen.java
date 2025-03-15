@@ -121,7 +121,7 @@ public abstract class BaseTierScreen extends Screen {
         context.getMatrices().translate(treeOriginX + offsetX, treeOriginY + offsetY, 0);
 
         // Render tech tree content here
-        renderTechTree(context, mouseX - bookScreenX - offsetX, mouseY - bookScreenY - offsetY, delta);
+        this.renderTechTree(context, mouseX - bookScreenX - offsetX, mouseY - bookScreenY - offsetY, delta);
 
         context.getMatrices().pop();
         context.disableScissor();

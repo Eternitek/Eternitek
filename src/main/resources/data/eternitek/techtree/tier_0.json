@@ -1,0 +1,26 @@
+{
+  "name": "Tier 0: Crude",
+  "id": "eternitek:tier_0",
+  "nodes": [
+    {
+      "node": "eternitek:apple",
+      "icon": "minecraft:textures/item/apple.png",
+      "item": "minecraft:apple",
+      "position": {
+        "x": -50,
+        "y": 0
+      }
+    },
+    {
+      "node": "eternitek:golden_apple",
+      "parent": "eternitek:apple",
+      "icon": "minecraft:textures/item/golden_apple.png",
+      "item": "minecraft:golden_apple",
+      "position": {
+        "x": 50,
+        "y": 0
+      }
+    }
+  ]
+}
+

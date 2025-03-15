@@ -5,6 +5,7 @@ import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;
 import io.teking.eternitek.core.registry.EternitekTabs;
 import io.teking.eternitek.core.resource.MultiblockReloadListener;
+import io.teking.eternitek.core.resource.TechTreeReloadListener;
 import io.teking.eternitek.core.util.fun.Facts;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -43,6 +44,11 @@ public class EternitekCore implements ModInitializer {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
                 EternitekCore.id("multiblock"),
                 MultiblockReloadListener::new
+        );
+
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
+                EternitekCore.id("techtree"),
+                TechTreeReloadListener::new
         );
 
         LOGGER.info("Successfully loaded");

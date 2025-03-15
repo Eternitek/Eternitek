@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import org.joml.Quaternionf;
 
 import java.util.List;
 
@@ -43,6 +44,22 @@ public class RenderHelper {
 
     public static void setPalette(Tooltipped.Palette palette) {
         currentColors = palette;
+    }
+
+    public static void drawConnectingLine(DrawContext context, int startX, int startY, int endX, int endY, int width, int color) {
+        float angle = (float) Math.atan2(endY - startY, endX - startX);
+        float lineLength = (float) Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+        // Save the transformation matrix
+        context.getMatrices().push();
+        // Perform the transformations
+        context.getMatrices().translate(startX, startY, 0);
+        context.getMatrices().multiply(new Quaternionf().rotationZ(angle));
+
+        // Draw the rectangle
+        context.fill(0, -width / 2, (int) lineLength, width / 2, color);
+
+        // Restore the transformation matrix
+        context.getMatrices().pop();
     }
 
 }
