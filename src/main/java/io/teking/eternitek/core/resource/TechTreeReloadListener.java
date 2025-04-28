@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class TechTreeReloadListener implements SimpleSynchronousResourceReloadListener {
 
-    private RegistryWrapper.WrapperLookup wrapperLookup;
+    private final RegistryWrapper.WrapperLookup wrapperLookup;
 
     public static final Map<Identifier, TechTree> TREES = new HashMap<>();
 

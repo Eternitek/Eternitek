@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 
 public class MultiblockReloadListener implements SimpleSynchronousResourceReloadListener {
 
-    private RegistryWrapper.WrapperLookup wrapperLookup;
+    private final RegistryWrapper.WrapperLookup wrapperLookup;
 
     public static final Map<Identifier, Multiblock> MULTIBLOCKS = new HashMap<>();
 
