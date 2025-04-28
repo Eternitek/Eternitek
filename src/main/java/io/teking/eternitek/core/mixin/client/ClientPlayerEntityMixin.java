@@ -1,5 +1,6 @@
 package io.teking.eternitek.core.mixin.client;
 
+import io.teking.eternitek.core.client.screen.codex.screens.CodexScreen;
 import io.teking.eternitek.core.registry.EternitekItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -23,7 +24,7 @@ public class ClientPlayerEntityMixin {
     @Inject(method = "useBook", at = @At("TAIL"))
     public void eternitek$openCodex(ItemStack book, Hand hand, CallbackInfo ci) {
         if(book.isOf(EternitekItems.CODEX)) {
-//            this.client.setScreen(new CodexScreen());
+            this.client.setScreen(new CodexScreen());
         }
     }
 
