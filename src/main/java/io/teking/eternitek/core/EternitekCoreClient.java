@@ -26,44 +26,7 @@ public class EternitekCoreClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        HudRenderCallback.EVENT.register(EternitekCoreClient::renderBlockTooltip);
-    }
 
-    private static void renderBlockTooltip(DrawContext context, RenderTickCounter counter) {
-
-        MinecraftClient client = MinecraftClient.getInstance();
-        TextRenderer textRenderer = client.textRenderer;
-
-        if(client.currentScreen != null) return;
-        BlockState state = getLookingAt(client.player);
-        if(!(state.getBlock() instanceof Tooltipped block)) return;
-        if(!client.player.isSneaking()) return;
-
-        int windowWidth = context.getScaledWindowWidth();
-        int windowHeight = context.getScaledWindowHeight();
-
-        int x = (windowWidth / 2) + 20;
-        int y = (windowHeight / 2);
-
-        RenderHelper.setPalette(block.getColors());
-
-        List<OrderedText> tooltip = block.getTooltip(state);
-
-        context.drawTooltip(
-                textRenderer,
-                tooltip,
-                (screenWidth, screenHeight, tipX, tipY, width, height) -> new Vector2i(x, y - (height / 2)),
-                x, y
-        );
-
-        RenderHelper.setPalette(null);
-
-    }
-
-    private static BlockState getLookingAt(PlayerEntity player) {
-        HitResult hitResult = player.raycast(player.getBlockInteractionRange(), 0.0F, false);
-        if(!(hitResult instanceof BlockHitResult blockHitResult)) return Blocks.AIR.getDefaultState();
-        return player.getWorld().getBlockState(blockHitResult.getBlockPos());
     }
 
 }
