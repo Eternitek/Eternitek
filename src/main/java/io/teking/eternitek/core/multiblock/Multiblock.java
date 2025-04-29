@@ -138,10 +138,8 @@ public class Multiblock {
     }
 
     public boolean canUse(PlayerEntity player, BlockPos pos, World world) {
-        if(isValid(pos, world)) {
-            return true;
-        }
-        player.sendMessage(Text.translatable("texts.eternitek.invalid_structure"), true);
+        if(isValid(pos, world)) return true;
+        player.sendMessage(Text.translatable("texts.eternitek.invalid_structure").withColor(0xE43B44), true);
         return false;
     }
 

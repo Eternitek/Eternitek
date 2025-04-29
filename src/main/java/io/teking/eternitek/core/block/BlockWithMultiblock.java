@@ -14,7 +14,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BlockWithMultiblock extends BlockWithEntity {
+public abstract class BlockWithMultiblock extends Block {
 
     protected final Identifier multiblock;
 
