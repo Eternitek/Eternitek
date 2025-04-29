@@ -32,6 +32,7 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(EternitekTabs.ETERNITEK_CORE, "Eternitek Core");
 
         translationBuilder.add("texts.eternitek.invalid_structure", "Invalid structure");
+        translationBuilder.add("texts.eternitek.no_tree", "Failed to load tech tree for identifier '%s'");
 
     }
 

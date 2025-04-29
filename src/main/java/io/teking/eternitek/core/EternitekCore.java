@@ -40,7 +40,6 @@ public class EternitekCore implements ModInitializer {
         EternitekItems.register();
         EternitekTabs.register();
 
-
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
                 EternitekCore.id("multiblock"),
                 MultiblockReloadListener::new

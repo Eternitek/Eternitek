@@ -7,5 +7,6 @@
   "item.eternitek.codex": "Codex",
   "item.eternitek.crude_steel_ingot": "Crude Steel Ingot",
   "itemGroup.eternitek_core": "Eternitek Core",
-  "texts.eternitek.invalid_structure": "Invalid structure"
+  "texts.eternitek.invalid_structure": "Invalid structure",
+  "texts.eternitek.no_tree": "Failed to load tech tree for identifier '%s'"
 }

@@ -1,5 +1,6 @@
 package io.teking.eternitek.core.resource;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
@@ -41,21 +42,14 @@ public class TechTreeReloadListener implements SimpleSynchronousResourceReloadLi
     public void reload(ResourceManager manager) {
 
         for(Identifier id : manager.findResources("techtree", path -> path.getPath().endsWith(".json")).keySet()) {
-            try(InputStream stream = manager.getResource(id).orElseThrow().getInputStream()) {
+            try(InputStream stream = manager.getResource(id).get().getInputStream()) {
 
                 JsonObject object = JsonHelper.deserialize(new InputStreamReader(stream, StandardCharsets.UTF_8));
-                DataResult<TechTree> result = TechTree.CODEC.parse(
-                        RegistryOps.of(
-                                JsonOps.INSTANCE,
-                                wrapperLookup
-                        ),
-                        object
-                );
+                DataResult<TechTree> result = TechTree.CODEC.parse(JsonOps.INSTANCE, object);
 
-                TechTree tree = result.getOrThrow();
-                if(tree == null) continue;
-                EternitekCore.LOGGER.info("Tech tree id: {}", tree.getId());
-                TREES.put(tree.getId(), tree);
+                TechTree tree = result.resultOrPartial(EternitekCore.LOGGER::error).orElseThrow();
+                EternitekCore.LOGGER.info("Tech tree id: {}", tree.id());
+                TREES.put(tree.id(), tree);
 
             } catch(Exception error) {
                 EternitekCore.LOGGER.error("Error occurred loading tech tree {} from resource: {}", id, error);
