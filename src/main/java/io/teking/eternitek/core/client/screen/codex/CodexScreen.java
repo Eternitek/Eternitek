@@ -13,7 +13,7 @@ public class CodexScreen extends Screen {
 
     public static final Identifier TEXTURE = EternitekCore.id("textures/gui/codex.png");
 
-    private Text errorMessage;
+    private Text errorMessage = Text.empty();
 
     public CodexScreen() {
 
