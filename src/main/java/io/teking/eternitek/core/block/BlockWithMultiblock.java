@@ -31,15 +31,9 @@ public abstract class BlockWithMultiblock extends Block {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if(!world.isClient && this.getMultiblock().canUse(player, pos, world)) useMultiblock(state, world, pos, player, hit);
+        if(world.isClient || !this.getMultiblock().canUse(player, pos, world)) return ActionResult.FAIL;
+        useMultiblock(state, world, pos, player, hit);
         return ActionResult.SUCCESS;
-    }
-
-    public static class Entity extends BlockEntity {
-
-        public Entity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-            super(type, pos, state);
-        }
     }
 
 }

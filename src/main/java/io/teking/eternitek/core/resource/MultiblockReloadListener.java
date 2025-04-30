@@ -47,10 +47,7 @@ public class MultiblockReloadListener implements SimpleSynchronousResourceReload
 
                 JsonObject object = JsonHelper.deserialize(new InputStreamReader(stream, StandardCharsets.UTF_8));
                 DataResult<Multiblock.Data> result = Multiblock.Data.CODEC.parse(
-                        RegistryOps.of(
-                                JsonOps.INSTANCE,
-                                wrapperLookup
-                        ),
+                        RegistryOps.of(JsonOps.INSTANCE, wrapperLookup),
                         object
                 );
 
