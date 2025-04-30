@@ -1,7 +1,6 @@
 package io.teking.eternitek.core;
 
 import io.teking.eternitek.core.block.BlockWithMultiblock;
-import io.teking.eternitek.core.block.Tooltipped;
 import io.teking.eternitek.core.util.render.RenderHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
