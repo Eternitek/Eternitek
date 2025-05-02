@@ -1,5 +1,7 @@
 accessWidener v2 named
 
+accessible field net/minecraft/client/gui/screen/Screen drawables Ljava/util/List;
+
 accessible class net/minecraft/screen/slot/ArmorSlot
 
 accessible method net/minecraft/client/gui/tooltip/TooltipBackgroundRenderer renderBorder (Lnet/minecraft/client/gui/DrawContext;IIIIIII)V

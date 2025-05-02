@@ -7,10 +7,9 @@ import io.teking.eternitek.core.util.render.RenderHelper;
 import io.teking.eternitek.core.util.techtree.TechNode;
 import io.teking.eternitek.core.util.techtree.TechTree;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
-import static io.teking.eternitek.core.resource.TechTreeReloadListener.TREES;
 
 public class TechTreeScreen extends CodexScreen {
 
@@ -26,21 +25,35 @@ public class TechTreeScreen extends CodexScreen {
     }
 
     @Override
+    protected void init() {
+
+        super.init();
+
+        for(TechNode node : this.tree.nodes()) {
+            int x = (this.width / 2) - 14 + node.x();
+            int y = (this.height / 2) - 14 + (-1 * node.y());
+            this.addDrawableChild(new NodeWidget(x, y, node));
+        }
+
+    }
+
+    @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
 
         super.render(context, mouseX, mouseY, delta);
 
         RenderHelper helper = new RenderHelper(context);
+
         for(TechNode node : this.tree.nodes()) {
-
-            NodeWidget widget = new NodeWidget(node);
-
-            if(node.parent().compareTo(EternitekCore.id("root")) != 0 && this.tree.getNodeMap().containsKey(node.parent())) {
-                helper.drawConnectingLine(node, this.tree.getNodeMap().get(node.parent()), 2, 0xFF526D82);
+            if(node.connections().contains(EternitekCore.id("root"))) continue;
+            for(Identifier connect : node.connections()) {
+                if(!this.tree.getNodeMap().containsKey(connect)) continue;
+                helper.drawConnectingLine(node, this.tree.getNodeMap().get(connect), 2, 0xFF27374D);
             }
+        }
 
-            widget.render(context, mouseX, mouseY, delta);
-
+        for(Drawable drawable : this.drawables) {
+            drawable.render(context, mouseX, mouseY, delta);
         }
 
     }

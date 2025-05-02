@@ -65,9 +65,6 @@ public class NodeWidget extends ClickableWidget {
             );
         }
 
-    @Override
-    public void setTooltip(@Nullable Tooltip tooltip) {
-        super.setTooltip(Tooltip.of(Text.of(node.identifier())));
     }
 
     @Override

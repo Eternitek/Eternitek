@@ -4,38 +4,97 @@
   "nodes": [
     {
       "node": "eternitek:simple",
+      "tooltip": [
+        {
+          "text": "Simple",
+          "color": "#A5AFB1"
+        },
+        {
+          "text": "The name says it all.",
+          "color": "#A5AFB1"
+        }
+      ],
       "icon": "eternitek:textures/item/simple_keycard.png",
-      "x": -100,
-      "y": 0
+      "position": {
+        "x": 0,
+        "y": 0
+      }
     },
     {
       "node": "eternitek:gelatinous",
-      "parent": "eternitek:simple",
+      "tooltip": [
+        {
+          "text": "Gelatinous",
+          "color": "#A7B580"
+        },
+        {
+          "text": "Eugh. It's sticky.",
+          "color": "#A5AFB1"
+        }
+      ],
+      "connections": [ "eternitek:simple" ],
       "icon": "eternitek:textures/item/gelatinous_keycard.png",
-      "x": -50,
-      "y": 20
-    },
-    {
-      "node": "eternitek:breezy",
-      "parent": "eternitek:gelatinous",
-      "icon": "eternitek:textures/item/breezy_keycard.png",
-      "x": 0,
-      "y": 0
+      "position": {
+        "x": -60,
+        "y": 0
+      }
     },
     {
       "node": "eternitek:reverious",
-      "parent": "eternitek:breezy",
+      "tooltip": [
+        {
+          "text": "Reverious",
+          "color": "#CC4F82"
+        },
+        {
+          "text": "Is it... breathing?",
+          "color": "#A5AFB1"
+        }
+      ],
+      "connections": [ "eternitek:simple" ],
       "icon": "eternitek:textures/item/reverious_keycard.png",
-      "x": 50,
-      "y": -20
+      "position": {
+        "x": 0,
+        "y": 60
+      }
+    },
+    {
+      "node": "eternitek:breezy",
+      "tooltip": [
+        {
+          "text": "Breezy",
+          "color": "#8B97C9"
+        },
+        {
+          "text": "Wheeeeeee!",
+          "color": "#A5AFB1"
+        }
+      ],
+      "connections": [ "eternitek:simple" ],
+      "icon": "eternitek:textures/item/breezy_keycard.png",
+      "position": {
+        "x": 60,
+        "y": 0
+      }
     },
     {
       "node": "eternitek:gilded",
-      "parent": "eternitek:reverious",
+      "tooltip": [
+        {
+          "text": "Gilded",
+          "color": "#E9BE6A"
+        },
+        {
+          "text": "For executives only.",
+          "color": "#A5AFB1"
+        }
+      ],
+      "connections": [ "eternitek:simple" ],
       "icon": "eternitek:textures/item/gilded_keycard.png",
-      "x": 100,
-      "y": 0
+      "position": {
+        "x": 0,
+        "y": -60
+      }
     }
   ]
 }
-

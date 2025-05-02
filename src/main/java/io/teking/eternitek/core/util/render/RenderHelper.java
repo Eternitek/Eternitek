@@ -39,10 +39,14 @@ public class RenderHelper {
     }
 
     public void drawConnectingLine(TechNode start, TechNode end, int width, int color) {
-        drawConnectingLine(start.x(), start.y(), end.x(), end.y(), width, color);
+        drawConnectingLine(start, end, width, color, color);
     }
 
-    public void drawConnectingLine(int startX, int startY, int endX, int endY, int width, int color) {
+    public void drawConnectingLine(TechNode start, TechNode end, int width, int colorStart, int colorEnd) {
+        drawConnectingLine(start.x(), start.y(), end.x(), end.y(), width, colorStart, colorEnd);
+    }
+
+    public void drawConnectingLine(int startX, int startY, int endX, int endY, int width, int colorStart, int colorEnd) {
 
         MatrixStack matrices = context.getMatrices();
 
@@ -60,11 +64,12 @@ public class RenderHelper {
 
         matrices.push();
 
-            matrices.translate(startX, startY, 0);
+            matrices.translate(startX, startY, 1);
             matrices.translate(windowWidthCenter, windowHeightCenter, 0);
             matrices.multiply(RotationAxis.POSITIVE_Z.rotation(angle));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-90.0F));
 
-            context.fill(0, -(width / 2), lineLength, (width / 2), color);
+            context.fillGradient(-(width / 2), 0, (width / 2), lineLength, colorStart, colorEnd); // TO-DO: Figure out pixelated lines?
 
         matrices.pop();
 
