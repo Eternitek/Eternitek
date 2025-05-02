@@ -5,6 +5,7 @@ import io.teking.eternitek.core.client.screen.codex.CodexScreen;
 import io.teking.eternitek.core.resource.TechTreeReloadListener;
 import io.teking.eternitek.core.util.render.RenderHelper;
 import io.teking.eternitek.core.util.techtree.TechNode;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
@@ -21,8 +22,9 @@ public class NodeWidget extends ClickableWidget {
 
     private final TechNode node;
 
-    public NodeWidget(TechNode node) {
-        super(node.x(), node.y(), 28, 28, Text.of(node.identifier()));
+    public NodeWidget(int x, int y, TechNode node) {
+        super(x, y, 28, 28, node.tooltip().getFirst());
+        this.visible = true;
         this.node = node;
     }
 
@@ -32,9 +34,9 @@ public class NodeWidget extends ClickableWidget {
         int windowWidthCenter = (context.getScaledWindowWidth() / 2) - (this.width / 2);
         int windowHeightCenter = (context.getScaledWindowHeight() / 2) - (this.height / 2);
 
-        int readX = this.getX();
-        int readY = this.getY() * -1; // We multiply by -1 to make this more consistent with regular rectangular coordinates
-                                      // (i.e. (0, -50) is down on the screen rather than up)
+        int readX = this.node.x();
+        int readY = this.node.y() * -1; // We multiply by -1 to make this more consistent with regular rectangular coordinates
+                                        // (i.e. (0, -50) is down on the screen rather than up)
 
         int x = windowWidthCenter + readX;
         int y = windowHeightCenter + readY;
@@ -44,7 +46,7 @@ public class NodeWidget extends ClickableWidget {
                 x, y, 4,
                 338, 0, // TO-DO: Update once texture is finalized
                 this.getWidth(), this.getHeight(),
-                512, 256
+                512, 512
         );
 
         context.drawTexture(
@@ -55,7 +57,13 @@ public class NodeWidget extends ClickableWidget {
                 16, 16
         );
 
-    }
+        if(isMouseOver(mouseX, mouseY) && !node.tooltip().getFirst().equals(Text.empty())) {
+            context.drawTooltip(
+                    MinecraftClient.getInstance().textRenderer,
+                    node.tooltip(),
+                    mouseX, mouseY
+            );
+        }
 
     @Override
     public void setTooltip(@Nullable Tooltip tooltip) {
