@@ -4,7 +4,6 @@ import net.minecraft.util.math.random.Random;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Facts {
 

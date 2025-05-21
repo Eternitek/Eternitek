@@ -3,7 +3,6 @@ package io.teking.eternitek.core.machine;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Tier {

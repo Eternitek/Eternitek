@@ -1,22 +1,12 @@
 package io.teking.eternitek.core.client.screen.codex.widget;
 
-import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.client.screen.codex.CodexScreen;
-import io.teking.eternitek.core.resource.TechTreeReloadListener;
-import io.teking.eternitek.core.util.render.RenderHelper;
 import io.teking.eternitek.core.util.techtree.TechNode;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
-
-import static io.teking.eternitek.core.resource.TechTreeReloadListener.TREES;
 
 public class NodeWidget extends ClickableWidget {
 

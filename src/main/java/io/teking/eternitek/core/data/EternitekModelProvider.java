@@ -2,10 +2,12 @@ package io.teking.eternitek.core.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.*;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
 
-import static io.teking.eternitek.core.registry.EternitekItems.*;
 import static io.teking.eternitek.core.registry.EternitekBlocks.*;
+import static io.teking.eternitek.core.registry.EternitekItems.*;
 
 public class EternitekModelProvider extends FabricModelProvider {
 

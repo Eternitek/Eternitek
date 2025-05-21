@@ -1,6 +1,5 @@
 package io.teking.eternitek.core.data;
 
-import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.registry.EternitekTabs;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -8,8 +7,8 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static io.teking.eternitek.core.registry.EternitekItems.*;
 import static io.teking.eternitek.core.registry.EternitekBlocks.*;
+import static io.teking.eternitek.core.registry.EternitekItems.*;
 
 public class EternitekLanguageProvider extends FabricLanguageProvider {
 

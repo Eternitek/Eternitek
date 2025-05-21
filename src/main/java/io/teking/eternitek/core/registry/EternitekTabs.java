@@ -14,7 +14,8 @@ import net.minecraft.text.Text;
 
 import java.util.function.Supplier;
 
-import static io.teking.eternitek.core.registry.EternitekBlocks.*;
+import static io.teking.eternitek.core.registry.EternitekBlocks.BLAST_BRICKS;
+import static io.teking.eternitek.core.registry.EternitekBlocks.PRIMITIVE_FURNACE;
 import static io.teking.eternitek.core.registry.EternitekItems.*;
 
 public class EternitekTabs {

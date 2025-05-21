@@ -1,17 +1,13 @@
 package io.teking.eternitek.core.util.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.teking.eternitek.core.util.techtree.TechNode;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import org.joml.Matrix4f;
-import org.joml.Vector2i;
 
 @Environment(EnvType.CLIENT)
 public class RenderHelper {

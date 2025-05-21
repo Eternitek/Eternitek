@@ -4,10 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.teking.eternitek.core.EternitekCore;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.*;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 
 import java.util.List;
