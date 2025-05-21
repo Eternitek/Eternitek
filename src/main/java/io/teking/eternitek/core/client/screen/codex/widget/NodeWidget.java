@@ -12,8 +12,16 @@ public class NodeWidget extends ClickableWidget {
 
     private final TechNode node;
 
+    private final int startX;
+    private final int startY;
+
+    private int offsetX;
+    private int offsetY;
+
     public NodeWidget(int x, int y, TechNode node) {
         super(x, y, 28, 28, node.tooltip().getFirst());
+        this.startX = x;
+        this.startY = y;
         this.visible = true;
         this.node = node;
     }
@@ -30,6 +38,9 @@ public class NodeWidget extends ClickableWidget {
 
         int x = windowWidthCenter + readX;
         int y = windowHeightCenter + readY;
+
+        this.setX(startX + offsetX);
+        this.setY(startY + offsetY);
 
         context.drawTexture(
                 CodexScreen.TEXTURE,
@@ -55,6 +66,11 @@ public class NodeWidget extends ClickableWidget {
             );
         }
 
+    }
+
+    public void updateOffset(int offsetX, int offsetY) {
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     @Override

@@ -11,14 +11,24 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class TechTreeScreen extends CodexScreen {
 
     private final TechTree tree;
+
+    private boolean isDragging;
+    private int lastMouseX;
+    private int lastMouseY;
+
+    private int offsetX;
+    private int offsetY;
 
     public TechTreeScreen(Identifier treeId) {
 
         super();
 
+        this.isDragging = false;
         this.tree = TechTreeReloadListener.TREES.get(treeId);
         if(tree == null) setError(Text.translatable("texts.eternitek.no_tree", treeId));
 
@@ -42,20 +52,70 @@ public class TechTreeScreen extends CodexScreen {
 
         super.render(context, mouseX, mouseY, delta);
 
-        RenderHelper helper = new RenderHelper(context);
+        context.getMatrices().push();
 
-        for(TechNode node : this.tree.nodes()) {
-            if(node.connections().contains(EternitekCore.id("root"))) continue;
-            for(Identifier connect : node.connections()) {
-                if(!this.tree.getNodeMap().containsKey(connect)) continue;
-                helper.drawConnectingLine(node, this.tree.getNodeMap().get(connect), 2, 0xFF27374D);
+            context.getMatrices().translate(offsetX, offsetY, 0);
+
+            RenderHelper helper = new RenderHelper(context);
+
+            for(TechNode node : this.tree.nodes()) {
+                if(node.connections().contains(EternitekCore.id("root"))) continue;
+                for(Identifier connect : node.connections()) {
+                    if(!this.tree.getNodeMap().containsKey(connect)) continue;
+                    helper.drawConnectingLine(node, this.tree.getNodeMap().get(connect), 2, 0xFF27374D);
+                }
             }
+
+            for(Drawable drawable : this.drawables) {
+                if(drawable instanceof NodeWidget node) node.updateOffset(offsetX, offsetY);
+                drawable.render(context, mouseX, mouseY, delta);
+            }
+
+        context.getMatrices().pop();
+
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+
+        if(isLeft(button)) {
+            this.isDragging = true;
+            this.lastMouseX = (int) mouseX;
+            this.lastMouseY = (int) mouseY;
+            return true;
         }
 
-        for(Drawable drawable : this.drawables) {
-            drawable.render(context, mouseX, mouseY, delta);
+        return super.mouseClicked(mouseX, mouseY, button);
+
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+
+        if(isLeft(button)) {
+            this.isDragging = false;
+            return true;
         }
 
+        return super.mouseReleased(mouseX, mouseY, button);
+
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+
+        if(isDragging && isLeft(button)) {
+            this.offsetX = (int) Math.clamp(offsetX + deltaX, -200, 200);
+            this.offsetY = (int) Math.clamp(offsetY + deltaY, -200, 200);
+            return true;
+        }
+
+        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+
+    }
+
+    private boolean isLeft(int button) {
+        return button == GLFW_MOUSE_BUTTON_LEFT;
     }
 
 }
