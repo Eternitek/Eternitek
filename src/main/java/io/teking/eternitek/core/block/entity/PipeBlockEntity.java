@@ -199,4 +199,8 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
         );
         nbt.put("Storage", storageNbt);
     }
+
+    public SingleVariantStorage<ItemVariant> getStorage() {
+        return storage;
+    }
 }

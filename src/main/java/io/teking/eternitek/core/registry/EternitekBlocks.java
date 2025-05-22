@@ -4,6 +4,8 @@ import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.block.MachineCoreBlock;
 import io.teking.eternitek.core.block.PipeBlock;
 import io.teking.eternitek.core.block.PrimitiveFurnaceBlock;
+import io.teking.eternitek.core.block.TransferTerminalBlock;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -23,6 +25,11 @@ public class EternitekBlocks {
     public static final Block PRIMITIVE_FURNACE = new PrimitiveFurnaceBlock(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.5F));
 
     public static final Block DEV_PIPE_BLOCK = new PipeBlock(AbstractBlock.Settings.create().mapColor(MapColor.IRON_GRAY).instrument(NoteBlockInstrument.IRON_XYLOPHONE /* Add Metal Pipe Easter Egg*/).requiresTool().strength(5.0F, 6.0F).sounds(BlockSoundGroup.METAL));
+    public static final Block TRANSFER_TERMINAL = new TransferTerminalBlock(AbstractBlock.Settings.create()
+            .strength(3.5f)
+            .requiresTool()
+            .sounds(BlockSoundGroup.GLASS)
+            .nonOpaque());
 
     public static void register() {
 
@@ -33,7 +40,7 @@ public class EternitekBlocks {
         registerBlockWithItem("primitive_furnace", PRIMITIVE_FURNACE);
 
         registerBlockWithItem("dev_pipe", DEV_PIPE_BLOCK);
-
+        registerBlockWithItem("transfer_terminal", TRANSFER_TERMINAL);
 
     }
 
