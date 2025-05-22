@@ -2,6 +2,7 @@ package io.teking.eternitek.core.registry;
 
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.block.MachineCoreBlock;
+import io.teking.eternitek.core.block.PipeBlock;
 import io.teking.eternitek.core.block.PrimitiveFurnaceBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
 
 public class EternitekBlocks {
 
@@ -20,6 +22,8 @@ public class EternitekBlocks {
     public static final Block MACHINE_CORE = new MachineCoreBlock(AbstractBlock.Settings.create());
     public static final Block PRIMITIVE_FURNACE = new PrimitiveFurnaceBlock(AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).requiresTool().strength(3.5F));
 
+    public static final Block DEV_PIPE_BLOCK = new PipeBlock(AbstractBlock.Settings.create().mapColor(MapColor.IRON_GRAY).instrument(NoteBlockInstrument.IRON_XYLOPHONE /* Add Metal Pipe Easter Egg*/).requiresTool().strength(5.0F, 6.0F).sounds(BlockSoundGroup.METAL));
+
     public static void register() {
 
         registerBlockWithItem("blast_bricks", BLAST_BRICKS);
@@ -27,6 +31,9 @@ public class EternitekBlocks {
 
         registerBlockWithItem("machine_core", MACHINE_CORE);
         registerBlockWithItem("primitive_furnace", PRIMITIVE_FURNACE);
+
+        registerBlockWithItem("dev_pipe", DEV_PIPE_BLOCK);
+
 
     }
 

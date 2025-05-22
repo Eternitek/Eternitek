@@ -1,5 +1,7 @@
 package io.teking.eternitek.core.block.transfer.pipe.connection;
 
+import io.teking.eternitek.core.block.entity.PipeBlockEntity;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.minecraft.block.entity.BlockEntity;
 
@@ -34,7 +36,7 @@ public interface Connectible<T extends TransferVariant<?>> {
      * @see Target
      * @see #insert(long)
      */
-    boolean canInsert(T variant);
+    boolean canInsert(ItemVariant variant);
 
     /**
      * Attempts to extract a given amount of the resource from the {@code BlockEntity}.
