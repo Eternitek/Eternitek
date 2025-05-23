@@ -180,7 +180,7 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
             SingleVariantStorage.readNbt(
                     storage,
                     ItemVariant.CODEC,
-                    () -> ItemVariant.blank(),
+                    ItemVariant::blank,
                     nbt.getCompound("Storage"),
                     registryLookup
             );
@@ -203,4 +203,5 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
     public SingleVariantStorage<ItemVariant> getStorage() {
         return storage;
     }
+
 }

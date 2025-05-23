@@ -168,7 +168,7 @@ public class TransferTerminalBlockEntity extends BlockEntity {
             SingleVariantStorage.readNbt(
                     storage,
                     ItemVariant.CODEC,
-                    () -> ItemVariant.blank(),
+                    ItemVariant::blank,
                     nbt.getCompound("Storage"),
                     registryLookup
             );
