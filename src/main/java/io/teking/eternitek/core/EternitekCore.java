@@ -1,9 +1,6 @@
 package io.teking.eternitek.core;
 
-import io.teking.eternitek.core.registry.EternitekBlockEntities;
-import io.teking.eternitek.core.registry.EternitekBlocks;
-import io.teking.eternitek.core.registry.EternitekItems;
-import io.teking.eternitek.core.registry.EternitekTabs;
+import io.teking.eternitek.core.registry.*;
 import io.teking.eternitek.core.resource.MultiblockReloadListener;
 import io.teking.eternitek.core.resource.TechTreeReloadListener;
 import io.teking.eternitek.core.util.fun.Facts;
@@ -30,6 +27,7 @@ public class EternitekCore implements ModInitializer {
         EternitekBlockEntities.register();
         EternitekBlocks.register();
         EternitekItems.register();
+        EternitekRegistries.register();
         EternitekTabs.register();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(

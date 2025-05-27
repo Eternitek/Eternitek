@@ -12,4 +12,8 @@ public class EternitekRegistries {
             RegistryKey.ofRegistry(EternitekCore.id("multiblock"))
     ).buildAndRegister();
 
+    public static void register() {
+
+    }
+
 }
