@@ -1,5 +1,8 @@
 package io.teking.eternitek.core.client.screen.codex;
 
+import foundry.veil.api.client.render.VeilRenderSystem;
+import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
+import foundry.veil.api.client.render.shader.program.ShaderProgram;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.client.screen.codex.widget.NodeWidget;
 import io.teking.eternitek.core.resource.TechTreeReloadListener;
@@ -57,6 +60,9 @@ public class TechTreeScreen extends CodexScreen {
             context.getMatrices().translate(offsetX, offsetY, 0);
 
             RenderHelper helper = new RenderHelper(context);
+            AdvancedFbo fbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(EternitekCore.id("pixelate"));
+
+            if(fbo != null) fbo.bind(true);
 
             for(TechNode node : this.tree.nodes()) {
                 if(node.connections().contains(EternitekCore.id("root"))) continue;
@@ -65,6 +71,8 @@ public class TechTreeScreen extends CodexScreen {
                     helper.drawConnectingLine(node, this.tree.getNodeMap().get(connect), 2, 0xFF27374D);
                 }
             }
+
+            AdvancedFbo.unbind();
 
             for(Drawable drawable : this.drawables) {
                 if(drawable instanceof NodeWidget node) node.updateOffset(offsetX, offsetY);

@@ -1,0 +1,10 @@
+{
+  "stages": [
+    {
+      "type": "veil:blit",
+      "shader": "eternitek:pixelate",
+      "in": "eternitek:pixelate",
+      "out": "veil:post"
+    }
+  ]
+}
