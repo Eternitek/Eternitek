@@ -29,22 +29,12 @@ public class NodeWidget extends ClickableWidget {
     @Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
 
-        int windowWidthCenter = (context.getScaledWindowWidth() / 2) - (this.width / 2);
-        int windowHeightCenter = (context.getScaledWindowHeight() / 2) - (this.height / 2);
-
-        int readX = this.node.x();
-        int readY = this.node.y() * -1; // We multiply by -1 to make this more consistent with regular rectangular coordinates
-                                        // (i.e. (0, -50) is down on the screen rather than up)
-
-        int x = windowWidthCenter + readX;
-        int y = windowHeightCenter + readY;
-
         this.setX(startX + offsetX);
         this.setY(startY + offsetY);
 
         context.drawTexture(
                 CodexScreen.TEXTURE,
-                x, y, 4,
+                getX(), getY(), 4,
                 338, 0, // TO-DO: Update once texture is finalized
                 this.getWidth(), this.getHeight(),
                 512, 512
@@ -52,7 +42,7 @@ public class NodeWidget extends ClickableWidget {
 
         context.drawTexture(
                 node.icon(),
-                x + 6, y + 6, 5,
+                getX() + 6, getY() + 6, 5,
                 0, 0,
                 16, 16,
                 16, 16

@@ -1,8 +1,8 @@
 package io.teking.eternitek.core.client.screen.codex;
 
 import foundry.veil.api.client.render.VeilRenderSystem;
+import foundry.veil.api.client.render.VeilRenderer;
 import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
-import foundry.veil.api.client.render.shader.program.ShaderProgram;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.client.screen.codex.widget.NodeWidget;
 import io.teking.eternitek.core.resource.TechTreeReloadListener;
@@ -18,12 +18,11 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class TechTreeScreen extends CodexScreen {
 
+    private static final Identifier PIXELATE_PIPELINE = EternitekCore.id("pixelate");
+
     private final TechTree tree;
 
     private boolean isDragging;
-    private int lastMouseX;
-    private int lastMouseY;
-
     private int offsetX;
     private int offsetY;
 
@@ -74,6 +73,10 @@ public class TechTreeScreen extends CodexScreen {
 
             AdvancedFbo.unbind();
 
+            VeilRenderSystem.renderer().getPostProcessingManager().add(-100000, PIXELATE_PIPELINE);
+
+            context.getMatrices().translate(-offsetX, -offsetY, 0);
+
             for(Drawable drawable : this.drawables) {
                 if(drawable instanceof NodeWidget node) node.updateOffset(offsetX, offsetY);
                 drawable.render(context, mouseX, mouseY, delta);
@@ -88,8 +91,6 @@ public class TechTreeScreen extends CodexScreen {
 
         if(isLeft(button)) {
             this.isDragging = true;
-            this.lastMouseX = (int) mouseX;
-            this.lastMouseY = (int) mouseY;
             return true;
         }
 
@@ -114,7 +115,7 @@ public class TechTreeScreen extends CodexScreen {
 
         if(isDragging && isLeft(button)) {
             this.offsetX = (int) Math.clamp(offsetX + deltaX, -200, 200);
-            this.offsetY = (int) Math.clamp(offsetY + deltaY, -200, 200);
+            this.offsetY = (int) Math.clamp(offsetY + deltaY, -100, 100);
             return true;
         }
 
@@ -124,6 +125,11 @@ public class TechTreeScreen extends CodexScreen {
 
     private boolean isLeft(int button) {
         return button == GLFW_MOUSE_BUTTON_LEFT;
+    }
+
+    @Override
+    public void removed() {
+        VeilRenderSystem.renderer().getPostProcessingManager().remove(PIXELATE_PIPELINE);
     }
 
 }
