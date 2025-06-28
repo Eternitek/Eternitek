@@ -30,7 +30,7 @@ public class TransferTerminalBlockEntity extends BlockEntity {
     public TransferTerminalBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
-        this.storage = new SingleVariantStorage<ItemVariant>() {
+        this.storage = new SingleVariantStorage<>() {
             @Override
             protected ItemVariant getBlankVariant() {
                 return ItemVariant.blank();

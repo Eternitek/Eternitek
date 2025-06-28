@@ -23,11 +23,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVariant> {
+
     private final SingleVariantStorage<ItemVariant> storage;
     private static final long MAX_AMOUNT = 64; // One stack
     private static final long TRANSFER_RATE = 8; // Items per tick
 
     public PipeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+
         super(type, pos, state);
 
         this.storage = new SingleVariantStorage<>() {
@@ -46,12 +48,12 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
                 markDirty();
             }
         };
+
     }
 
     @Override
     public boolean canExtract(ItemVariant variant) {
-        return !isEmpty() && storage.getAmount() > 0 &&
-                (variant.isBlank() || variant.equals(storage.getResource()));
+        return !isEmpty() && (variant.isBlank() || variant.equals(storage.getResource()));
     }
 
     @Override
@@ -147,27 +149,26 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
                     inputStorage = InventoryStorage.of(inventory, direction.getOpposite());
                 }
 
-                if (inputStorage != null) {
-                    try (Transaction transaction = Transaction.openOuter()) {
-                        // Only move if the source has items
-                        for (StorageView<ItemVariant> view : inputStorage) {
-                            if (!view.isResourceBlank() && view.getAmount() > 0) {
-                                long moved = StorageUtil.move(
-                                        inputStorage,
-                                        pipe.storage,
-                                        variant -> true,
-                                        TRANSFER_RATE,
-                                        transaction
-                                );
-                                if (moved > 0) {
-                                    transaction.commit();
-                                    return; // Exit after successful transfer
-                                }
-                                break; // Break if we couldn't move from this slot
+                if (inputStorage == null) continue;
+                try (Transaction transaction = Transaction.openOuter()) {
+                    // Only move if the source has items
+                    for (StorageView<ItemVariant> view : inputStorage) {
+                        if (!view.isResourceBlank() && view.getAmount() > 0) {
+                            long moved = StorageUtil.move(
+                                    inputStorage,
+                                    pipe.storage,
+                                    variant -> true,
+                                    TRANSFER_RATE,
+                                    transaction
+                            );
+                            if (moved > 0) {
+                                transaction.commit();
+                                return; // Exit after successful transfer
                             }
+                            break; // Break if we couldn't move from this slot
                         }
-                        transaction.abort();
                     }
+                    transaction.abort();
                 }
             }
         }

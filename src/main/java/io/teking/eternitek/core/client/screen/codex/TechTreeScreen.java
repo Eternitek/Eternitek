@@ -89,10 +89,7 @@ public class TechTreeScreen extends CodexScreen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
 
-        if(isLeft(button)) {
-            this.isDragging = true;
-            return true;
-        }
+        if(isLeft(button)) this.isDragging = true;
 
         return super.mouseClicked(mouseX, mouseY, button);
 

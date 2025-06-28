@@ -1,10 +1,9 @@
 package io.teking.eternitek.core.block;
 
+import com.mojang.serialization.MapCodec;
 import io.teking.eternitek.core.block.entity.TransferTerminalBlockEntity;
 import io.teking.eternitek.core.registry.EternitekBlockEntities;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,7 +21,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class TransferTerminalBlock extends Block implements BlockEntityProvider {
+public class TransferTerminalBlock extends BlockWithEntity {
+
+    public static final MapCodec<TransferTerminalBlock> CODEC = createCodec(TransferTerminalBlock::new);
+
     public static final BooleanProperty MODE = BooleanProperty.of("mode");
     public static final DirectionProperty FACING = Properties.FACING;
 
@@ -31,6 +33,11 @@ public class TransferTerminalBlock extends Block implements BlockEntityProvider 
         setDefaultState(getStateManager().getDefaultState()
                 .with(MODE, false)
                 .with(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -61,15 +68,15 @@ public class TransferTerminalBlock extends Block implements BlockEntityProvider 
         return new TransferTerminalBlockEntity(EternitekBlockEntities.TRANSFER_TERMINAL_ENTITY, pos, state);
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, EternitekBlockEntities.TRANSFER_TERMINAL_ENTITY,
-                (world1, pos, state1, be) -> TransferTerminalBlockEntity.tick(world1, pos, state1, (TransferTerminalBlockEntity) be));
+    protected BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Nullable
-    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
-        return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return validateTicker(type, EternitekBlockEntities.TRANSFER_TERMINAL_ENTITY, TransferTerminalBlockEntity::tick);
     }
+
 }
