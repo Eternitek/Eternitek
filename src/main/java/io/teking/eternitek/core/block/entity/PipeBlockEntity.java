@@ -22,7 +22,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import java.util.EnumMap;
+
 public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVariant> {
+
+    private final EnumMap<Direction, Storage<ItemVariant>> storages = new EnumMap<>(Direction.class);
 
     private final SingleVariantStorage<ItemVariant> storage;
     private static final long MAX_AMOUNT = 64; // One stack
@@ -176,21 +180,25 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+
         super.readNbt(nbt, registryLookup);
-        if (nbt.contains("Storage")) {
-            SingleVariantStorage.readNbt(
-                    storage,
-                    ItemVariant.CODEC,
-                    ItemVariant::blank,
-                    nbt.getCompound("Storage"),
-                    registryLookup
-            );
-        }
+        if (!nbt.contains("Storage")) return;
+
+        SingleVariantStorage.readNbt(
+                storage,
+                ItemVariant.CODEC,
+                ItemVariant::blank,
+                nbt.getCompound("Storage"),
+                registryLookup
+        );
+
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+
         super.writeNbt(nbt, registryLookup);
+
         NbtCompound storageNbt = new NbtCompound();
         SingleVariantStorage.writeNbt(
                 storage,
@@ -198,7 +206,9 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
                 storageNbt,
                 registryLookup
         );
+
         nbt.put("Storage", storageNbt);
+
     }
 
     public SingleVariantStorage<ItemVariant> getStorage() {
