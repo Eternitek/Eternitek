@@ -3,7 +3,6 @@ package io.teking.eternitek.core.registry;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.block.entity.PipeBlockEntity;
 import io.teking.eternitek.core.block.entity.TransferTerminalBlockEntity;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

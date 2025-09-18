@@ -1,8 +1,6 @@
 package io.teking.eternitek.core.block.entity;
 
 import io.teking.eternitek.core.block.transfer.pipe.connection.Connectible;
-import io.teking.eternitek.core.block.transfer.pipe.connection.Source;
-import io.teking.eternitek.core.block.transfer.pipe.connection.Target;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;

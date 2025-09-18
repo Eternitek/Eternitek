@@ -5,7 +5,6 @@ import io.teking.eternitek.core.block.MachineCoreBlock;
 import io.teking.eternitek.core.block.PipeBlock;
 import io.teking.eternitek.core.block.PrimitiveFurnaceBlock;
 import io.teking.eternitek.core.block.TransferTerminalBlock;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;

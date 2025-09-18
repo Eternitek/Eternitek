@@ -6,12 +6,8 @@ import com.mojang.serialization.JsonOps;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.multiblock.Multiblock;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryOps;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -19,11 +15,9 @@ import net.minecraft.util.JsonHelper;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public class MultiblockReloadListener implements SimpleSynchronousResourceReloadListener {
 

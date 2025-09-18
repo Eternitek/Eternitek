@@ -1,7 +1,6 @@
 package io.teking.eternitek.core.client.screen.codex;
 
 import foundry.veil.api.client.render.VeilRenderSystem;
-import foundry.veil.api.client.render.VeilRenderer;
 import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.client.screen.codex.widget.NodeWidget;
@@ -14,7 +13,7 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class TechTreeScreen extends CodexScreen {
 
