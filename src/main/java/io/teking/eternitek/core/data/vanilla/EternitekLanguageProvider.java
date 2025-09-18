@@ -1,4 +1,4 @@
-package io.teking.eternitek.core.data;
+package io.teking.eternitek.core.data.vanilla;
 
 import io.teking.eternitek.core.registry.EternitekTabs;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

@@ -5,7 +5,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import io.teking.eternitek.core.EternitekCore;
 import io.teking.eternitek.core.multiblock.Multiblock;
-import io.teking.eternitek.core.registry.EternitekRegistries;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -65,7 +64,7 @@ public class MultiblockReloadListener implements SimpleSynchronousResourceReload
                     }
                 }
 
-                Registry.register(EternitekRegistries.MULTIBLOCK, data.id(), new Multiblock(pattern, data.key()));
+                MULTIBLOCKS.put(id, new Multiblock(pattern, data.key()));
 
             } catch(Exception error) {
                 EternitekCore.LOGGER.error("Error occurred loading multiblock {} from resource: {}", id, error);

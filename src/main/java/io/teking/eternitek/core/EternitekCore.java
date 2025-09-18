@@ -27,7 +27,6 @@ public class EternitekCore implements ModInitializer {
         EternitekBlockEntities.register();
         EternitekBlocks.register();
         EternitekItems.register();
-        EternitekRegistries.register();
         EternitekTabs.register();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(

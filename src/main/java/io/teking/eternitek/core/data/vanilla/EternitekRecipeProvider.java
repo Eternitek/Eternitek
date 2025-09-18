@@ -1,4 +1,4 @@
-package io.teking.eternitek.core.data;
+package io.teking.eternitek.core.data.vanilla;
 
 import io.teking.eternitek.core.registry.EternitekBlocks;
 import io.teking.eternitek.core.registry.EternitekItems;

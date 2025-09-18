@@ -1,7 +1,6 @@
 package io.teking.eternitek.core.block;
 
 import io.teking.eternitek.core.multiblock.Multiblock;
-import io.teking.eternitek.core.registry.EternitekRegistries;
 import io.teking.eternitek.core.resource.MultiblockReloadListener;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,7 +21,7 @@ public abstract class BlockWithMultiblock extends Block {
     }
 
     public Multiblock getMultiblock() {
-        return EternitekRegistries.MULTIBLOCK.get(multiblockId);
+        return MultiblockReloadListener.MULTIBLOCKS.get(multiblockId);
     }
 
     protected abstract void useMultiblock(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit);

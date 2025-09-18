@@ -1,8 +1,8 @@
 package io.teking.eternitek.core;
 
-import io.teking.eternitek.core.data.EternitekLanguageProvider;
-import io.teking.eternitek.core.data.EternitekModelProvider;
-import io.teking.eternitek.core.data.EternitekRecipeProvider;
+import io.teking.eternitek.core.data.vanilla.EternitekLanguageProvider;
+import io.teking.eternitek.core.data.vanilla.EternitekModelProvider;
+import io.teking.eternitek.core.data.vanilla.EternitekRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 

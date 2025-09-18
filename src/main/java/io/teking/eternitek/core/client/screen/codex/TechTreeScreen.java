@@ -61,7 +61,7 @@ public class TechTreeScreen extends CodexScreen {
             RenderHelper helper = new RenderHelper(context);
             AdvancedFbo fbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(EternitekCore.id("pixelate"));
 
-            if(fbo != null) fbo.bind(true);
+//            if(fbo != null) fbo.bind(true);
 
             for(TechNode node : this.tree.nodes()) {
                 if(node.connections().contains(EternitekCore.id("root"))) continue;
@@ -71,7 +71,7 @@ public class TechTreeScreen extends CodexScreen {
                 }
             }
 
-            AdvancedFbo.unbind();
+//            AdvancedFbo.unbind();
 
             VeilRenderSystem.renderer().getPostProcessingManager().add(-100000, PIXELATE_PIPELINE);
 

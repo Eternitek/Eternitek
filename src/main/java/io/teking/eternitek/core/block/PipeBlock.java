@@ -3,10 +3,7 @@ package io.teking.eternitek.core.block;
 import com.mojang.serialization.MapCodec;
 import io.teking.eternitek.core.block.entity.PipeBlockEntity;
 import io.teking.eternitek.core.registry.EternitekBlockEntities;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,7 +14,7 @@ public class PipeBlock extends BlockWithEntity {
 
     public static final MapCodec<PipeBlock> CODEC = createCodec(PipeBlock::new);
 
-    public PipeBlock(Settings settings) {
+    public PipeBlock(AbstractBlock.Settings settings) {
         super(settings);
     }
 
