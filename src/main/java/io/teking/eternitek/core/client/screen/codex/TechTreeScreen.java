@@ -11,13 +11,14 @@ import io.teking.eternitek.core.util.techtree.TechTree;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class TechTreeScreen extends CodexScreen {
 
-    private static final Identifier PIXELATE_PIPELINE = EternitekCore.id("pixelate");
+    private static final Identifier COG = EternitekCore.id("textures/gui/icon/cog.png");
 
     private final TechTree tree;
 
@@ -31,7 +32,6 @@ public class TechTreeScreen extends CodexScreen {
 
         this.isDragging = false;
         this.tree = TechTreeReloadListener.TREES.get(treeId);
-        if(tree == null) setError(Text.translatable("texts.eternitek.no_tree", treeId));
 
     }
 
@@ -53,35 +53,39 @@ public class TechTreeScreen extends CodexScreen {
 
         super.render(context, mouseX, mouseY, delta);
 
-        context.getMatrices().push();
+        context.enableScissor(
+                100 + 1, 27 + 1,
+                this.width, this.height
+        );
 
-            context.getMatrices().translate(offsetX, offsetY, 0);
+        for(Drawable drawable : this.drawables) {
+            if(drawable instanceof NodeWidget node) node.updateOffset(offsetX, offsetY);
+            drawable.render(context, mouseX, mouseY, delta);
+        }
 
-            RenderHelper helper = new RenderHelper(context);
-            AdvancedFbo fbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(EternitekCore.id("pixelate"));
+        context.disableScissor();
 
-//            if(fbo != null) fbo.bind(true);
+        context.fill(
+                10, 37,
+                110, 54,
+                0xFF23674E
+        );
 
-            for(TechNode node : this.tree.nodes()) {
-                if(node.connections().contains(EternitekCore.id("root"))) continue;
-                for(Identifier connect : node.connections()) {
-                    if(!this.tree.getNodeMap().containsKey(connect)) continue;
-                    helper.drawConnectingLine(node, this.tree.getNodeMap().get(connect), 2, 0xFF27374D);
-                }
-            }
+        context.drawTexture(
+                COG,
+                15, 42,
+                0, 0,
+                7, 7,
+                8, 8
+        );
 
-//            AdvancedFbo.unbind();
-
-            VeilRenderSystem.renderer().getPostProcessingManager().add(-100000, PIXELATE_PIPELINE);
-
-            context.getMatrices().translate(-offsetX, -offsetY, 0);
-
-            for(Drawable drawable : this.drawables) {
-                if(drawable instanceof NodeWidget node) node.updateOffset(offsetX, offsetY);
-                drawable.render(context, mouseX, mouseY, delta);
-            }
-
-        context.getMatrices().pop();
+        context.drawText(
+                textRenderer,
+                "Technology",
+                27, 42,
+                Colors.WHITE,
+                false
+        );
 
     }
 
@@ -109,9 +113,11 @@ public class TechTreeScreen extends CodexScreen {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
 
+        double width = this.width;
+
         if(isDragging && isLeft(button)) {
-            this.offsetX = (int) Math.clamp(offsetX + deltaX, -200, 200);
-            this.offsetY = (int) Math.clamp(offsetY + deltaY, -100, 100);
+            this.offsetX = (int) Math.clamp(offsetX + deltaX, -width, width);
+            this.offsetY = (int) Math.clamp(offsetY + deltaY, -width, width);
             return true;
         }
 
@@ -121,11 +127,6 @@ public class TechTreeScreen extends CodexScreen {
 
     private boolean isLeft(int button) {
         return button == GLFW_MOUSE_BUTTON_LEFT;
-    }
-
-    @Override
-    public void removed() {
-        VeilRenderSystem.renderer().getPostProcessingManager().remove(PIXELATE_PIPELINE);
     }
 
 }

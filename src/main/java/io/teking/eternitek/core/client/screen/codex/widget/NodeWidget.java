@@ -7,6 +7,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 
 public class NodeWidget extends ClickableWidget {
 
@@ -19,7 +20,7 @@ public class NodeWidget extends ClickableWidget {
     private int offsetY;
 
     public NodeWidget(int x, int y, TechNode node) {
-        super(x, y, 28, 28, node.tooltip().getFirst());
+        super(x, y, 22, 22, node.tooltip().getFirst());
         this.startX = x;
         this.startY = y;
         this.visible = true;
@@ -32,17 +33,21 @@ public class NodeWidget extends ClickableWidget {
         this.setX(startX + offsetX);
         this.setY(startY + offsetY);
 
-        context.drawTexture(
-                CodexScreen.TEXTURE,
-                getX(), getY(), 4,
-                338, 0, // TO-DO: Update once texture is finalized
-                this.getWidth(), this.getHeight(),
-                512, 512
+        context.fill(
+                getX(), getY(),
+                getX() + 22, getY() + 22,
+                Colors.BLACK
+        );
+
+        context.drawBorder(
+                getX(), getY(),
+                22, 22,
+                Colors.WHITE
         );
 
         context.drawTexture(
                 node.icon(),
-                getX() + 6, getY() + 6, 5,
+                getX() + 3, getY() + 3, 5,
                 0, 0,
                 16, 16,
                 16, 16

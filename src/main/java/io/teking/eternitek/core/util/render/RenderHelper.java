@@ -18,6 +18,22 @@ public class RenderHelper {
         this.context = context;
     }
 
+    public void drawBarVertical(int x, int barWidth, int barColor, int lineColor) {
+        int width = context.getScaledWindowWidth();
+        int height = context.getScaledWindowHeight();
+        context.fill(x, 0, x + barWidth, height, barColor);
+        if (x > 0) context.drawVerticalLine(x, 0, height, lineColor);
+        if (x < width) context.drawVerticalLine(x + barWidth, 0, height, lineColor);
+    }
+
+    public void drawBarHorizontal(int y, int barHeight, int barColor, int lineColor) {
+        int width = context.getScaledWindowWidth();
+        int height = context.getScaledWindowHeight();
+        context.fill(0, y, width, y + barHeight, barColor);
+        if (y > 0) context.drawHorizontalLine(0, width, y, lineColor);
+        if (y < height) context.drawHorizontalLine(0, width, y + barHeight, lineColor);
+    }
+
     public void drawTexture(Identifier texture, Position pos, int width, int height, int textureWidth, int textureHeight) {
 
         int windowWidth = context.getScaledWindowWidth();
