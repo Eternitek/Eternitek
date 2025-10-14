@@ -1,6 +1,8 @@
 package io.teking.eternitek.core.block.entity;
 
+import com.google.common.base.Predicates;
 import io.teking.eternitek.core.block.transfer.pipe.connection.Connectible;
+import io.teking.eternitek.core.util.pipes.ItemTransferHelper;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
@@ -22,9 +24,11 @@ import net.minecraft.world.World;
 
 import java.util.EnumMap;
 
+import static io.teking.eternitek.core.util.pipes.ItemTransferHelper.tryMove;
+
 public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVariant> {
 
-    private final EnumMap<Direction, Storage<ItemVariant>> storages = new EnumMap<>(Direction.class);
+    public final EnumMap<Direction, Storage<ItemVariant>> storages = new EnumMap<>(Direction.class);
 
     private final SingleVariantStorage<ItemVariant> storage;
     private static final long MAX_AMOUNT = 64; // One stack
@@ -93,89 +97,19 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PipeBlockEntity pipe) {
+
         if (world.isClient) return;
 
-        // First try to output items if we have any
-        if (!pipe.isEmpty()) {
-            for (Direction direction : Direction.values()) {
-                BlockPos neighborPos = pos.offset(direction);
-                BlockEntity neighbor = world.getBlockEntity(neighborPos);
-                if (neighbor == null) continue;
-
-                Storage<ItemVariant> outputStorage = null;
-
-                // Get the appropriate storage for output
-                if (neighbor instanceof InventoryProvider provider) {
-                    SidedInventory inventory = provider.getInventory(world.getBlockState(neighborPos), world, neighborPos);
-                    if (inventory.canInsert(0, pipe.storage.getResource().toStack(), direction.getOpposite())) {
-                        outputStorage = InventoryStorage.of(inventory, direction.getOpposite());
-                    }
-                } else if (neighbor instanceof Inventory inventory) {
-                    outputStorage = InventoryStorage.of(inventory, direction.getOpposite());
-                }
-
-                if (outputStorage != null) {
-                    try (Transaction transaction = Transaction.openOuter()) {
-                        long moved = StorageUtil.move(
-                                pipe.storage,
-                                outputStorage,
-                                variant -> true,
-                                TRANSFER_RATE,
-                                transaction
-                        );
-                        if (moved > 0) {
-                            transaction.commit();
-                            return; // Exit after successful transfer
-                        }
-                        transaction.abort();
-                    }
-                }
+        for (Direction direction : pipe.storages.keySet()) {
+            Storage<ItemVariant> storage = pipe.storages.get(direction);
+            if (!pipe.isEmpty()) {
+                if (ItemTransferHelper.tryMove(pipe.storage, storage)) return;
+            } else {
+                if (ItemTransferHelper.tryMove(storage, pipe.storage)) return;
             }
         }
-        // Try to input items only if we're empty
-        else {
-            for (Direction direction : Direction.values()) {
-                BlockPos neighborPos = pos.offset(direction);
-                BlockEntity neighbor = world.getBlockEntity(neighborPos);
-                if (neighbor == null) continue;
 
-                Storage<ItemVariant> inputStorage = null;
-
-                // Get the appropriate storage for input
-                if (neighbor instanceof InventoryProvider provider) {
-                    SidedInventory inventory = provider.getInventory(world.getBlockState(neighborPos), world, neighborPos);
-                    if (inventory.canExtract(0, inventory.getStack(0), direction.getOpposite())) {
-                        inputStorage = InventoryStorage.of(inventory, direction.getOpposite());
-                    }
-                } else if (neighbor instanceof Inventory inventory) {
-                    inputStorage = InventoryStorage.of(inventory, direction.getOpposite());
-                }
-
-                if (inputStorage == null) continue;
-                try (Transaction transaction = Transaction.openOuter()) {
-                    // Only move if the source has items
-                    for (StorageView<ItemVariant> view : inputStorage) {
-                        if (!view.isResourceBlank() && view.getAmount() > 0) {
-                            long moved = StorageUtil.move(
-                                    inputStorage,
-                                    pipe.storage,
-                                    variant -> true,
-                                    TRANSFER_RATE,
-                                    transaction
-                            );
-                            if (moved > 0) {
-                                transaction.commit();
-                                return; // Exit after successful transfer
-                            }
-                            break; // Break if we couldn't move from this slot
-                        }
-                    }
-                    transaction.abort();
-                }
-            }
-        }
     }
-
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
 

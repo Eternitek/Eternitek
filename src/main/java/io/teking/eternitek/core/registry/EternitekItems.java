@@ -27,7 +27,7 @@ public class EternitekItems {
             ToolMaterials.NETHERITE,
             new Item.Settings().fireproof(),
             1, 1, 1 // 3x3x3 mining area
-    );
+    ));
 
     public static void register() {
 

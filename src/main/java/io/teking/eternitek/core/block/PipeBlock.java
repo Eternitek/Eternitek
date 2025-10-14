@@ -3,11 +3,17 @@ package io.teking.eternitek.core.block;
 import com.mojang.serialization.MapCodec;
 import io.teking.eternitek.core.block.entity.PipeBlockEntity;
 import io.teking.eternitek.core.registry.EternitekBlockEntities;
+import io.teking.eternitek.core.util.pipes.ItemTransferHelper;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 public class PipeBlock extends BlockWithEntity {
@@ -41,7 +47,17 @@ public class PipeBlock extends BlockWithEntity {
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
 
+        Vec3i diff = sourcePos.toImmutable().subtract(pos);
+        Direction facing = Direction.fromVector(diff.getX(), diff.getY(), diff.getZ());
+        Inventory neighborInventory = ItemTransferHelper.getInventoryAt(world, pos, facing);
 
+        BlockEntity entity = world.getBlockEntity(sourcePos);
+        if (!(entity instanceof PipeBlockEntity pipe)) {
+            super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+            return;
+        }
+
+        pipe.storages.put(facing, neighborInventory == null ? null : InventoryStorage.of(neighborInventory, facing));
 
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
 
