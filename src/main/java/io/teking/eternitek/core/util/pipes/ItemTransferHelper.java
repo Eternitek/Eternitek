@@ -1,5 +1,6 @@
 package io.teking.eternitek.core.util.pipes;
 
+import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -43,6 +44,8 @@ public class ItemTransferHelper {
 
         if (blockEntity instanceof Inventory inventory) {
             return inventory;
+        } else if (blockEntity instanceof InventoryProvider provider) {
+            return provider.getInventory(world.getBlockState(targetPos), world, targetPos);
         }
 
         return null;
