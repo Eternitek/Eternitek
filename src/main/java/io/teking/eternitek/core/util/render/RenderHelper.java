@@ -4,10 +4,12 @@ import io.teking.eternitek.core.util.techtree.TechNode;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class RenderHelper {
@@ -51,39 +53,20 @@ public class RenderHelper {
     }
 
     public void drawConnectingLine(TechNode start, TechNode end, int width, int color) {
-        drawConnectingLine(start, end, width, color, color);
+        drawConnectingLine(start.x(), start.y(), end.x(), end.y(), width, color);
     }
 
-    public void drawConnectingLine(TechNode start, TechNode end, int width, int colorStart, int colorEnd) {
-        drawConnectingLine(start.x(), start.y(), end.x(), end.y(), width, colorStart, colorEnd);
-    }
+    public void drawConnectingLine(int startX, int startY, int endX, int endY, int width, int color) {
 
-    public void drawConnectingLine(int startX, int startY, int endX, int endY, int width, int colorStart, int colorEnd) {
+        Matrix4f matrix = context.getMatrices().peek().getPositionMatrix();
+        BufferBuilder buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 
-        MatrixStack matrices = context.getMatrices();
+        buffer.vertex(startX, startY, 5).color(color);
+        buffer.vertex(endX, endY, 5).color(color);
 
-        startY *= -1;
-        endY *= -1;
 
-        int windowWidthCenter = (context.getScaledWindowWidth() / 2);
-        int windowHeightCenter = (context.getScaledWindowHeight() / 2);
 
-        int x = endX - startX;
-        int y = endY - startY;
-
-        float angle = (float) Math.atan2(y, x);
-        int lineLength = (int) MathHelper.hypot(x, y);
-
-        matrices.push();
-
-            matrices.translate(startX, startY, 1);
-            matrices.translate(windowWidthCenter, windowHeightCenter, 0);
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotation(angle));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-90.0F));
-
-            context.fillGradient(-(width / 2), 0, (width / 2), lineLength, colorStart, colorEnd); // TO-DO: Figure out pixelated lines?
-
-        matrices.pop();
+        BufferRenderer.draw(buffer.end());
 
     }
 

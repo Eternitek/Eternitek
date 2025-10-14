@@ -87,6 +87,14 @@ public class TechTreeScreen extends CodexScreen {
                 false
         );
 
+        RenderHelper helper = new RenderHelper(context);
+
+        helper.drawConnectingLine(
+                150, 30,
+                250, 60,
+                1, Colors.WHITE
+        );
+
     }
 
     @Override
