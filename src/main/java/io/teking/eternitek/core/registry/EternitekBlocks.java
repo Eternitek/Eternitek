@@ -50,7 +50,7 @@ public class EternitekBlocks {
     }
 
     public static void registerBlockWithItem(String name, Block block) {
-        EternitekItems.registerItem(name, new BlockItem(block, new Item.Settings()));
+        EternitekItems.registerItem(name, settings -> new BlockItem(block, settings));
         registerBlock(name, block);
     }
 
