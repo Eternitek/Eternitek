@@ -17,21 +17,21 @@ public class EternitekLanguageProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder builder) {
 
-        translationBuilder.add(BLAST_BRICK, "Blast Brick");
-        translationBuilder.add(CODEX, "Codex");
-        translationBuilder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
+        builder.add(BLAST_BRICK, "Blast Brick");
+        builder.add(CODEX, "Codex");
+        builder.add(CRUDE_STEEL_INGOT, "Crude Steel Ingot");
 
-        translationBuilder.add(BLAST_BRICKS, "Blast Bricks");
-        translationBuilder.add(FACILITY_TILES, "Facility Tiles");
-        translationBuilder.add(MACHINE_CORE, "Machine Core");
-        translationBuilder.add(PRIMITIVE_FURNACE, "Primitive Furnace");
+        builder.add(BLAST_BRICKS, "Blast Bricks");
+        builder.add(FACILITY_TILES, "Facility Tiles");
+        builder.add(MACHINE_CORE, "Machine Core");
+        builder.add(PRIMITIVE_FURNACE, "Primitive Furnace");
 
-        translationBuilder.add(EternitekTabs.ETERNITEK_CORE, "Eternitek Core");
+        builder.add(EternitekTabs.ETERNITEK_CORE, "Eternitek Core");
 
-        translationBuilder.add("texts.eternitek.invalid_structure", "Invalid structure");
-        translationBuilder.add("texts.eternitek.no_tree", "Failed to load tech tree for identifier '%s'");
+        builder.add("texts.eternitek.invalid_structure", "Invalid structure");
+        builder.add("texts.eternitek.no_tree", "Failed to load tech tree for identifier '%s'");
 
     }
 
