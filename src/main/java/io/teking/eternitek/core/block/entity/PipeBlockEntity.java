@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.BlockState;
@@ -38,22 +39,7 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
 
         super(type, pos, state);
 
-        this.storage = new SingleVariantStorage<>() {
-            @Override
-            protected ItemVariant getBlankVariant() {
-                return ItemVariant.blank();
-            }
-
-            @Override
-            protected long getCapacity(ItemVariant variant) {
-                return MAX_AMOUNT;
-            }
-
-            @Override
-            protected void onFinalCommit() {
-                markDirty();
-            }
-        };
+        this.storage = new ItemPipeStorage();
 
     }
 
@@ -143,8 +129,23 @@ public class PipeBlockEntity extends BlockEntity implements Connectible<ItemVari
 
     }
 
-    public SingleVariantStorage<ItemVariant> getStorage() {
-        return storage;
+    private class ItemPipeStorage extends SingleVariantStorage<ItemVariant> {
+
+        @Override
+        protected ItemVariant getBlankVariant() {
+            return ItemVariant.blank();
+        }
+
+        @Override
+        protected long getCapacity(ItemVariant variant) {
+            return TRANSFER_RATE;
+        }
+
+        @Override
+        protected void onFinalCommit() {
+            markDirty();
+        }
+
     }
 
 }
