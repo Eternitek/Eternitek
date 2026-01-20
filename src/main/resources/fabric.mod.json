@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "eternitek",
+	"version": "${version}",
+	"name": "Eternitek",
+	"description": "A tech mod for modern Minecraft",
+	"authors": [
+		"Mercury"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/eternitek/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.mercury.eternitek.core.EternitekCore"
+		],
+		"client": [
+			"net.mercury.eternitek.core.EternitekClient"
+		],
+		"fabric-datagen": [
+			"net.mercury.eternitek.core.EternitekDataGenerator"
+		]
+	},
+	"mixins": [
+		"eternitek.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.1-",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
