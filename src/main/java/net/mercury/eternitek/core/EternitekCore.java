@@ -2,6 +2,7 @@ package net.mercury.eternitek.core;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.mercury.eternitek.core.registry.EternitekItems;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -16,6 +17,8 @@ public class EternitekCore implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
+		EternitekItems.register();
 
 		LOGGER.info("Hello Fabric world!");
 	}
