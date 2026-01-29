@@ -5,7 +5,10 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.mercury.eternitek.core.registry.EternitekItems;
+import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.mercury.eternitek.core.resource.MultiblockResourceListener;
+import net.mercury.eternitek.core.resource.ResearchResourceListener;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -22,8 +25,12 @@ public class EternitekCore implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
+		// Before anything else, ensure registries are loaded.
+		EternitekRegistries.register();
+
 		ResourceLoader loader = ResourceLoader.get(PackType.SERVER_DATA);
 		loader.registerReloadListener(id("multiblock"), new MultiblockResourceListener());
+		loader.registerReloadListener(id("research"), new ResearchResourceListener());
 
 		EternitekItems.register();
 
