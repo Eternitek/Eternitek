@@ -1,5 +1,8 @@
 package net.mercury.eternitek.core.item;
 
+import net.mercury.eternitek.core.EternitekCore;
+import net.mercury.eternitek.core.codex.gui.CodexScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,9 +21,9 @@ public class CodexItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getUseItem();
-        player.openItemGui(stack, hand);
-        player.awardStat(Stats.ITEM_USED.get(this));
+        if (level.isClientSide()) {
+            Minecraft.getInstance().setScreen(new CodexScreen(EternitekCore.id("keycards")));
+        }
         return InteractionResult.SUCCESS;
     }
 

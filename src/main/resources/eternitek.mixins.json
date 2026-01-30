@@ -3,9 +3,7 @@
 	"package": "net.mercury.eternitek.core.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [],
-	"client": [
-		"client.LocalPlayerMixin"
-	],
+	"client": [],
 	"injectors": {
 		"defaultRequire": 1
 	},
