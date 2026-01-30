@@ -34,7 +34,7 @@ public class EternitekCore implements ModInitializer {
 
 		EternitekItems.register();
 
-		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("Successfully initialized");
 
 	}
 

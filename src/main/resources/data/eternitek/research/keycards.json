@@ -14,7 +14,7 @@
           "color": "#A5AFB1"
         }
       ],
-      "icon": "eternitek:simple_keycard",
+      "icon": "eternitek:textures/item/simple_keycard.png",
       "position": {
         "x": 0,
         "y": 0
@@ -32,7 +32,7 @@
           "color": "#A5AFB1"
         }
       ],
-      "icon": "eternitek:gilded_keycard",
+      "icon": "eternitek:textures/item/gilded_keycard.png",
       "position": {
         "x": 60,
         "y": 0

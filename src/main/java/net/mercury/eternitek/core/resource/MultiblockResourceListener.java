@@ -25,7 +25,7 @@ public class MultiblockResourceListener extends SimpleReloadListener<List<Multib
 
     @Override
     protected List<Multiblock.Data> prepare(SharedState state) {
-        FileToIdConverter converter = FileToIdConverter.json("multiblocks");
+        FileToIdConverter converter = FileToIdConverter.json("multiblock");
         return CompletableFuture
                 .supplyAsync(() -> converter.listMatchingResources(state.resourceManager()))
                 .thenCompose(MultiblockResourceListener::load)

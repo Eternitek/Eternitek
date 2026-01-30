@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.mercury.eternitek.core.EternitekCore;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.resources.Identifier;
@@ -28,7 +29,7 @@ public record Node(
                     pair -> new Vector2i(pair.getFirst(), pair.getSecond()),
                     vec -> new Pair<>(vec.x, vec.y)
             ).fieldOf("position").forGetter(Node::position),
-            Identifier.CODEC.listOf().fieldOf("connections").forGetter(Node::connections)
+            Identifier.CODEC.listOf().fieldOf("connections").orElse(List.of(EternitekCore.id("root"))).forGetter(Node::connections)
     ).apply(instance, Node::new));
 
 }
