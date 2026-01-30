@@ -20,6 +20,9 @@ public class NodeWidget extends AbstractWidget {
 
     private final Node node;
 
+    private int offX;
+    private int offY;
+
     public NodeWidget(Node node) {
         super(
                 node.position().x,
@@ -29,13 +32,20 @@ public class NodeWidget extends AbstractWidget {
                 node.tooltip().getFirst()
         );
         this.node = node;
+        this.offX = 0;
+        this.offY = 0;
+    }
+
+    public void updateOffset(int x, int y) {
+        this.offX = x;
+        this.offY = y;
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float a) {
 
-        int x = this.getX();
-        int y = this.getY();
+        int x = getX() + this.offX;
+        int y = getY() + this.offY;
 
         int size = this.isHovered ? 24 : 22;
         int offset = size / 2;
