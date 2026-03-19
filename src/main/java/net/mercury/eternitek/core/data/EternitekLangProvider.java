@@ -2,6 +2,7 @@ package net.mercury.eternitek.core.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.mercury.eternitek.core.registry.EternitekItems;
 import net.minecraft.core.HolderLookup;
 
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +15,8 @@ public class EternitekLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder builder) {
+
+        builder.add(EternitekItems.CODEX, "Codex");
 
     }
 
