@@ -5,6 +5,8 @@ import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -37,6 +39,18 @@ public class CodexScreen extends Screen {
             node.updateOffset(this.offX, this.offY);
             node.extractRenderState(graphics, mouseX, mouseY, a);
         }
+    }
+
+    @Override
+    public boolean mouseDragged(MouseButtonEvent event, double dx, double dy) {
+
+        if (event.button() != 0) return super.mouseDragged(event, dx, dy);
+
+        this.offX += (int) dx;
+        this.offY += (int) dy;
+
+        return super.mouseDragged(event, dx, dy);
+
     }
 
 }
