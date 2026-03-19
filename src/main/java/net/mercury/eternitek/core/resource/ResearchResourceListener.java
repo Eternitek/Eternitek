@@ -1,22 +1,18 @@
 package net.mercury.eternitek.core.resource;
 
 import com.google.gson.JsonObject;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.fabricmc.fabric.api.resource.v1.reloader.SimpleReloadListener;
 import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.resources.*;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Util;
-import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
 

@@ -1,14 +1,11 @@
 package net.mercury.eternitek.core;
 
 import net.fabricmc.api.ModInitializer;
-
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.mercury.eternitek.core.registry.EternitekItems;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.mercury.eternitek.core.resource.MultiblockResourceListener;
 import net.mercury.eternitek.core.resource.ResearchResourceListener;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;

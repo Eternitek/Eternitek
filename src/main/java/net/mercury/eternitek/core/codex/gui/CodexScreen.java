@@ -1,15 +1,11 @@
 package net.mercury.eternitek.core.codex.gui;
 
-import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
-import net.mercury.eternitek.core.codex.research.Node;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.joml.Vector2i;
 
 import java.util.List;
 

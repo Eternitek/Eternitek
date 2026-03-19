@@ -1,7 +1,5 @@
 package net.mercury.eternitek.core.registry;
 
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
-import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.multiblock.Multiblock;

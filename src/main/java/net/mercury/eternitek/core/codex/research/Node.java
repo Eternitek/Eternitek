@@ -1,6 +1,5 @@
 package net.mercury.eternitek.core.codex.research;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,7 +7,6 @@ import net.mercury.eternitek.core.EternitekCore;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
 import org.joml.Vector2i;
 
 import java.util.List;

@@ -3,12 +3,10 @@ package net.mercury.eternitek.core.item;
 import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.gui.CodexScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class CodexItem extends Item {
