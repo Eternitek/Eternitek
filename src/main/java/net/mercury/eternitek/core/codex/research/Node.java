@@ -19,14 +19,16 @@ public record Node(
         List<Identifier> connections
 ) {
 
+    private static final Codec<Vector2i> POSITION_CODEC = Codec.list(Codec.INT, 2, 2).xmap(
+            ints -> new Vector2i(ints.getFirst(), ints.getLast()),
+            vec -> List.of(vec.x, vec.y)
+    );
+
     public static final Codec<Node> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Identifier.CODEC.fieldOf("node").forGetter(Node::node),
             ComponentSerialization.CODEC.listOf().fieldOf("tooltip").orElse(List.of(Component.empty())).forGetter(Node::tooltip),
             Identifier.CODEC.fieldOf("icon").forGetter(Node::icon),
-            Codec.pair(Codec.INT.fieldOf("x").codec(), Codec.INT.fieldOf("y").codec()).xmap(
-                    pair -> new Vector2i(pair.getFirst(), pair.getSecond()),
-                    vec -> new Pair<>(vec.x, vec.y)
-            ).fieldOf("position").forGetter(Node::position),
+            POSITION_CODEC.fieldOf("position").forGetter(Node::position),
             Identifier.CODEC.listOf().fieldOf("connections").orElse(List.of(EternitekCore.id("root"))).forGetter(Node::connections)
     ).apply(instance, Node::new));
 

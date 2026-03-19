@@ -15,10 +15,7 @@
         }
       ],
       "icon": "eternitek:textures/item/simple_keycard.png",
-      "position": {
-        "x": 0,
-        "y": 0
-      }
+      "position": [ 0, 0 ]
     },
     {
       "node": "eternitek:gilded",
@@ -33,10 +30,7 @@
         }
       ],
       "icon": "eternitek:textures/item/gilded_keycard.png",
-      "position": {
-        "x": 60,
-        "y": 0
-      },
+      "position": [ 60, 0 ],
       "connections": [ "eternitek:simple" ]
     }
   ]
