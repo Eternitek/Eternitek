@@ -1,6 +1,7 @@
 package net.mercury.eternitek.core.codex.gui;
 
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
+import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
@@ -22,7 +23,7 @@ public class CodexScreen extends Screen {
         this.offX = this.width / 2;
         this.offY = this.height / 2;
 
-        this.nodes = EternitekRegistries.RESEARCH.getOrDefault(tree, null)
+        this.nodes = EternitekRegistries.RESEARCH.getOrDefault(tree, new Tree(tree.toString(), tree, List.of()))
                 .nodes()
                 .stream()
                 .map(NodeWidget::new)

@@ -20,16 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
 
     @Override
     protected List<Tree> prepare(SharedState state) {
         FileToIdConverter converter = FileToIdConverter.json("research");
-        return CompletableFuture
-                .supplyAsync(() -> converter.listMatchingResources(state.resourceManager()))
-                .thenCompose(ResearchResourceListener::load)
-                .getNow(List.of());
+        try {
+            return CompletableFuture
+                    .supplyAsync(() -> converter.listMatchingResources(state.resourceManager()))
+                    .thenCompose(ResearchResourceListener::load)
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static CompletableFuture<List<Tree>> load(Map<Identifier, Resource> resources) {
@@ -42,6 +47,8 @@ public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
 
                 JsonObject json = GsonHelper.parse(new InputStreamReader(stream));
                 DataResult<Tree> result = Tree.CODEC.parse(JsonOps.INSTANCE, json);
+
+                EternitekCore.LOGGER.info("Successfully loaded research tree {}", id);
 
                 return result.resultOrPartial(EternitekCore.LOGGER::error).get();
 
@@ -59,8 +66,10 @@ public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
 
     @Override
     protected void apply(List<Tree> prepared, PreparableReloadListener.SharedState state) {
+        EternitekCore.LOGGER.info("Preparing {} research trees", prepared.size());
         for (Tree tree : prepared) {
             EternitekRegistries.RESEARCH.put(tree.id(), tree);
+            EternitekCore.LOGGER.info("Research tree {} applied", tree.id());
         }
     }
 
