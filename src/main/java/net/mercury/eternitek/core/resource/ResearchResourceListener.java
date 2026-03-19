@@ -65,11 +65,7 @@ public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
     @Override
     protected void apply(List<Tree> prepared, PreparableReloadListener.SharedState state) {
         for (Tree tree : prepared) {
-            Registry.register(
-                    EternitekRegistries.RESEARCH_TREE,
-                    tree.id(),
-                    tree
-            );
+            EternitekRegistries.RESEARCH.put(tree.id(), tree);
         }
     }
 

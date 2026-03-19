@@ -4,7 +4,7 @@ import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
 import net.mercury.eternitek.core.codex.research.Node;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -26,9 +26,7 @@ public class CodexScreen extends Screen {
         this.offX = this.width / 2;
         this.offY = this.height / 2;
 
-        this.nodes = EternitekRegistries.RESEARCH_TREE.get(tree)
-                .orElseThrow()
-                .value()
+        this.nodes = EternitekRegistries.RESEARCH.getOrDefault(tree, null)
                 .nodes()
                 .stream()
                 .map(NodeWidget::new)
@@ -37,13 +35,11 @@ public class CodexScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float a) {
-
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         for (NodeWidget node : this.nodes) {
             node.updateOffset(this.offX, this.offY);
-            node.render(graphics, mouseX, mouseY, a);
+            node.extractRenderState(graphics, mouseX, mouseY, a);
         }
-
     }
 
 }

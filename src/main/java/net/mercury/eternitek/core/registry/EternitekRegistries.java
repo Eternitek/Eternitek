@@ -6,19 +6,17 @@ import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.multiblock.Multiblock;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EternitekRegistries {
 
-    public static final ResourceKey<Registry<Tree>> RESEARCH_TREE_KEY = key("research");
-    public static final Registry<Tree> RESEARCH_TREE = FabricRegistryBuilder
-            .create(RESEARCH_TREE_KEY)
-            .buildAndRegister();
+    public static final Map<Identifier, Tree> RESEARCH = new HashMap<>();
 
-    public static final ResourceKey<Registry<Multiblock>> MULTIBLOCK_KEY = key("multiblock");
-    public static final Registry<Multiblock> MULTIBLOCK = FabricRegistryBuilder
-            .create(MULTIBLOCK_KEY)
-            .buildAndRegister();
+    public static final Map<Identifier, Multiblock> MULTIBLOCK = new HashMap<>();
 
     public static void register() {
 

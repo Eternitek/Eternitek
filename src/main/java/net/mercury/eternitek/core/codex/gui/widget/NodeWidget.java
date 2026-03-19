@@ -2,8 +2,7 @@ package net.mercury.eternitek.core.codex.gui.widget;
 
 import net.mercury.eternitek.core.codex.research.Node;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -42,7 +41,7 @@ public class NodeWidget extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float a) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
         int x = getX() + this.offX;
         int y = getY() + this.offY;
@@ -59,7 +58,7 @@ public class NodeWidget extends AbstractWidget {
 
         if (this.isHovered) {
 
-            graphics.renderOutline(
+            graphics.outline(
                     x - 14,
                     y - 14,
                     28,
@@ -67,7 +66,7 @@ public class NodeWidget extends AbstractWidget {
                     Color.WHITE.getRGB()
             );
 
-            graphics.renderTooltip(
+            graphics.tooltip(
                     Minecraft.getInstance().font,
                     this.node.tooltip().stream()
                             .map(Component::getVisualOrderText)
