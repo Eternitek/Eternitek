@@ -44,7 +44,7 @@ public class NodeWidget extends AbstractWidget {
         int x = getX() + this.offX;
         int y = getY() + this.offY;
 
-        int size = this.isHovered ? 24 : 22;
+        int size = isMouseOver(mouseX, mouseY) ? 24 : 22;
         int offset = size / 2;
         graphics.fill(
                 x - offset,
@@ -54,7 +54,16 @@ public class NodeWidget extends AbstractWidget {
                 Color.WHITE.getRGB()
         );
 
-        if (this.isHovered) {
+        graphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                this.node.icon(),
+                x - 8, y - 8,
+                0, 0,
+                16, 16,
+                16, 16
+        );
+
+        if (isMouseOver(mouseX, mouseY)) {
 
             graphics.outline(
                     x - 14,
@@ -77,15 +86,15 @@ public class NodeWidget extends AbstractWidget {
 
         }
 
-        graphics.blit(
-                RenderPipelines.GUI_TEXTURED,
-                this.node.icon(),
-                x - 8, y - 8,
-                0, 0,
-                16, 16,
-                16, 16
-        );
+    }
 
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        int x = getX() + this.offX;
+        int y = getY() + this.offY;
+        int offset = this.width / 2;
+        return ((x - offset) <= mouseX && mouseX <= (x + offset)) &&
+                ((y - offset) <= mouseY && mouseY <= (y + offset));
     }
 
     @Override
