@@ -36,7 +36,7 @@ public class EternitekCore implements ModInitializer {
 	}
 
 	public static Identifier id(String path) {
-		return Identifier.fromNamespaceAndPath(ID, path);
+		return Identifier.fromNamespaceAndPath(ID, path.toLowerCase());
 	}
 
 	public static <T> ResourceKey<T> key(ResourceKey<? extends Registry<T>> registry, String path) {

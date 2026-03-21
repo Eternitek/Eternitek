@@ -1,5 +1,6 @@
 package net.mercury.eternitek.core.codex.gui.widget;
 
+import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Node;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -73,19 +74,22 @@ public class NodeWidget extends AbstractWidget {
                     Color.WHITE.getRGB()
             );
 
-            graphics.tooltip(
-                    Minecraft.getInstance().font,
-                    this.node.tooltip().stream()
-                            .map(Component::getVisualOrderText)
-                            .map(ClientTooltipComponent::create)
-                            .collect(Collectors.toList()),
-                    mouseX, mouseY,
-                    DefaultTooltipPositioner.INSTANCE,
-                    null
-            );
-
         }
 
+    }
+
+    public void extractTooltipRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        if (!isMouseOver(mouseX, mouseY)) return;
+        graphics.tooltip(
+                Minecraft.getInstance().font,
+                this.node.tooltip().stream()
+                        .map(Component::getVisualOrderText)
+                        .map(ClientTooltipComponent::create)
+                        .collect(Collectors.toList()),
+                mouseX, mouseY,
+                DefaultTooltipPositioner.INSTANCE,
+                EternitekCore.id("simple")
+        );
     }
 
     @Override

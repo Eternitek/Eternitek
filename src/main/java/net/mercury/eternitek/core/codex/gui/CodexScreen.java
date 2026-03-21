@@ -1,8 +1,10 @@
 package net.mercury.eternitek.core.codex.gui;
 
+import com.mojang.blaze3d.platform.Window;
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -22,8 +24,9 @@ public class CodexScreen extends Screen {
     public CodexScreen(Identifier tree) {
 
         super(Component.empty());
-        this.offX = this.width / 2;
-        this.offY = this.height / 2;
+        Window window = Minecraft.getInstance().getWindow();
+        this.offX = window.getGuiScaledWidth() / 2;
+        this.offY = window.getGuiScaledHeight() / 2;
 
         this.nodes = EternitekRegistries.RESEARCH.getOrDefault(tree, new Tree(tree.toString(), tree, List.of()))
                 .nodes()
@@ -35,10 +38,18 @@ public class CodexScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+
+        graphics.fill(0, 0, this.width, this.height, 0xAA000000);
+
         for (NodeWidget node : this.nodes) {
             node.updateOffset(this.offX, this.offY);
             node.extractRenderState(graphics, mouseX, mouseY, a);
         }
+
+        for (NodeWidget node : this.nodes) {
+            node.extractTooltipRenderState(graphics, mouseX, mouseY, a);
+        }
+
     }
 
     @Override
