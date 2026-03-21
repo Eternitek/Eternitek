@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.mercury.eternitek.core.data.EternitekLangProvider;
 import net.mercury.eternitek.core.data.EternitekModelProvider;
+import net.mercury.eternitek.core.data.EternitekResearchProvider;
 
 public class EternitekDataGenerator implements DataGeneratorEntrypoint {
 
@@ -14,6 +15,7 @@ public class EternitekDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(EternitekLangProvider::new);
 		pack.addProvider(EternitekModelProvider::new);
+		pack.addProvider(EternitekResearchProvider::new);
 
 	}
 

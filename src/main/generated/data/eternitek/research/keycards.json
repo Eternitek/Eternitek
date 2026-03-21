@@ -1,0 +1,44 @@
+{
+  "id": "eternitek:keycards",
+  "name": "Keycards",
+  "nodes": [
+    {
+      "connections": [],
+      "icon": "eternitek:textures/item/simple_keycard.png",
+      "node": "eternitek:simple",
+      "position": [
+        0,
+        0
+      ],
+      "tooltip": [
+        {
+          "color": "#A5AFB1",
+          "text": "Simple"
+        },
+        {
+          "color": "#A5AFB1",
+          "text": "The name says it all."
+        }
+      ]
+    },
+    {
+      "connections": [],
+      "icon": "eternitek:textures/item/gilded_keycard.png",
+      "node": "eternitek:gilded",
+      "position": [
+        60,
+        0
+      ],
+      "tooltip": [
+        {
+          "color": "#E9BE6A",
+          "text": "Gilded"
+        },
+        {
+          "color": "#A5AFB1",
+          "text": "For executives only."
+        }
+      ]
+    }
+  ]
+}
