@@ -15,7 +15,7 @@ public record Node(
         List<Component> tooltip,
         Identifier icon,
         Vector2i position,
-        List<Identifier> connections
+        List<Identifier> children
 ) {
 
     private static final Codec<Vector2i> POSITION_CODEC = Codec.list(Codec.INT, 2, 2).xmap(
@@ -28,7 +28,7 @@ public record Node(
             ComponentSerialization.CODEC.listOf().fieldOf("tooltip").orElse(List.of(Component.empty())).forGetter(Node::tooltip),
             Identifier.CODEC.fieldOf("icon").forGetter(Node::icon),
             POSITION_CODEC.fieldOf("position").forGetter(Node::position),
-            Identifier.CODEC.listOf().fieldOf("connections").orElse(List.of(EternitekCore.id("root"))).forGetter(Node::connections)
+            Identifier.CODEC.listOf().fieldOf("children").orElse(List.of(EternitekCore.id("root"))).forGetter(Node::children)
     ).apply(instance, Node::new));
 
 }

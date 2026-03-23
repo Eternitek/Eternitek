@@ -17,6 +17,7 @@ import org.joml.Matrix3x2fStack;
 import org.joml.Vector2i;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class CodexScreen extends Screen {
@@ -34,9 +35,10 @@ public class CodexScreen extends Screen {
         this.offX = window.getGuiScaledWidth() / 2;
         this.offY = window.getGuiScaledHeight() / 2;
 
-        this.tree = EternitekRegistries.RESEARCH.getOrDefault(id, new Tree(id.toString(), id, List.of()));
+        this.tree = EternitekRegistries.RESEARCH.getOrDefault(id, new Tree(id.toString(), id, Map.of()));
         this.nodes = this.tree
                 .nodes()
+                .values()
                 .stream()
                 .map(NodeWidget::new)
                 .toList();
@@ -56,20 +58,15 @@ public class CodexScreen extends Screen {
 
         for (NodeWidget widget : this.nodes) {
 
-            for (Identifier connection : widget.connections()) {
+            for (Identifier id : widget.children()) {
 
-                Optional<Node> optional = this.nodes
-                        .stream()
-                        .filter(node -> node.id().equals(connection))
-                        .findFirst()
-                        .map(NodeWidget::node);
+                if (!this.tree.nodes().containsKey(id)) continue;
 
-                if (optional.isEmpty()) continue;
-                Node node = widget.node();
-                Node other = optional.get();
+                Node parent = widget.node();
+                Node child = this.tree.nodes().get(id);
 
-                Vector2i start = node.position();
-                Vector2i end = other.position();
+                Vector2i start = parent.position();
+                Vector2i end = child.position();
 
                 RenderHelper.line(
                         graphics,

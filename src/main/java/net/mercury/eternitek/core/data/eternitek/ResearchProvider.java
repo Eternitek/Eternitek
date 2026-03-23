@@ -19,7 +19,7 @@ import java.util.function.BiConsumer;
 
 public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
 
-    private Map<Identifier, Tree> toRegister;
+    private final Map<Identifier, Tree> toRegister;
 
     protected ResearchProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(
@@ -84,7 +84,7 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
         }
 
         public void build() {
-            this.parent.register(this.id, new Tree(name, id, nodes));
+            this.parent.register(this.id, new Tree(name, id, Tree.nodeMap(nodes)));
         }
 
     }

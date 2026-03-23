@@ -1,6 +1,5 @@
 package net.mercury.eternitek.core.codex.gui.widget;
 
-import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Node;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -116,8 +115,8 @@ public class NodeWidget extends AbstractWidget {
         return this.node.id();
     }
 
-    public List<Identifier> connections() {
-        return this.node.connections();
+    public List<Identifier> children() {
+        return this.node.children();
     }
 
 }
