@@ -3,9 +3,11 @@
   "name": "Keycards",
   "nodes": [
     {
-      "connections": [],
+      "connections": [
+        "eternitek:gilded"
+      ],
       "icon": "eternitek:textures/item/simple_keycard.png",
-      "node": "eternitek:simple",
+      "id": "eternitek:simple",
       "position": [
         0,
         0
@@ -24,7 +26,7 @@
     {
       "connections": [],
       "icon": "eternitek:textures/item/gilded_keycard.png",
-      "node": "eternitek:gilded",
+      "id": "eternitek:gilded",
       "position": [
         60,
         0

@@ -1,6 +1,5 @@
 package net.mercury.eternitek.core.codex.research;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.mercury.eternitek.core.EternitekCore;
@@ -12,7 +11,7 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public record Node(
-        Identifier node,
+        Identifier id,
         List<Component> tooltip,
         Identifier icon,
         Vector2i position,
@@ -25,7 +24,7 @@ public record Node(
     );
 
     public static final Codec<Node> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Identifier.CODEC.fieldOf("node").forGetter(Node::node),
+            Identifier.CODEC.fieldOf("id").forGetter(Node::id),
             ComponentSerialization.CODEC.listOf().fieldOf("tooltip").orElse(List.of(Component.empty())).forGetter(Node::tooltip),
             Identifier.CODEC.fieldOf("icon").forGetter(Node::icon),
             POSITION_CODEC.fieldOf("position").forGetter(Node::position),

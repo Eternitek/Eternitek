@@ -10,8 +10,10 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 import java.awt.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class NodeWidget extends AbstractWidget {
@@ -88,7 +90,7 @@ public class NodeWidget extends AbstractWidget {
                         .collect(Collectors.toList()),
                 mouseX, mouseY,
                 DefaultTooltipPositioner.INSTANCE,
-                EternitekCore.id("simple")
+                null
         );
     }
 
@@ -104,6 +106,18 @@ public class NodeWidget extends AbstractWidget {
     @Override
     protected void updateWidgetNarration(NarrationElementOutput output) {
 
+    }
+
+    public Node node() {
+        return this.node;
+    }
+
+    public Identifier id() {
+        return this.node.id();
+    }
+
+    public List<Identifier> connections() {
+        return this.node.connections();
     }
 
 }

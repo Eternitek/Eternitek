@@ -2,7 +2,6 @@ package net.mercury.eternitek.core.data.eternitek;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricCodecDataProvider;
-import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.research.Node;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.minecraft.core.HolderLookup;
@@ -92,7 +91,7 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
 
     protected static class NodeBuilder {
 
-        private Identifier node;
+        private Identifier id;
         private List<Component> tooltip;
         private Identifier icon;
         private Vector2i position;
@@ -106,13 +105,13 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
             this.connections = new ArrayList<>();
         }
 
-        public NodeBuilder id(Identifier node) {
-            this.node = node;
+        public NodeBuilder id(Identifier id) {
+            this.id = id;
             return this;
         }
 
-        public NodeBuilder id(String node) {
-            this.node = Identifier.parse(node);
+        public NodeBuilder id(String id) {
+            this.id = Identifier.parse(id);
             return this;
         }
 
@@ -156,8 +155,13 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
             return this;
         }
 
+        public NodeBuilder connection(String connection) {
+            this.connections.add(Identifier.parse(connection));
+            return this;
+        }
+
         public TreeBuilder build() {
-            Node result = new Node(node, tooltip, icon, position, connections);
+            Node result = new Node(id, tooltip, icon, position, connections);
             parent.addNode(result);
             return parent;
         }

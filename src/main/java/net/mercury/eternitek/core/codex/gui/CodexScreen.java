@@ -2,8 +2,10 @@ package net.mercury.eternitek.core.codex.gui;
 
 import com.mojang.blaze3d.platform.Window;
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
+import net.mercury.eternitek.core.codex.research.Node;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
+import net.mercury.eternitek.core.util.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,24 +13,29 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.joml.Matrix3x2fStack;
+import org.joml.Vector2i;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CodexScreen extends Screen {
 
+    private final Tree tree;
     private final List<NodeWidget> nodes;
 
     protected int offX;
     protected int offY;
 
-    public CodexScreen(Identifier tree) {
+    public CodexScreen(Identifier id) {
 
         super(Component.empty());
         Window window = Minecraft.getInstance().getWindow();
         this.offX = window.getGuiScaledWidth() / 2;
         this.offY = window.getGuiScaledHeight() / 2;
 
-        this.nodes = EternitekRegistries.RESEARCH.getOrDefault(tree, new Tree(tree.toString(), tree, List.of()))
+        this.tree = EternitekRegistries.RESEARCH.getOrDefault(id, new Tree(id.toString(), id, List.of()));
+        this.nodes = this.tree
                 .nodes()
                 .stream()
                 .map(NodeWidget::new)
@@ -40,6 +47,45 @@ public class CodexScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 
         graphics.fill(0, 0, this.width, this.height, 0xAA000000);
+
+        Matrix3x2fStack matrices = graphics.pose();
+
+        matrices.pushMatrix();
+
+        matrices.translate(this.offX, this.offY);
+
+        for (NodeWidget widget : this.nodes) {
+
+            for (Identifier connection : widget.connections()) {
+
+                Optional<Node> optional = this.nodes
+                        .stream()
+                        .filter(node -> node.id().equals(connection))
+                        .findFirst()
+                        .map(NodeWidget::node);
+
+                if (optional.isEmpty()) continue;
+                Node node = widget.node();
+                Node other = optional.get();
+
+                Vector2i start = node.position();
+                Vector2i end = other.position();
+
+                RenderHelper.line(
+                        graphics,
+                        start.x(),
+                        start.y(),
+                        end.x(),
+                        end.y(),
+                        2,
+                        0xFFFFFFFF
+                );
+
+            }
+
+        }
+
+        matrices.popMatrix();
 
         for (NodeWidget node : this.nodes) {
             node.updateOffset(this.offX, this.offY);

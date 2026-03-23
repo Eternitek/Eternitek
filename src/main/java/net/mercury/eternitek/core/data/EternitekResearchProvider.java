@@ -26,6 +26,7 @@ public class EternitekResearchProvider extends ResearchProvider {
                         .tooltip(Component.literal("The name says it all.").withColor(0xFFA5AFB1))
                         .icon("eternitek:textures/item/simple_keycard.png")
                         .position(0, 0)
+                        .connection("eternitek:gilded")
                         .build()
                 .node()
                         .id("eternitek:gilded")
