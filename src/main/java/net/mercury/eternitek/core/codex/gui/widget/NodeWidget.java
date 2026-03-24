@@ -24,8 +24,8 @@ public class NodeWidget extends AbstractWidget {
 
     public NodeWidget(Node node) {
         super(
-                node.position().x,
-                node.position().y,
+                node.position().x - 11,
+                node.position().y - 11,
                 22,
                 22,
                 node.tooltip().getFirst()
@@ -46,20 +46,18 @@ public class NodeWidget extends AbstractWidget {
         int x = getX() + this.offX;
         int y = getY() + this.offY;
 
-        int size = 22;
-        int offset = size / 2;
         graphics.fill(
-                x - offset,
-                y - offset,
-                x + offset,
-                y + offset,
+                x,
+                y,
+                x + this.width,
+                y + this.height,
                 Color.WHITE.getRGB()
         );
 
         graphics.blit(
                 RenderPipelines.GUI_TEXTURED,
                 this.node.icon(),
-                x - 8, y - 8,
+                x + 3, y + 3,
                 0, 0,
                 16, 16,
                 16, 16
@@ -68,10 +66,10 @@ public class NodeWidget extends AbstractWidget {
         if (isMouseOver(mouseX, mouseY)) {
 
             graphics.outline(
-                    x - 13,
-                    y - 13,
-                    26,
-                    26,
+                    x - 2,
+                    y - 2,
+                    this.width + 4,
+                    this.height + 4,
                     Color.WHITE.getRGB()
             );
 
@@ -97,9 +95,8 @@ public class NodeWidget extends AbstractWidget {
     public boolean isMouseOver(double mouseX, double mouseY) {
         int x = getX() + this.offX;
         int y = getY() + this.offY;
-        int offset = this.width / 2;
-        return ((x - offset) <= mouseX && mouseX <= (x + offset)) &&
-                ((y - offset) <= mouseY && mouseY <= (y + offset));
+        return (x <= mouseX && mouseX <= (x + this.width)) &&
+                (y <= mouseY && mouseY <= (y + this.height));
     }
 
     @Override
