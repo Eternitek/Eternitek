@@ -68,13 +68,12 @@ public class CodexScreen extends Screen {
                 Vector2i start = parent.position();
                 Vector2i end = child.position();
 
-                RenderHelper.line(
+                RenderHelper.pixelLine(
                         graphics,
                         start.x(),
                         start.y(),
                         end.x(),
                         end.y(),
-                        2,
                         0xFFFFFFFF
                 );
 
