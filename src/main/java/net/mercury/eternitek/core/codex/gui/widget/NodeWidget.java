@@ -46,7 +46,7 @@ public class NodeWidget extends AbstractWidget {
         int x = getX() + this.offX;
         int y = getY() + this.offY;
 
-        int size = isMouseOver(mouseX, mouseY) ? 24 : 22;
+        int size = 22;
         int offset = size / 2;
         graphics.fill(
                 x - offset,
@@ -68,10 +68,10 @@ public class NodeWidget extends AbstractWidget {
         if (isMouseOver(mouseX, mouseY)) {
 
             graphics.outline(
-                    x - 14,
-                    y - 14,
-                    28,
-                    28,
+                    x - 13,
+                    y - 13,
+                    26,
+                    26,
                     Color.WHITE.getRGB()
             );
 
