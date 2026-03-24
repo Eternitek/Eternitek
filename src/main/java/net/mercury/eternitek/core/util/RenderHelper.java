@@ -6,19 +6,19 @@ import org.joml.Matrix3x2fStack;
 
 public class RenderHelper {
 
-    public static void line(GuiGraphicsExtractor graphics, int x1, int y1, int x2, int y2, int width, int color) {
+    public static void line(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int width, int color) {
 
         Matrix3x2fStack matrices = graphics.pose();
 
-        int dx = x2 - x1;
-        int dy = y2 - y1;
+        int dx = x1 - x0;
+        int dy = y1 - y0;
 
         float angle = (float) Math.atan2(dy, dx);
         int length = (int) Mth.length(dx, dy);
 
         matrices.pushMatrix();
 
-            matrices.translate(x1, y1);
+            matrices.translate(x0, y0);
 
             matrices.rotate(angle);
 
