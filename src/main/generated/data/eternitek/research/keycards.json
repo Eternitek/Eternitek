@@ -4,6 +4,7 @@
   "nodes": [
     {
       "children": [
+        "eternitek:reverious",
         "eternitek:gilded"
       ],
       "icon": "eternitek:textures/item/simple_keycard.png",
@@ -25,11 +26,30 @@
     },
     {
       "children": [],
+      "icon": "eternitek:textures/item/reverious_keycard.png",
+      "id": "eternitek:reverious",
+      "position": [
+        -60,
+        60
+      ],
+      "tooltip": [
+        {
+          "color": "#CC4F82",
+          "text": "Reverious"
+        },
+        {
+          "color": "#A5AFB1",
+          "text": "Is it... breathing?"
+        }
+      ]
+    },
+    {
+      "children": [],
       "icon": "eternitek:textures/item/gilded_keycard.png",
       "id": "eternitek:gilded",
       "position": [
         60,
-        0
+        -20
       ],
       "tooltip": [
         {
