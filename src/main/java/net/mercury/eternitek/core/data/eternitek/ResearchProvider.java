@@ -85,6 +85,9 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
 
         public void build() {
             this.parent.register(this.id, new Tree(name, id, Tree.nodeMap(nodes)));
+            this.name = null;
+            this.id = null;
+            this.nodes.clear();
         }
 
     }

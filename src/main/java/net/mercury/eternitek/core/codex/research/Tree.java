@@ -25,7 +25,7 @@ public record Tree(
     ).apply(instance, Tree::new));
 
     public static Map<Identifier, Node> nodeMap(List<Node> nodes) {
-        return nodes.stream().collect(Collectors.toMap(Node::id, Function.identity()));
+        return List.copyOf(nodes).stream().collect(Collectors.toMap(Node::id, Function.identity()));
     }
 
 }
