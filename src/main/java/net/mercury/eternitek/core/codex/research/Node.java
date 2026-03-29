@@ -9,13 +9,15 @@ import net.minecraft.resources.Identifier;
 import org.joml.Vector2i;
 
 import java.util.List;
+import java.util.Optional;
 
 public record Node(
         Identifier id,
         List<Component> tooltip,
         Identifier icon,
         Vector2i position,
-        List<Identifier> children
+        List<Identifier> children,
+        Optional<Identifier> quest
 ) {
 
     private static final Codec<Vector2i> POSITION_CODEC = Codec.list(Codec.INT, 2, 2).xmap(
@@ -28,7 +30,8 @@ public record Node(
             ComponentSerialization.CODEC.listOf().fieldOf("tooltip").orElse(List.of(Component.empty())).forGetter(Node::tooltip),
             Identifier.CODEC.fieldOf("icon").forGetter(Node::icon),
             POSITION_CODEC.fieldOf("position").forGetter(Node::position),
-            Identifier.CODEC.listOf().fieldOf("children").orElse(List.of(EternitekCore.id("root"))).forGetter(Node::children)
+            Identifier.CODEC.listOf().fieldOf("children").orElse(List.of()).forGetter(Node::children),
+            Identifier.CODEC.optionalFieldOf("quest").forGetter(Node::quest)
     ).apply(instance, Node::new));
 
 }

@@ -10,10 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.joml.Vector2i;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
@@ -98,14 +95,16 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
         private List<Component> tooltip;
         private Identifier icon;
         private Vector2i position;
-        private List<Identifier> connections;
+        private List<Identifier> children;
+        private Optional<Identifier> quest;
 
         private final TreeBuilder parent;
 
         public NodeBuilder(TreeBuilder parent) {
             this.parent = parent;
             this.tooltip = new ArrayList<>();
-            this.connections = new ArrayList<>();
+            this.children = new ArrayList<>();
+            this.quest = Optional.empty();
         }
 
         public NodeBuilder id(Identifier id) {
@@ -148,23 +147,33 @@ public abstract class ResearchProvider extends FabricCodecDataProvider<Tree> {
             return this;
         }
 
-        public NodeBuilder connections(List<Identifier> connections) {
-            this.connections = connections;
+        public NodeBuilder children(List<Identifier> children) {
+            this.children = children;
             return this;
         }
 
-        public NodeBuilder connection(Identifier connection) {
-            this.connections.add(connection);
+        public NodeBuilder child(Identifier child) {
+            this.children.add(child);
             return this;
         }
 
-        public NodeBuilder connection(String connection) {
-            this.connections.add(Identifier.parse(connection));
+        public NodeBuilder child(String child) {
+            this.children.add(Identifier.parse(child));
+            return this;
+        }
+
+        public NodeBuilder quest(Identifier quest) {
+            this.quest = Optional.of(quest);
+            return this;
+        }
+
+        public NodeBuilder quest(String quest) {
+            this.quest = Optional.of(Identifier.parse(quest));
             return this;
         }
 
         public TreeBuilder build() {
-            Node result = new Node(id, tooltip, icon, position, connections);
+            Node result = new Node(id, tooltip, icon, position, children, quest);
             parent.addNode(result);
             return parent;
         }

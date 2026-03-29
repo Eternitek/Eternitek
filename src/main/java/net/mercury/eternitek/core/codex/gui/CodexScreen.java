@@ -2,6 +2,7 @@ package net.mercury.eternitek.core.codex.gui;
 
 import com.mojang.blaze3d.platform.Window;
 import net.mercury.eternitek.core.codex.gui.widget.NodeWidget;
+import net.mercury.eternitek.core.codex.gui.widget.QuestWidget;
 import net.mercury.eternitek.core.codex.research.Node;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
@@ -91,6 +92,9 @@ public class CodexScreen extends Screen {
         for (NodeWidget node : this.nodes) {
             node.extractTooltipRenderState(graphics, mouseX, mouseY, a);
         }
+
+        QuestWidget quest = new QuestWidget(Component.empty());
+        quest.extractRenderState(graphics, mouseX, mouseY, a);
 
     }
 
