@@ -4,13 +4,56 @@
   "nodes": [
     {
       "children": [
-        "eternitek:reverious",
         "eternitek:gilded"
+      ],
+      "icon": "eternitek:textures/item/breezy_keycard.png",
+      "id": "eternitek:breezy",
+      "position": [
+        0,
+        60
+      ],
+      "tooltip": [
+        {
+          "color": "#8B97C9",
+          "text": "Breezy"
+        },
+        {
+          "color": "#A5AFB1",
+          "text": "Wheeeeeee!"
+        }
+      ]
+    },
+    {
+      "children": [
+        "eternitek:gilded"
+      ],
+      "icon": "eternitek:textures/item/gelatinous_keycard.png",
+      "id": "eternitek:gelatinous",
+      "position": [
+        0,
+        -60
+      ],
+      "tooltip": [
+        {
+          "color": "#A7B580",
+          "text": "Gelatinous"
+        },
+        {
+          "color": "#A5AFB1",
+          "text": "Eugh. It's sticky."
+        }
+      ]
+    },
+    {
+      "children": [
+        "eternitek:gelatinous",
+        "eternitek:reverious",
+        "eternitek:breezy"
       ],
       "icon": "eternitek:textures/item/simple_keycard.png",
       "id": "eternitek:simple",
       "position": [
-        0,
+        -60,
         0
       ],
       "tooltip": [
@@ -25,12 +68,14 @@
       ]
     },
     {
-      "children": [],
+      "children": [
+        "eternitek:gilded"
+      ],
       "icon": "eternitek:textures/item/reverious_keycard.png",
       "id": "eternitek:reverious",
       "position": [
-        -60,
-        60
+        0,
+        0
       ],
       "tooltip": [
         {
@@ -48,8 +93,8 @@
       "icon": "eternitek:textures/item/gilded_keycard.png",
       "id": "eternitek:gilded",
       "position": [
-        60,
-        -20
+        100,
+        0
       ],
       "tooltip": [
         {

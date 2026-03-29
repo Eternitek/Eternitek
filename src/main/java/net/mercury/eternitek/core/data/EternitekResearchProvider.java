@@ -24,9 +24,19 @@ public class EternitekResearchProvider extends ResearchProvider {
                 .tooltip(Component.literal("Simple").withColor(0xFFA5AFB1))
                 .tooltip(Component.literal("The name says it all.").withColor(0xFFA5AFB1))
                 .icon("eternitek:textures/item/simple_keycard.png")
-                .position(0, 0)
-                .connection("eternitek:reverious")
-                .connection("eternitek:gilded")
+                .position(-60, 0)
+                .child("eternitek:gelatinous")
+                .child("eternitek:reverious")
+                .child("eternitek:breezy")
+                .build();
+
+        builder.node()
+                .id("eternitek:gelatinous")
+                .tooltip(Component.literal("Gelatinous").withColor(0xFFA7B580))
+                .tooltip(Component.literal("Eugh. It's sticky.").withColor(0xFFA5AFB1))
+                .icon("eternitek:textures/item/gelatinous_keycard.png")
+                .position(0, -60)
+                .child("eternitek:gilded")
                 .build();
 
         builder.node()
@@ -34,7 +44,17 @@ public class EternitekResearchProvider extends ResearchProvider {
                 .tooltip(Component.literal("Reverious").withColor(0xFFCC4F82))
                 .tooltip(Component.literal("Is it... breathing?").withColor(0xFFA5AFB1))
                 .icon("eternitek:textures/item/reverious_keycard.png")
-                .position(-60, 60)
+                .position(0, 0)
+                .child("eternitek:gilded")
+                .build();
+
+        builder.node()
+                .id("eternitek:breezy")
+                .tooltip(Component.literal("Breezy").withColor(0xFF8B97C9))
+                .tooltip(Component.literal("Wheeeeeee!").withColor(0xFFA5AFB1))
+                .icon("eternitek:textures/item/breezy_keycard.png")
+                .position(0, 60)
+                .child("eternitek:gilded")
                 .build();
 
         builder.node()
@@ -42,7 +62,7 @@ public class EternitekResearchProvider extends ResearchProvider {
                 .tooltip(Component.literal("Gilded").withColor(0xFFE9BE6A))
                 .tooltip(Component.literal("For executives only.").withColor(0xFFA5AFB1))
                 .icon("eternitek:textures/item/gilded_keycard.png")
-                .position(60, -60)
+                .position(100, 0)
                 .build();
 
         builder.build();

@@ -66,7 +66,7 @@ public class ResearchResourceListener extends SimpleReloadListener<List<Tree>> {
 
     @Override
     protected void apply(List<Tree> prepared, PreparableReloadListener.SharedState state) {
-        EternitekCore.LOGGER.info("Preparing {} research trees", prepared.size());
+        EternitekCore.LOGGER.info("Preparing {} research tree(s)", prepared.size());
         for (Tree tree : prepared) {
             EternitekRegistries.RESEARCH.put(tree.id(), tree);
             EternitekCore.LOGGER.info("Research tree {} applied", tree.id());

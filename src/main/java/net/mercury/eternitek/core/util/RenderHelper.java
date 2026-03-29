@@ -30,36 +30,49 @@ public class RenderHelper {
     }
 
     public static void pixelLine(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int color) {
-
-        y0 -= 1;
-        y1 -= 1;
         
-        int dx = Math.abs(x1 - x0);
-        int sx = x0 < x1 ? 1 : -1;
-        int dy = -Math.abs(y1 - y0);
-        int sy = y0 < y1 ? 1 : -1;
+        float dx = Math.abs(x1 - x0);
+        float sx = x0 < x1 ? 1 : -1;
+        float dy = -Math.abs(y1 - y0);
+        float sy = y0 < y1 ? 1 : -1;
 
-        int error = dx + dy;
+        float x = x0;
+        float y = y0;
+
+        float error = dx + dy;
 
         while (true) {
 
-            graphics.fill(x0, y0, x0 + 1, y0 + 1, color);
+            graphics.fill((int) x, (int) y, (int) (x + 1), (int) (y + 1), color);
 
-            int error2 = 2 * error;
+            float error2 = 2.0F * error;
 
             if (error2 >= dy) {
-                if (x0 == x1) break;
+                if (x == x1) break;
                 error += dy;
-                x0 += sx;
+                x += sx;
             }
 
             if (error2 <= dx) {
-                if (y0 == y1) break;
+                if (y == y1) break;
                 error += dx;
-                y0 += sy;
+                y += sy;
             }
 
         }
+
+    }
+
+    public static void progressBar(
+            GuiGraphicsExtractor graphics,
+            int x, int y,
+            int width, int height,
+            float progress,
+            int fullColor, int emptyColor
+    ) {
+
+        graphics.fill(x, y, x + width, y + height, emptyColor);
+        graphics.fill(x, y, x + (int) (width * progress), y + height, fullColor);
 
     }
 
