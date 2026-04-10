@@ -14,23 +14,19 @@ import java.util.function.Function;
 
 public class EternitekItems {
 
-    public static final List<Item> GENERATE = new ArrayList<>();
-
-    public static final Item CODEX = registerItem("codex", CodexItem::new, true);
+    public static final Item CODEX = registerItem("codex", CodexItem::new);
 
     public static void register() {
 
     }
 
-    public static Item registerItem(String name, Function<Item.Properties, Item> factory, boolean model) {
+    public static Item registerItem(String name, Function<Item.Properties, Item> factory) {
         ResourceKey<Item> key = EternitekCore.key(Registries.ITEM, name);
-        Item item = Registry.register(
+        return Registry.register(
                 BuiltInRegistries.ITEM,
                 key,
                 factory.apply(new Item.Properties().setId(key))
         );
-        GENERATE.add(item);
-        return item;
     }
 
 }
