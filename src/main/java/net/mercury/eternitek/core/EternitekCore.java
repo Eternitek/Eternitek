@@ -3,6 +3,7 @@ package net.mercury.eternitek.core;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.mercury.eternitek.core.registry.EternitekItems;
+import net.mercury.eternitek.core.registry.EternitekObjectives;
 import net.mercury.eternitek.core.registry.EternitekRegistries;
 import net.mercury.eternitek.core.resource.MultiblockResourceListener;
 import net.mercury.eternitek.core.resource.ResearchResourceListener;
@@ -30,6 +31,7 @@ public class EternitekCore implements ModInitializer {
 		loader.registerReloadListener(id("research"), new ResearchResourceListener());
 
 		EternitekItems.register();
+		EternitekObjectives.register();
 
 		LOGGER.info("Successfully initialized");
 

@@ -3,6 +3,7 @@ package net.mercury.eternitek.core.registry;
 import com.mojang.serialization.Lifecycle;
 import net.mercury.eternitek.core.EternitekCore;
 import net.mercury.eternitek.core.codex.quest.Quest;
+import net.mercury.eternitek.core.codex.quest.objective.Objective;
 import net.mercury.eternitek.core.codex.research.Tree;
 import net.mercury.eternitek.core.multiblock.Multiblock;
 import net.minecraft.core.MappedRegistry;
@@ -14,11 +15,17 @@ import net.minecraft.resources.ResourceKey;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.mercury.eternitek.core.codex.quest.objective.Objective.Type;
+
 public class EternitekRegistries {
 
     public static final Map<Identifier, Tree> RESEARCH = new HashMap<>();
     public static final Map<Identifier, Quest> QUEST = new HashMap<>();
     public static final Map<Identifier, Multiblock> MULTIBLOCK = new HashMap<>();
+
+    public static final Registry<Type<?>> OBJECTIVE = new MappedRegistry<>(
+            key("objectives"), Lifecycle.stable()
+    );
 
     public static void register() {
 
