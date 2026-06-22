@@ -14,13 +14,13 @@ public record MiningObjective(int amount, BlockPredicate predicate) implements O
     ).apply(instance, MiningObjective::new));
 
     @Override
-    public Type<?> getType() {
-        return EternitekObjectives.MINING;
+    public Integer getGoal() {
+        return this.amount;
     }
 
     @Override
-    public Integer getRequirement() {
-        return amount;
+    public Type<?> getType() {
+        return EternitekObjectives.MINING;
     }
 
 }

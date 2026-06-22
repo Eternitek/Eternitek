@@ -10,16 +10,16 @@ public interface Objective<T> {
     Codec<Objective<?>> CODEC = EternitekRegistries.OBJECTIVE.byNameCodec()
             .dispatch("objective", Objective::getType, Type::codec);
 
+    T getGoal();
+
     Type<?> getType();
 
-    T getRequirement();
+    record Type<T extends Objective<?>>(MapCodec<T> codec) {}
 
-    default void trigger(Player player, Type<?> type, T value) {
+    record Progress<T>(Objective<T> parent) {
 
 
 
     }
-
-    record Type<T extends Objective<?>>(MapCodec<T> codec) {}
 
 }

@@ -23,4 +23,10 @@ public record Quest(
             Objective.CODEC.listOf().fieldOf("objectives").forGetter(Quest::objectives)
     ).apply(instance, Quest::new));
 
+    public record Progress(
+            List<Objective<?>> objectives
+    ) {
+
+    }
+
 }

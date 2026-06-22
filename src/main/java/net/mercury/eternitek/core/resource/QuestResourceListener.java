@@ -49,6 +49,7 @@ public class QuestResourceListener extends SimpleReloadListener<List<Quest>> {
                 JsonObject json = GsonHelper.parse(new InputStreamReader(stream));
                 DataResult<Quest> result = Quest.CODEC.parse(JsonOps.INSTANCE, json);
 
+
                 EternitekCore.LOGGER.info("Successfully loaded quest {}", id);
 
                 return result.resultOrPartial(EternitekCore.LOGGER::error).get();
