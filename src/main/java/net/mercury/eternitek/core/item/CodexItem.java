@@ -22,7 +22,7 @@ public class CodexItem extends Item {
         if (level.isClientSide()) {
             Minecraft.getInstance().setScreen(new CodexScreen(EternitekCore.id("keycards")));
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
     }
 
 }
