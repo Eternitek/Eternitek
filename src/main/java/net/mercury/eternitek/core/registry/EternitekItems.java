@@ -8,8 +8,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 public class EternitekItems {
@@ -21,12 +19,15 @@ public class EternitekItems {
     }
 
     public static Item registerItem(String name, Function<Item.Properties, Item> factory) {
+        return registerItem(name, factory, new Item.Properties());
+    }
+
+    public static Item registerItem(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
         ResourceKey<Item> key = EternitekCore.key(Registries.ITEM, name);
         return Registry.register(
                 BuiltInRegistries.ITEM,
                 key,
-                factory.apply(new Item.Properties().setId(key))
+                factory.apply(properties.setId(key))
         );
     }
-
 }
